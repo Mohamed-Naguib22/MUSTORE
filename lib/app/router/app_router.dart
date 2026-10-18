@@ -7,7 +7,7 @@ import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/screens/login_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/register_screen.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
-import 'package:mustore/features/splash/presentation/screens/splash_screen.dart';
+import 'package:mustore/app/router/screens/splash_screen.dart';
 import 'access_level.dart';
 import 'app_page.dart';
 
