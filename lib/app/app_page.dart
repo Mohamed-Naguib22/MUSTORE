@@ -10,6 +10,7 @@ import 'package:mustore/features/profile/presentation/screens/edit_profile_scree
 import 'package:mustore/features/settings/presentation/screens/settings_screen.dart';
 import 'package:mustore/features/shopping/presentation/screens/cart_screen.dart';
 import 'package:mustore/features/shopping/presentation/screens/checkout_screen.dart';
+import 'package:mustore/generated/l10n.dart';
 
 enum AppBarMode { standard, none }
 
@@ -23,47 +24,41 @@ enum AppPage {
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   home('/', AccessLevel.public, HomeScreen.new,
-      title: 'Home',
       icon: Icons.home_outlined,
       selectedIcon: Icons.home_rounded,
       isTab: true,
       appBar: AppBarMode.none),
 
   cart('/cart', AccessLevel.public, CartScreen.new,
-      title: 'Cart',
       icon: Icons.shopping_bag_outlined,
       selectedIcon: Icons.shopping_bag_rounded,
       isTab: true),
 
   categories('/categories', AccessLevel.public, CategoriesScreen.new,
-      title: 'Categories',
       icon: Icons.grid_view_outlined,
       selectedIcon: Icons.grid_view_rounded,
       isTab: true),
 
   account('/account', AccessLevel.authenticated, AccountScreen.new,
-      title: 'Account',
       icon: Icons.person_outline_rounded,
       selectedIcon: Icons.person_rounded,
       isTab: true),
 
   settings('/settings', AccessLevel.public, SettingsScreen.new,
-      title: 'Settings',
       icon: Icons.settings_outlined,
       selectedIcon: Icons.settings_rounded,
       isTab: true),
 
   editProfile('/account/edit', AccessLevel.authenticated, EditProfileScreen.new,
-      title: 'Edit profile', parent: account),
+      parent: account),
 
   checkout('/cart/checkout', AccessLevel.public, CheckoutScreen.new,
-      title: 'Checkout', parent: cart, fullScreen: true);
+      parent: cart, fullScreen: true);
 
   const AppPage(
       this.path,
       this.access,
       this.builder, {
-        this.title = '',
         this.icon,
         this.selectedIcon,
         this.parent,
@@ -75,13 +70,23 @@ enum AppPage {
   final String path;
   final AccessLevel access;
   final Widget Function() builder;
-  final String title;
   final IconData? icon;
   final IconData? selectedIcon;
   final AppPage? parent;
   final bool isTab;
   final bool fullScreen;
   final AppBarMode appBar;
+
+  String titleOf(S l10n) => switch (this) {
+    splash || login || register => '',
+    home => l10n.navHome,
+    cart => l10n.navCart,
+    categories => l10n.navCategories,
+    account => l10n.navAccount,
+    settings => l10n.settings,
+    editProfile => l10n.pageEditProfile,
+    checkout => l10n.pageCheckout,
+  };
 
   bool get isAuthFlow => this == splash || this == login || this == register;
 

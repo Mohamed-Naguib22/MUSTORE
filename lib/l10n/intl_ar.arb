@@ -9,6 +9,13 @@
   "themeDark": "داكن",
   "languageSystem": "النظام",
 
+  "navHome": "الرئيسية",
+  "navCart": "السلة",
+  "navCategories": "الفئات",
+  "navAccount": "حسابي",
+  "pageEditProfile": "تعديل الملف الشخصي",
+  "pageCheckout": "إتمام الشراء",
+
   "authEmail": "البريد الإلكتروني",
   "authEmailHint": "name@example.com",
   "authPassword": "كلمة المرور",

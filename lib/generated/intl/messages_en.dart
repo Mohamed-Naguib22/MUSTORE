@@ -101,6 +101,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSubtitle":
             MessageLookupByLibrary.simpleMessage("Log in to continue shopping"),
         "loginTitle": MessageLookupByLibrary.simpleMessage("Welcome back"),
+        "navAccount": MessageLookupByLibrary.simpleMessage("Account"),
+        "navCart": MessageLookupByLibrary.simpleMessage("Cart"),
+        "navCategories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "navHome": MessageLookupByLibrary.simpleMessage("Home"),
+        "pageCheckout": MessageLookupByLibrary.simpleMessage("Checkout"),
+        "pageEditProfile": MessageLookupByLibrary.simpleMessage("Edit profile"),
         "priceEgp": m0,
         "registerButton":
             MessageLookupByLibrary.simpleMessage("Create account"),

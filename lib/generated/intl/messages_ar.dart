@@ -100,6 +100,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSubtitle":
             MessageLookupByLibrary.simpleMessage("سجّل الدخول لمتابعة التسوق"),
         "loginTitle": MessageLookupByLibrary.simpleMessage("مرحباً بعودتك"),
+        "navAccount": MessageLookupByLibrary.simpleMessage("حسابي"),
+        "navCart": MessageLookupByLibrary.simpleMessage("السلة"),
+        "navCategories": MessageLookupByLibrary.simpleMessage("الفئات"),
+        "navHome": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+        "pageCheckout": MessageLookupByLibrary.simpleMessage("إتمام الشراء"),
+        "pageEditProfile":
+            MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
         "priceEgp": m0,
         "registerButton": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "registerSubtitle": m1,

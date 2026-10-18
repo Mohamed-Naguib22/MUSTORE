@@ -130,6 +130,66 @@ class S {
     );
   }
 
+  /// `Home`
+  String get navHome {
+    return Intl.message(
+      'Home',
+      name: 'navHome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cart`
+  String get navCart {
+    return Intl.message(
+      'Cart',
+      name: 'navCart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Categories`
+  String get navCategories {
+    return Intl.message(
+      'Categories',
+      name: 'navCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account`
+  String get navAccount {
+    return Intl.message(
+      'Account',
+      name: 'navAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit profile`
+  String get pageEditProfile {
+    return Intl.message(
+      'Edit profile',
+      name: 'pageEditProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Checkout`
+  String get pageCheckout {
+    return Intl.message(
+      'Checkout',
+      name: 'pageCheckout',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Email`
   String get authEmail {
     return Intl.message(

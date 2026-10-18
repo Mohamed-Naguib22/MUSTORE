@@ -8,6 +8,14 @@
   "themeLight": "Light",
   "themeDark": "Dark",
   "languageSystem": "System",
+
+  "navHome": "Home",
+  "navCart": "Cart",
+  "navCategories": "Categories",
+  "navAccount": "Account",
+  "pageEditProfile": "Edit profile",
+  "pageCheckout": "Checkout",
+
   "authEmail": "Email",
   "authEmailHint": "name@example.com",
   "authPassword": "Password",

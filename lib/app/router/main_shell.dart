@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mustore/app/app_page.dart';
+import 'package:mustore/generated/l10n.dart';
 
 class MainShell extends StatelessWidget {
   const MainShell({super.key, required this.navigationShell});
@@ -10,6 +11,7 @@ class MainShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tabs = AppPage.tabs;
+    final l10n = S.of(context);
 
     return Scaffold(
       body: navigationShell,
@@ -24,7 +26,7 @@ class MainShell extends StatelessWidget {
             NavigationDestination(
               icon: Icon(t.icon),
               selectedIcon: Icon(t.selectedIcon),
-              label: t.title,
+              label: t.titleOf(l10n),
             ),
         ],
       ),
