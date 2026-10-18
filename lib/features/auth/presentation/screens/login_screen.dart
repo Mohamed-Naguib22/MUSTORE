@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mustore/app/router/app_page.dart';
+import 'package:mustore/app/app_page.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
-import 'package:mustore/features/auth/domain/params/login_params.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
 import 'package:mustore/features/auth/presentation/widgets/auth_scaffold.dart';
