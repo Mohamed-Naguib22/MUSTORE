@@ -15,6 +15,7 @@ extension FailureMessage on Failure {
       NoDataFailure() => 'No saved data available',
       CancelledFailure() => '',
       UnknownFailure() => 'Something went wrong, please try again',
+      CacheFailure() => 'Failed to save your settings, please try again',
     };
   }
 }

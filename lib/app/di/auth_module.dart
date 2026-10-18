@@ -16,11 +16,15 @@ import 'package:mustore/features/auth/domain/use_cases/reset_password_use_case.d
 import 'package:mustore/features/auth/domain/use_cases/revoke_session_use_case.dart';
 import 'package:mustore/features/auth/domain/use_cases/verify_email_use_case.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
+import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
+import 'package:mustore/features/auth/data/data_sources/local/token_storage_impl.dart';
 
 void registerAuthModule(GetIt sl) {
   sl.registerLazySingleton<AuthRemoteDataSource>(
         () => AuthRemoteDataSourceImpl(apiClient: sl<ApiClient>()),
   );
+
+  sl.registerLazySingleton<TokenStorage>(() => TokenStorageImpl(sl()));
 
   sl.registerLazySingleton<AuthRepository>(
         () => AuthRepositoryImpl(

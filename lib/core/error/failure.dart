@@ -39,3 +39,7 @@ final class UnknownFailure extends Failure {
 final class NoDataFailure extends Failure {
   const NoDataFailure();
 }
+
+final class CacheFailure extends Failure {
+  const CacheFailure();
+}

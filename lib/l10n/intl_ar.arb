@@ -1,4 +1,11 @@
 {
   "@@locale": "ar",
-  "appTitle": "متجر"
+  "appTitle": "متجر",
+  "settings": "الإعدادات",
+  "settingsTheme": "المظهر",
+  "settingsLanguage": "اللغة",
+  "themeSystem": "النظام",
+  "themeLight": "فاتح",
+  "themeDark": "داكن",
+  "languageSystem": "النظام"
 }

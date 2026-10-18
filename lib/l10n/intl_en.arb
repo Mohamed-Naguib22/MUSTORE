@@ -1,4 +1,11 @@
 {
   "@@locale": "en",
-  "appTitle": "MUSTORE"
+  "appTitle": "MUSTORE",
+  "settings": "Settings",
+  "settingsTheme": "Theme",
+  "settingsLanguage": "Language",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "languageSystem": "System"
 }

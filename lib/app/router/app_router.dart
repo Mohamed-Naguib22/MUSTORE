@@ -1,13 +1,18 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mustore/app/router/main_shell.dart';
 import 'package:mustore/app/router/screens/not_found_screen.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/screens/login_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/register_screen.dart';
+import 'package:mustore/features/catalog/presentation/screens/categories_screen.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
 import 'package:mustore/app/router/screens/splash_screen.dart';
+import 'package:mustore/features/profile/presentation/screens/account_screen.dart';
+import 'package:mustore/features/settings/presentation/screens/settings_screen.dart';
+import 'package:mustore/features/shopping/presentation/screens/cart_screen.dart';
 import 'access_level.dart';
 import 'app_page.dart';
 
@@ -31,7 +36,26 @@ class AppRouter {
       _route(AppPage.splash, (_, _) => const SplashScreen()),
       _route(AppPage.login, (_, _) => const LoginScreen()),
       _route(AppPage.register, (_, _) => const RegisterScreen()),
-      _route(AppPage.home, (_, _) => const HomeScreen()),
+      StatefulShellRoute.indexedStack(
+        builder: (_, _, shell) => MainShell(navigationShell: shell),
+        branches: [
+          StatefulShellBranch(routes: [
+            _route(AppPage.home, (_, _) => const HomeScreen()),
+          ]),
+          StatefulShellBranch(routes: [
+            _route(AppPage.cart, (_, _) => const CartScreen()),
+          ]),
+          StatefulShellBranch(routes: [
+            _route(AppPage.categories, (_, _) => const CategoriesScreen()),
+          ]),
+          StatefulShellBranch(routes: [
+            _route(AppPage.account, (_, _) => const AccountScreen()),
+          ]),
+          StatefulShellBranch(routes: [
+            _route(AppPage.settings, (_, _) => const SettingsScreen()),
+          ]),
+        ],
+      ),
     ],
   );
 

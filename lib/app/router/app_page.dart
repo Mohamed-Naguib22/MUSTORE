@@ -4,7 +4,11 @@ enum AppPage {
   splash('/splash', AccessLevel.public),
   login('/login', AccessLevel.guestOnly),
   register('/register', AccessLevel.guestOnly),
-  home('/', AccessLevel.public);
+  home('/', AccessLevel.public),
+  cart('/cart', AccessLevel.public),
+  account('/account', AccessLevel.authenticated),
+  categories('/categories', AccessLevel.public),
+  settings('/settings', AccessLevel.public);
 
   const AppPage(this.path, this.access);
 
