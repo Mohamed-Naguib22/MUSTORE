@@ -29,22 +29,9 @@ class AuthScaffold extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: 56,
-                    width: 56,
-                    decoration: BoxDecoration(
-                      color: scheme.primary,
-                      borderRadius: Dimens.borderLg,
-                    ),
-                    child: Icon(
-                      Icons.shopping_bag_rounded,
-                      color: scheme.onPrimary,
-                    ),
-                  ),
-                  Dimens.gapXl,
                   Text(
                     title,
-                    style: text.headlineMedium?.copyWith(
+                    style: text.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w800,
                     ),
                   ),
