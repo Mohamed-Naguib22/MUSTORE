@@ -3,8 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mustore/app/app_page.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/widgets/buttons/app_button.dart';
+import 'package:mustore/core/widgets/cards/app_card.dart';
+import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
+
+const double _productCardHeight = 270;
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,14 +34,19 @@ class HomeScreen extends StatelessWidget {
               child: _SectionHeader(title: 'New arrivals', onSeeAll: () {}),
             ),
             SliverPadding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 24),
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                Dimens.lg,
+                0,
+                Dimens.lg,
+                Dimens.xl,
+              ),
               sliver: SliverGrid.builder(
                 itemCount: _products.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  mainAxisExtent: 270,
+                  mainAxisSpacing: Dimens.md,
+                  crossAxisSpacing: Dimens.md,
+                  mainAxisExtent: _productCardHeight,
                 ),
                 itemBuilder: (_, i) => _ProductCard(product: _products[i]),
               ),
@@ -61,7 +72,12 @@ class _HomeHeader extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 8, 4),
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        Dimens.lg,
+        Dimens.md,
+        Dimens.sm,
+        Dimens.xs,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -82,11 +98,16 @@ class _HomeHeader extends StatelessWidget {
               ],
             ),
           ),
-          if (isGuest)
-            TextButton(
+          if (isGuest) ...[
+            AppButton(
+              label: 'Log in',
+              variant: AppButtonVariant.tonal,
+              expand: false,
+              height: 36,
               onPressed: () => context.pushNamed(AppPage.login.name),
-              child: const Text('Log in'),
             ),
+            Dimens.gapXs,
+          ],
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.favorite_border_rounded),
@@ -109,36 +130,23 @@ class _SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
+    // Read-only field that acts as a tap target for the search screen.
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 16),
-      child: Material(
-        color: scheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(14),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(14),
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-            child: Row(
-              children: [
-                Icon(Icons.search_rounded, color: scheme.onSurfaceVariant),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    'Search products, categories...',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: scheme.onSurfaceVariant),
-                  ),
-                ),
-                Icon(Icons.tune_rounded, color: scheme.onSurfaceVariant),
-              ],
-            ),
-          ),
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        Dimens.lg,
+        Dimens.md,
+        Dimens.lg,
+        Dimens.lg,
+      ),
+      child: AppTextField(
+        readOnly: true,
+        hint: 'Search products, categories...',
+        prefixIcon: Icons.search_rounded,
+        suffixIcon: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.tune_rounded),
         ),
+        onTap: () {},
       ),
     );
   }
@@ -179,12 +187,12 @@ class _PromoCarouselState extends State<_PromoCarousel> {
             itemCount: widget.banners.length,
             onPageChanged: (i) => _index.value = i,
             itemBuilder: (_, i) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: Dimens.xs),
               child: _BannerCard(banner: widget.banners[i]),
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        Dimens.gapSm,
         ValueListenableBuilder<int>(
           valueListenable: _index,
           builder: (_, current, __) => Row(
@@ -192,13 +200,13 @@ class _PromoCarouselState extends State<_PromoCarousel> {
             children: [
               for (var i = 0; i < widget.banners.length; i++)
                 AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  duration: Dimens.normal,
+                  margin: const EdgeInsetsDirectional.symmetric(horizontal: 3),
                   height: 6,
                   width: i == current ? 20 : 6,
                   decoration: BoxDecoration(
                     color: i == current ? scheme.primary : scheme.outline,
-                    borderRadius: BorderRadius.circular(3),
+                    borderRadius: Dimens.borderPill,
                   ),
                 ),
             ],
@@ -219,9 +227,9 @@ class _BannerCard extends StatelessWidget {
     final text = Theme.of(context).textTheme;
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsetsDirectional.all(Dimens.lg + Dimens.xs),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: Dimens.borderXl,
         gradient: LinearGradient(
           begin: AlignmentDirectional.topStart,
           end: AlignmentDirectional.bottomEnd,
@@ -238,29 +246,28 @@ class _BannerCard extends StatelessWidget {
                 Text(
                   banner.title,
                   style: text.titleLarge?.copyWith(
-                    color: Colors.white,
+                    color: AppColors.onBanner,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                const SizedBox(height: 4),
+                Dimens.gapXs,
                 Text(
                   banner.subtitle,
-                  style: text.bodyMedium?.copyWith(color: Colors.white70),
+                  style: text.bodyMedium?.copyWith(color: AppColors.onBannerMuted),
                 ),
-                const SizedBox(height: 12),
-                FilledButton(
+                Dimens.gapMd,
+                AppButton(
+                  label: 'Shop now',
+                  expand: false,
+                  height: 36,
+                  backgroundColor: AppColors.onBanner,
+                  foregroundColor: banner.colors.first,
                   onPressed: () {},
-                  style: FilledButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: banner.colors.first,
-                    visualDensity: VisualDensity.compact,
-                  ),
-                  child: const Text('Shop now'),
                 ),
               ],
             ),
           ),
-          Icon(banner.icon, size: 72, color: Colors.white24),
+          Icon(banner.icon, size: Dimens.iconXl, color: AppColors.bannerIcon),
         ],
       ),
     );
@@ -278,7 +285,7 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 8, 8),
+      padding: Dimens.section,
       child: Row(
         children: [
           Expanded(
@@ -291,7 +298,18 @@ class _SectionHeader extends StatelessWidget {
             ),
           ),
           if (onSeeAll != null)
-            TextButton(onPressed: onSeeAll, child: const Text('See all')),
+            TextButton(
+              onPressed: onSeeAll,
+              style: TextButton.styleFrom(
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: Dimens.sm,
+                  vertical: Dimens.xs,
+                ),
+              ),
+              child: const Text('See all'),
+            ),
         ],
       ),
     );
@@ -311,36 +329,31 @@ class _CategoryList extends StatelessWidget {
       height: 92,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+        padding: Dimens.screenH,
         itemCount: categories.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 16),
+        separatorBuilder: (_, __) => Dimens.gapLg,
         itemBuilder: (_, i) {
           final c = categories[i];
-          return InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: () {},
-            child: SizedBox(
-              width: 68,
-              child: Column(
-                children: [
-                  Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      color: scheme.surfaceContainerHighest,
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    child: Icon(c.icon, color: scheme.primary),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    c.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                ],
-              ),
+          return SizedBox(
+            width: 68,
+            child: Column(
+              children: [
+                AppCard(
+                  variant: AppCardVariant.filled,
+                  width: 60,
+                  height: 60,
+                  padding: EdgeInsets.zero,
+                  onTap: () {},
+                  child: Center(child: Icon(c.icon, color: scheme.primary)),
+                ),
+                Dimens.gapXs,
+                Text(
+                  c.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ],
             ),
           );
         },
@@ -358,13 +371,20 @@ class _ProductsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // A little room below the cards (+ Clip.none) so the shadow isn't cut off.
     return SizedBox(
-      height: 270,
+      height: _productCardHeight + Dimens.xs + Dimens.md,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+        clipBehavior: Clip.none,
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          Dimens.lg,
+          Dimens.xs,
+          Dimens.lg,
+          Dimens.md,
+        ),
         itemCount: products.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 12),
+        separatorBuilder: (_, __) => Dimens.gapMd,
         itemBuilder: (_, i) => SizedBox(
           width: 170,
           child: _ProductCard(product: products[i]),
@@ -384,114 +404,108 @@ class _ProductCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
 
-    return Material(
-      color: scheme.surface,
-      borderRadius: BorderRadius.circular(16),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () {},
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(color: scheme.outline),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    _ProductImage(url: product.imageUrl),
-                    if (product.discountPercent != null)
-                      PositionedDirectional(
-                        top: 8,
-                        start: 8,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 3,
-                          ),
-                          decoration: BoxDecoration(
-                            color: scheme.secondary,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            '-${product.discountPercent}%',
-                            style: text.labelSmall?.copyWith(
-                              color: scheme.onSecondary,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
+    return AppCard(
+      padding: EdgeInsets.zero,
+      onTap: () {},
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                _ProductImage(url: product.imageUrl),
+                if (product.discountPercent != null)
+                  PositionedDirectional(
+                    top: Dimens.sm,
+                    start: Dimens.sm,
+                    child: Container(
+                      padding: const EdgeInsetsDirectional.symmetric(
+                        horizontal: Dimens.sm,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: scheme.secondary,
+                        borderRadius: Dimens.borderSm,
+                      ),
+                      child: Text(
+                        '-${product.discountPercent}%',
+                        style: text.labelSmall?.copyWith(
+                          color: scheme.onSecondary,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                    PositionedDirectional(
-                      top: 4,
-                      end: 4,
-                      child: IconButton.filledTonal(
-                        onPressed: () {},
-                        visualDensity: VisualDensity.compact,
-                        icon: const Icon(Icons.favorite_border_rounded, size: 18),
-                      ),
+                    ),
+                  ),
+                PositionedDirectional(
+                  top: Dimens.xs,
+                  end: Dimens.xs,
+                  child: IconButton.filled(
+                    onPressed: () {},
+                    visualDensity: VisualDensity.compact,
+                    style: IconButton.styleFrom(
+                      backgroundColor: scheme.surface.withValues(alpha: 0.92),
+                      foregroundColor: scheme.onSurface,
+                    ),
+                    icon: const Icon(Icons.favorite_border_rounded, size: 18),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: Dimens.cardPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  product.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: text.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                ),
+                Dimens.gapXs,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star_rounded,
+                      size: Dimens.iconSm,
+                      color: AppColors.rating,
+                    ),
+                    Dimens.gapXxs,
+                    Text(
+                      product.rating.toStringAsFixed(1),
+                      style: text.labelMedium,
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Dimens.gapXs,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      product.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: text.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                      '${product.finalPrice.toStringAsFixed(0)} EGP',
+                      style: text.titleSmall?.copyWith(
+                        color: scheme.primary,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star_rounded,
-                          size: 16,
-                          color: AppColors.rating,
+                    if (product.discountPercent != null) ...[
+                      Dimens.gapSm,
+                      Text(
+                        product.price.toStringAsFixed(0),
+                        style: text.labelSmall?.copyWith(
+                          color: scheme.onSurfaceVariant,
+                          decoration: TextDecoration.lineThrough,
                         ),
-                        const SizedBox(width: 2),
-                        Text(
-                          product.rating.toStringAsFixed(1),
-                          style: text.labelMedium,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '${product.finalPrice.toStringAsFixed(0)} EGP',
-                          style: text.titleSmall?.copyWith(
-                            color: scheme.primary,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        if (product.discountPercent != null) ...[
-                          const SizedBox(width: 6),
-                          Text(
-                            product.price.toStringAsFixed(0),
-                            style: text.labelSmall?.copyWith(
-                              color: scheme.onSurfaceVariant,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
+                      ),
+                    ],
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -510,7 +524,7 @@ class _ProductImage extends StatelessWidget {
       color: scheme.surfaceContainerHighest,
       child: Icon(
         Icons.image_outlined,
-        size: 40,
+        size: Dimens.iconLg,
         color: scheme.onSurfaceVariant,
       ),
     );
@@ -521,8 +535,7 @@ class _ProductImage extends StatelessWidget {
       url!,
       fit: BoxFit.cover,
       errorBuilder: (_, __, ___) => placeholder,
-      loadingBuilder: (_, child, progress) =>
-      progress == null ? child : placeholder,
+      loadingBuilder: (_, child, progress) => progress == null ? child : placeholder,
     );
   }
 }
@@ -570,19 +583,19 @@ const _banners = [
     'Season Sale',
     'Up to 50% off selected items',
     Icons.local_offer_rounded,
-    [AppColors.primary, Color(0xFF6C86FF)],
+    AppColors.bannerPrimary,
   ),
   _Banner(
     'New Arrivals',
     'Fresh styles just landed',
     Icons.new_releases_rounded,
-    [AppColors.secondary, AppColors.secondaryDark],
+    AppColors.bannerSecondary,
   ),
   _Banner(
     'Free Shipping',
     'On orders above 500 EGP',
     Icons.local_shipping_rounded,
-    [AppColors.success, Color(0xFF4CC9A0)],
+    AppColors.bannerSuccess,
   ),
 ];
 

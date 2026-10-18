@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/style/colors/app_colors.dart';
 
 class AppTextField extends StatefulWidget {
   const AppTextField({
@@ -51,12 +52,14 @@ class AppTextField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final TextDirection? textDirection;
   final TextAlign textAlign;
+
   final List<TextInputFormatter>? inputFormatters;
   final Iterable<String>? autofillHints;
   final int? maxLines;
   final int? minLines;
   final int? maxLength;
   final bool showCounter;
+
   final FormFieldValidator<String>? validator;
   final AutovalidateMode? autovalidateMode;
   final ValueChanged<String>? onChanged;
@@ -155,9 +158,9 @@ class _AppTextFieldState extends State<AppTextField> {
           vertical: Dimens.md,
         ),
         constraints: isMultiline ? null : const BoxConstraints(minHeight: Dimens.buttonHeight),
-        border: _border(Colors.transparent),
-        enabledBorder: _border(Colors.transparent),
-        disabledBorder: _border(Colors.transparent),
+        border: _border(AppColors.transparent),
+        enabledBorder: _border(AppColors.transparent),
+        disabledBorder: _border(AppColors.transparent),
         focusedBorder: _border(s.primary, width: 1.5),
         errorBorder: _border(s.error),
         focusedErrorBorder: _border(s.error, width: 1.5),

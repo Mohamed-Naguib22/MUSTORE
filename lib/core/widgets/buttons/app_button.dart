@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/style/colors/app_colors.dart';
 
 enum AppButtonVariant { primary, secondary, tonal, danger }
 
@@ -13,18 +14,24 @@ class AppButton extends StatefulWidget {
     this.variant = AppButtonVariant.primary,
     this.isLoading = false,
     this.isEnabled,
+    this.backgroundColor,
+    this.foregroundColor,
     this.expand = true,
     this.height = Dimens.buttonHeight,
     this.borderRadius = Dimens.borderMd,
   });
 
   final String label;
+
   final VoidCallback? onPressed;
+
   final IconData? icon;
   final IconData? trailingIcon;
   final AppButtonVariant variant;
   final bool isLoading;
   final ValueNotifier<bool>? isEnabled;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
   final bool expand;
 
   final double height;
@@ -46,7 +53,7 @@ class _AppButtonState extends State<AppButton> {
       elevated: false,
       );
     }
-    return switch (widget.variant) {
+    final base = switch (widget.variant) {
       AppButtonVariant.primary => (bg: s.primary, fg: s.onPrimary, elevated: true),
       AppButtonVariant.secondary => (bg: s.secondary, fg: s.onSecondary, elevated: true),
       AppButtonVariant.danger => (bg: s.error, fg: s.onError, elevated: true),
@@ -56,18 +63,24 @@ class _AppButtonState extends State<AppButton> {
       elevated: false,
       ),
     };
+    return (
+    bg: widget.backgroundColor ?? base.bg,
+    fg: widget.foregroundColor ?? base.fg,
+    elevated: base.elevated,
+    );
   }
 
-  List<BoxShadow> _shadows(Color bg, bool elevated) {
+  List<BoxShadow> _shadows(Color bg, bool elevated, Color shadowColor) {
     if (!elevated) return const [];
     final (blur, dy, alpha) = _pressed
         ? (4.0, 1.0, 0.25)
         : _hovered
         ? (18.0, 8.0, 0.40)
         : (12.0, 4.0, 0.32);
+    final custom = widget.backgroundColor != null;
     return [
       BoxShadow(
-        color: bg.withValues(alpha: alpha),
+        color: (custom ? shadowColor : bg).withValues(alpha: custom ? alpha * 0.4 : alpha),
         blurRadius: blur,
         offset: Offset(0, dy),
       ),
@@ -146,7 +159,7 @@ class _AppButtonState extends State<AppButton> {
           decoration: BoxDecoration(
             color: c.bg,
             borderRadius: widget.borderRadius,
-            boxShadow: _shadows(c.bg, c.elevated),
+            boxShadow: _shadows(c.bg, c.elevated, theme.colorScheme.shadow),
           ),
           child: Material(
             type: MaterialType.transparency,
@@ -156,14 +169,13 @@ class _AppButtonState extends State<AppButton> {
               onHighlightChanged: (v) => setState(() => _pressed = v),
               onHover: (v) => setState(() => _hovered = v),
               splashColor: c.fg.withValues(alpha: 0.12),
-              highlightColor: Colors.transparent,
+              highlightColor: AppColors.transparent,
               hoverColor: c.fg.withValues(alpha: 0.06),
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: widget.height),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: Dimens.xl,
-                    vertical: Dimens.md,
+                  padding: EdgeInsetsDirectional.symmetric(
+                    horizontal: widget.height < Dimens.buttonHeight ? Dimens.lg : Dimens.xl,
                   ),
                   child: body,
                 ),

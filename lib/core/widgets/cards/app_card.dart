@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/style/colors/app_colors.dart';
 
 enum AppCardVariant {
   elevated,
@@ -47,13 +48,18 @@ class _AppCardState extends State<AppCard> {
   List<BoxShadow> _shadows(ColorScheme s) {
     if (widget.variant != AppCardVariant.elevated) return const [];
     final (blur, dy, alpha) = _pressed
-        ? (6.0, 1.0, 0.05)
+        ? (8.0, 2.0, 0.07)
         : _hovered
-        ? (24.0, 10.0, 0.12)
-        : (16.0, 4.0, 0.08);
+        ? (28.0, 12.0, 0.14)
+        : (18.0, 6.0, 0.10);
     return [
       BoxShadow(
-        color: Colors.black.withValues(alpha: alpha),
+        color: s.shadow.withValues(alpha: 0.06),
+        blurRadius: 3,
+        offset: const Offset(0, 1),
+      ),
+      BoxShadow(
+        color: s.shadow.withValues(alpha: alpha),
         blurRadius: blur,
         offset: Offset(0, dy),
       ),
@@ -68,10 +74,14 @@ class _AppCardState extends State<AppCard> {
         switch (widget.variant) {
           AppCardVariant.elevated => s.surface,
           AppCardVariant.filled => s.surfaceContainerHighest,
-          AppCardVariant.outlined => Colors.transparent,
+          AppCardVariant.outlined => AppColors.transparent,
         };
 
-    final borderAlpha = widget.variant == AppCardVariant.outlined ? 0.8 : 0.35;
+    final borderAlpha = switch (widget.variant) {
+      AppCardVariant.outlined => 0.8,
+      AppCardVariant.elevated => 0.55,
+      AppCardVariant.filled => 0.3,
+    };
 
     Widget content = Padding(padding: widget.padding, child: widget.child);
 
@@ -82,7 +92,7 @@ class _AppCardState extends State<AppCard> {
         onHighlightChanged: (v) => setState(() => _pressed = v),
         onHover: (v) => setState(() => _hovered = v),
         splashColor: s.primary.withValues(alpha: 0.08),
-        highlightColor: Colors.transparent,
+        highlightColor: AppColors.transparent,
         hoverColor: s.primary.withValues(alpha: 0.04),
         child: content,
       );

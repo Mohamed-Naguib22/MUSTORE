@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/style/colors/app_colors.dart';
 
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({
@@ -44,7 +45,7 @@ class AppBottomSheet extends StatelessWidget {
       useRootNavigator: useRootNavigator,
       isDismissible: isDismissible,
       enableDrag: enableDrag,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       elevation: 0,
       builder: (_) => AppBottomSheet(
         title: title,
@@ -84,7 +85,7 @@ class AppBottomSheet extends StatelessWidget {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.12),
+                color: s.shadow.withValues(alpha: 0.12),
                 blurRadius: 24,
                 offset: const Offset(0, -4),
               ),
