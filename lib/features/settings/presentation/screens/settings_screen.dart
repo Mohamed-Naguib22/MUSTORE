@@ -25,48 +25,45 @@ class SettingsScreen extends StatelessWidget {
       listenWhen: (p, c) => c.failure != null && p.failure != c.failure,
       listener: (context, state) =>
           AppToast.error(context, state.failure!.localizedMessage(context)),
-      child: Scaffold(
-        appBar: AppBar(title: Text(l10n.settings)),
-        body: BlocBuilder<SettingsCubit, SettingsState>(
-          buildWhen: (p, c) =>
-          p.themeMode != c.themeMode || p.locale != c.locale,
-          builder: (context, state) {
-            final cubit = context.read<SettingsCubit>();
-            final isDark = Theme.of(context).brightness == Brightness.dark;
-            final isArabic =
-                Localizations.localeOf(context).languageCode == 'ar';
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        buildWhen: (p, c) =>
+        p.themeMode != c.themeMode || p.locale != c.locale,
+        builder: (context, state) {
+          final cubit = context.read<SettingsCubit>();
+          final isDark = Theme.of(context).brightness == Brightness.dark;
+          final isArabic =
+              Localizations.localeOf(context).languageCode == 'ar';
 
-            return ListView(
-              padding: Dimens.screen,
-              children: [
-                _Section(
-                  title: l10n.settingsTheme,
-                  children: [
-                    _SwitchTile(
-                      title: l10n.themeDark,
-                      value: isDark,
-                      onChanged: (v) => cubit
-                          .changeTheme(v ? ThemeMode.dark : ThemeMode.light),
-                    ),
-                  ],
-                ),
-                Dimens.gapXl,
-                _Section(
-                  title: l10n.settingsLanguage,
-                  children: [
-                    _SwitchTile(
-                      title: 'العربية',
-                      value: isArabic,
-                      onChanged: (v) =>
-                          cubit.changeLocale(Locale(v ? 'ar' : 'en')),
-                    ),
-                  ],
-                ),
-                const _LogoutSection(),
-              ],
-            );
-          },
-        ),
+          return ListView(
+            padding: Dimens.screen,
+            children: [
+              _Section(
+                title: l10n.settingsTheme,
+                children: [
+                  _SwitchTile(
+                    title: l10n.themeDark,
+                    value: isDark,
+                    onChanged: (v) => cubit
+                        .changeTheme(v ? ThemeMode.dark : ThemeMode.light),
+                  ),
+                ],
+              ),
+              Dimens.gapXl,
+              _Section(
+                title: l10n.settingsLanguage,
+                children: [
+                  _SwitchTile(
+                    title: 'العربية',
+                    value: isArabic,
+                    onChanged: (v) =>
+                        cubit.changeLocale(Locale(v ? 'ar' : 'en')),
+                  ),
+                ],
+              ),
+              const _LogoutSection(),
+            ],
+          );
+        },
       ),
     );
   }

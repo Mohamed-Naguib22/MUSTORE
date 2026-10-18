@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mustore/core/style/colors/app_colors.dart';
 
 class CustomAppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
+  final Widget? titleWidget;
   final Widget? leading;
+  final bool automaticallyImplyLeading;
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
   final bool centerTitle;
@@ -14,7 +18,9 @@ class CustomAppbarWidget extends StatelessWidget implements PreferredSizeWidget 
   const CustomAppbarWidget({
     super.key,
     this.title,
+    this.titleWidget,
     this.leading,
+    this.automaticallyImplyLeading = true,
     this.actions,
     this.bottom,
     this.centerTitle = true,
@@ -22,37 +28,49 @@ class CustomAppbarWidget extends StatelessWidget implements PreferredSizeWidget 
     this.elevation = 0,
     this.borderRadius,
     this.showDivider = true,
-  });
+  }) : assert(
+  title == null || titleWidget == null,
+  'Provide either title or titleWidget, not both.',
+  );
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
+    final isDark = scheme.brightness == Brightness.dark;
+
+    final ShapeBorder? shape = borderRadius != null
+        ? RoundedRectangleBorder(borderRadius: borderRadius!)
+        : showDivider
+        ? Border(bottom: BorderSide(color: scheme.outline))
+        : null;
 
     return AppBar(
       elevation: elevation,
       scrolledUnderElevation: 0,
-      surfaceTintColor: Colors.transparent,
+      surfaceTintColor: AppColors.transparent,
       backgroundColor: backgroundColor ?? scheme.surface,
       foregroundColor: scheme.onSurface,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: AppColors.transparent,
+        statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+        statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+      ),
+      automaticallyImplyLeading: automaticallyImplyLeading,
       leading: leading,
-      title: title != null
-          ? Text(
-        title!,
-        style: theme.textTheme.titleLarge?.copyWith(
-          color: scheme.onSurface,
-          fontWeight: FontWeight.bold,
-        ),
-      )
-          : null,
+      title: titleWidget ??
+          (title == null
+              ? null
+              : Text(
+            title!,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.titleLarge,
+          )),
       centerTitle: centerTitle,
       actions: actions,
       bottom: bottom,
-      shape: borderRadius != null
-          ? RoundedRectangleBorder(borderRadius: borderRadius!)
-          : showDivider
-          ? Border(bottom: BorderSide(color: scheme.outline))
-          : null,
+      shape: shape,
     );
   }
 
@@ -79,15 +97,18 @@ class CustomAppbarAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+
     return IconButton(
       tooltip: tooltip,
       onPressed: onPressed,
-      icon: Badge(
+      color: scheme.onSurface,
+      icon: Badge.count(
+        count: count,
+        maxCount: 99,
         isLabelVisible: count > 0,
-        label: Text(count > 99 ? '99+' : '$count'),
         backgroundColor: scheme.secondary,
         textColor: scheme.onSecondary,
-        child: Icon(icon, color: scheme.onSurface),
+        child: Icon(icon),
       ),
     );
   }
