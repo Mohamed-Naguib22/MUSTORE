@@ -1,0 +1,3 @@
+final class PasswordEncryptionConfig {
+  static const publicKey = "MIIBCgKCAQEAvQF5EW3QP3iRoEM8uKSrRi/IvpAPL1snH+ifseN9CPvQdW7aO21xp/CyaG9+7LjIzX61T/ui+UMrmMd7fThvpOPpd5PljpZ593+b2F+NaV/y9V6G2fEKLpb5QOPKeHYjLVxM8CrVHXiBF+DOqssFfLs12Fp8tnp/wMBWc8i9d1STYUpaR9HiLaC4BSwjfsotOe6FOZcF/OfoxcOWm3XN8c1sRtM2PQG3uCeeF51t1r1JxeIt2AJaKWeK6Wpk0yNwa5WztEnC7+Se4AgedK1zWj0bokrpVAsX3X5I88m3BkZBVOn27nnh2yoNyto86CfhMCkFxoMtnOB172Nm2IXtWQIDAQAB";
+}

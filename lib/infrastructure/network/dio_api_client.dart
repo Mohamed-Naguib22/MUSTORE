@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:mustore/core/config/api_config.dart';
 import 'package:mustore/core/network/api/api_client.dart';
 import 'package:mustore/core/network/http/http_header_keys.dart';
 import 'package:mustore/core/network/http/http_method.dart';
-import 'package:mustore/core/utils/constants/api_constants.dart';
 
 class DioApiClient implements ApiClient {
   late final Dio _dio;
@@ -15,9 +15,9 @@ class DioApiClient implements ApiClient {
   }) {
     _dio = Dio(
       BaseOptions(
-        baseUrl: ApiConstants.baseUrl,
-        connectTimeout: connectTimeout ?? ApiConstants.connectTimeout,
-        receiveTimeout: receiveTimeout ?? ApiConstants.receiveTimeout,
+        baseUrl: ApiConfig.baseUrl,
+        connectTimeout: connectTimeout ?? ApiConfig.connectTimeout,
+        receiveTimeout: receiveTimeout ?? ApiConfig.receiveTimeout,
         headers: headers ??
             {HeaderKeys.contentType: HeaderKeys.applicationJson},
       ),
@@ -34,7 +34,7 @@ class DioApiClient implements ApiClient {
       _dio.options.headers.remove(HeaderKeys.authorization);
 
   String _url(String? baseUrl, String path) =>
-      (baseUrl != null && baseUrl != ApiConstants.baseUrl)
+      (baseUrl != null && baseUrl != ApiConfig.baseUrl)
           ? '$baseUrl$path'
           : path;
 
@@ -64,7 +64,7 @@ class DioApiClient implements ApiClient {
   @override
   Future<Response> get({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
   }) =>
@@ -74,7 +74,7 @@ class DioApiClient implements ApiClient {
   @override
   Future<Response> post({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Object? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
@@ -91,7 +91,7 @@ class DioApiClient implements ApiClient {
   @override
   Future<Response> put({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Object? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
@@ -108,7 +108,7 @@ class DioApiClient implements ApiClient {
   @override
   Future<Response> patch({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Object? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
@@ -125,7 +125,7 @@ class DioApiClient implements ApiClient {
   @override
   Future<Response> delete({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Object? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,

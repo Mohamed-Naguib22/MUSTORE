@@ -26,6 +26,8 @@ dependencies:
   get_it: ^9.3.0
   flutter_secure_storage: ^11.2.0
   connectivity_plus: ^7.3.2
+  encrypt: ^5.0.3
+  pointycastle: ^3.9.1
 
 dev_dependencies:
   flutter_test:

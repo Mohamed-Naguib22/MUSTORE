@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:mustore/core/config/api_config.dart';
 import 'package:mustore/core/network/api/api_guard.dart';
 import 'package:mustore/core/network/http/http_header_keys.dart';
-import 'package:mustore/core/utils/constants/api_constants.dart';
 import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
 import 'package:mustore/features/auth/domain/entities/auth_tokens.dart';
 import 'package:mustore/features/auth/domain/events/session_event.dart';
@@ -20,11 +20,11 @@ class AuthInterceptor extends QueuedInterceptor {
         _publicPaths = publicPaths,
         _refreshPath = refreshPath,
         _revokePath = revokePath,
-        _host = Uri.parse(ApiConstants.baseUrl).host,
+        _host = Uri.parse(ApiConfig.baseUrl).host,
         _dio = Dio(BaseOptions(
-          baseUrl: ApiConstants.baseUrl,
-          connectTimeout: ApiConstants.connectTimeout,
-          receiveTimeout: ApiConstants.receiveTimeout,
+          baseUrl: ApiConfig.baseUrl,
+          connectTimeout: ApiConfig.connectTimeout,
+          receiveTimeout: ApiConfig.receiveTimeout,
         ));
 
   final TokenStorage _tokens;

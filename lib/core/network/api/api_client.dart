@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:mustore/core/utils/constants/api_constants.dart';
+import 'package:mustore/core/config/api_config.dart';
 
 abstract interface class ApiClient {
   void setAuthToken(String token);
@@ -7,14 +7,14 @@ abstract interface class ApiClient {
 
   Future<Response> get({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
   });
 
   Future<Response> post({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Object? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
@@ -23,7 +23,7 @@ abstract interface class ApiClient {
 
   Future<Response> put({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Object? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
@@ -32,7 +32,7 @@ abstract interface class ApiClient {
 
   Future<Response> patch({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Object? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
@@ -41,7 +41,7 @@ abstract interface class ApiClient {
 
   Future<Response> delete({
     required String path,
-    String? baseUrl = ApiConstants.baseUrl,
+    String? baseUrl = ApiConfig.baseUrl,
     Object? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,

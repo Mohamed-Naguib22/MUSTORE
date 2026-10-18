@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure.dart';
+import 'package:mustore/core/services/encryption/password_encryption_service.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/utils/mixins/safe_emit_mixin.dart';
 import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
@@ -30,10 +31,12 @@ import 'package:mustore/features/auth/domain/use_cases/reset_password_use_case.d
 import 'package:mustore/features/auth/domain/use_cases/revoke_session_use_case.dart';
 import 'package:mustore/features/auth/domain/use_cases/verify_email_use_case.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
+import 'package:mustore/features/profile/domain/enums/gender.dart';
 
 class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
 
   final TokenStorage _tokens;
+  final PasswordEncryptionService _passwordEncryption;
   StreamSubscription<SessionEvent>? _expiredSub;
 
   AuthCubit({
@@ -49,6 +52,7 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
     required ChangePasswordUseCase changePassword,
     required TokenStorage tokenStorage,
     required SessionEvents sessionEvents,
+    required PasswordEncryptionService passwordEncryption,
   })  : _login = login,
         _register = register,
         _verifyEmail = verifyEmail,
@@ -59,6 +63,7 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
         _forgetPassword = forgetPassword,
         _resetPassword = resetPassword,
         _changePassword = changePassword,
+        _passwordEncryption = passwordEncryption,
         _tokens = tokenStorage,
         super(const AuthState()) {
     _expiredSub = safeSubscribe(sessionEvents.stream, (event) {
@@ -84,8 +89,16 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
   final ResetPasswordUseCase _resetPassword;
   final ChangePasswordUseCase _changePassword;
 
-  Future<void> login(LoginParams params) =>
-      _runSession(AuthAction.login, () => _login(params));
+  Future<void> login({required String email, required String password}) =>
+      _runSession(
+        AuthAction.login,
+            () => _login(
+          LoginParams(
+            email: email,
+            encryptedPassword: _passwordEncryption.encrypt(password),
+          ),
+        ),
+      );
 
   Future<void> verifyEmail(VerifyEmailParams params) =>
       _runSession(AuthAction.verifyEmail, () => _verifyEmail(params));
@@ -96,8 +109,19 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
   Future<void> resetPassword(ResetPasswordParams params) =>
       _runSession(AuthAction.resetPassword, () => _resetPassword(params));
 
-  Future<void> changePassword(ChangePasswordParams params) =>
-      _runSession(AuthAction.changePassword, () => _changePassword(params));
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) =>
+      _runSession(
+        AuthAction.changePassword,
+            () => _changePassword(
+          ChangePasswordParams(
+            oldPasswordEncrypted: _passwordEncryption.encrypt(currentPassword),
+            newPasswordEncrypted: _passwordEncryption.encrypt(newPassword),
+          ),
+        ),
+      );
 
   Future<void> refreshToken() async {
     final tokens = await _tokens.read();
@@ -108,8 +132,27 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
     );
   }
 
-  Future<void> register(RegisterParams params) =>
-      _runUnit(AuthAction.register, () => _register(params));
+  Future<void> register({
+    required String firstName,
+    required String lastName,
+    required String phoneNumber,
+    required String email,
+    required String password,
+    required Gender gender,
+  }) =>
+      _runUnit(
+        AuthAction.register,
+            () => _register(
+          RegisterParams(
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            email: email,
+            encryptedPassword: _passwordEncryption.encrypt(password),
+            gender: gender,
+          ),
+        ),
+      );
 
   Future<void> resendOtp(ResendOtpParams params) =>
       _runUnit(AuthAction.resendOtp, () => _resendOtp(params));
