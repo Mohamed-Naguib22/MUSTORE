@@ -1,0 +1,179 @@
+import 'package:flutter/material.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
+
+enum AppButtonVariant { primary, secondary, tonal, danger }
+
+class AppButton extends StatefulWidget {
+  const AppButton({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.icon,
+    this.trailingIcon,
+    this.variant = AppButtonVariant.primary,
+    this.isLoading = false,
+    this.isEnabled,
+    this.expand = true,
+    this.height = Dimens.buttonHeight,
+    this.borderRadius = Dimens.borderMd,
+  });
+
+  final String label;
+  final VoidCallback? onPressed;
+  final IconData? icon;
+  final IconData? trailingIcon;
+  final AppButtonVariant variant;
+  final bool isLoading;
+  final ValueNotifier<bool>? isEnabled;
+  final bool expand;
+
+  final double height;
+  final BorderRadius borderRadius;
+
+  @override
+  State<AppButton> createState() => _AppButtonState();
+}
+
+class _AppButtonState extends State<AppButton> {
+  bool _pressed = false;
+  bool _hovered = false;
+
+  ({Color bg, Color fg, bool elevated}) _colors(ColorScheme s, bool interactive) {
+    if (!interactive) {
+      return (
+      bg: s.onSurface.withValues(alpha: 0.12),
+      fg: s.onSurface.withValues(alpha: 0.38),
+      elevated: false,
+      );
+    }
+    return switch (widget.variant) {
+      AppButtonVariant.primary => (bg: s.primary, fg: s.onPrimary, elevated: true),
+      AppButtonVariant.secondary => (bg: s.secondary, fg: s.onSecondary, elevated: true),
+      AppButtonVariant.danger => (bg: s.error, fg: s.onError, elevated: true),
+      AppButtonVariant.tonal => (
+      bg: s.primary.withValues(alpha: 0.12),
+      fg: s.primary,
+      elevated: false,
+      ),
+    };
+  }
+
+  List<BoxShadow> _shadows(Color bg, bool elevated) {
+    if (!elevated) return const [];
+    final (blur, dy, alpha) = _pressed
+        ? (4.0, 1.0, 0.25)
+        : _hovered
+        ? (18.0, 8.0, 0.40)
+        : (12.0, 4.0, 0.32);
+    return [
+      BoxShadow(
+        color: bg.withValues(alpha: alpha),
+        blurRadius: blur,
+        offset: Offset(0, dy),
+      ),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final notifier = widget.isEnabled;
+    if (notifier == null) return _buildButton(context, true);
+    return ValueListenableBuilder<bool>(
+      valueListenable: notifier,
+      builder: (context, value, _) => _buildButton(context, value),
+    );
+  }
+
+  Widget _buildButton(BuildContext context, bool externallyEnabled) {
+    final interactive = widget.onPressed != null && externallyEnabled;
+    final enabled = interactive && !widget.isLoading;
+
+    final theme = Theme.of(context);
+    final c = _colors(theme.colorScheme, interactive);
+    final textStyle = (theme.textTheme.labelLarge ?? const TextStyle()).copyWith(color: c.fg);
+
+    final content = Row(
+      mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        if (widget.icon != null) ...[
+          Icon(widget.icon, size: Dimens.iconMd - Dimens.xs, color: c.fg),
+          Dimens.gapSm,
+        ],
+        Flexible(
+          child: Text(
+            widget.label,
+            style: textStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        if (widget.trailingIcon != null) ...[
+          Dimens.gapSm,
+          Icon(widget.trailingIcon, size: Dimens.iconMd - Dimens.xs, color: c.fg),
+        ],
+      ],
+    );
+
+    final body = Stack(
+      alignment: Alignment.center,
+      children: [
+        AnimatedOpacity(
+          duration: Dimens.fast,
+          opacity: widget.isLoading ? 0 : 1,
+          child: content,
+        ),
+        if (widget.isLoading)
+          SizedBox(
+            width: Dimens.iconSm + Dimens.xs,
+            height: Dimens.iconSm + Dimens.xs,
+            child: CircularProgressIndicator(strokeWidth: 2.2, color: c.fg),
+          ),
+      ],
+    );
+
+    final button = Semantics(
+      button: true,
+      enabled: enabled,
+      label: widget.label,
+      child: AnimatedScale(
+        scale: _pressed && enabled ? 0.97 : 1,
+        duration: Dimens.fast,
+        curve: Curves.easeOut,
+        child: AnimatedContainer(
+          duration: Dimens.fast,
+          curve: Curves.easeOut,
+          decoration: BoxDecoration(
+            color: c.bg,
+            borderRadius: widget.borderRadius,
+            boxShadow: _shadows(c.bg, c.elevated),
+          ),
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              borderRadius: widget.borderRadius,
+              onTap: enabled ? widget.onPressed : null,
+              onHighlightChanged: (v) => setState(() => _pressed = v),
+              onHover: (v) => setState(() => _hovered = v),
+              splashColor: c.fg.withValues(alpha: 0.12),
+              highlightColor: Colors.transparent,
+              hoverColor: c.fg.withValues(alpha: 0.06),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: widget.height),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: Dimens.xl,
+                    vertical: Dimens.md,
+                  ),
+                  child: body,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    return widget.expand ? SizedBox(width: double.infinity, child: button) : button;
+  }
+}

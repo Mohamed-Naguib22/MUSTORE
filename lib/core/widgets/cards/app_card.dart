@@ -1,0 +1,121 @@
+import 'package:flutter/material.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
+
+enum AppCardVariant {
+  elevated,
+  filled,
+  outlined,
+}
+
+class AppCard extends StatefulWidget {
+  const AppCard({
+    super.key,
+    required this.child,
+    this.onTap,
+    this.onLongPress,
+    this.variant = AppCardVariant.elevated,
+    this.padding = Dimens.cardPadding,
+    this.margin,
+    this.borderRadius = Dimens.borderLg,
+    this.color,
+    this.width,
+    this.height,
+  });
+
+  final Widget child;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
+  final AppCardVariant variant;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? margin;
+  final BorderRadius borderRadius;
+  final Color? color;
+
+  final double? width;
+  final double? height;
+
+  @override
+  State<AppCard> createState() => _AppCardState();
+}
+
+class _AppCardState extends State<AppCard> {
+  bool _pressed = false;
+  bool _hovered = false;
+
+  bool get _interactive => widget.onTap != null || widget.onLongPress != null;
+
+  List<BoxShadow> _shadows(ColorScheme s) {
+    if (widget.variant != AppCardVariant.elevated) return const [];
+    final (blur, dy, alpha) = _pressed
+        ? (6.0, 1.0, 0.05)
+        : _hovered
+        ? (24.0, 10.0, 0.12)
+        : (16.0, 4.0, 0.08);
+    return [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: alpha),
+        blurRadius: blur,
+        offset: Offset(0, dy),
+      ),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final s = Theme.of(context).colorScheme;
+
+    final fill = widget.color ??
+        switch (widget.variant) {
+          AppCardVariant.elevated => s.surface,
+          AppCardVariant.filled => s.surfaceContainerHighest,
+          AppCardVariant.outlined => Colors.transparent,
+        };
+
+    final borderAlpha = widget.variant == AppCardVariant.outlined ? 0.8 : 0.35;
+
+    Widget content = Padding(padding: widget.padding, child: widget.child);
+
+    if (_interactive) {
+      content = InkWell(
+        onTap: widget.onTap,
+        onLongPress: widget.onLongPress,
+        onHighlightChanged: (v) => setState(() => _pressed = v),
+        onHover: (v) => setState(() => _hovered = v),
+        splashColor: s.primary.withValues(alpha: 0.08),
+        highlightColor: Colors.transparent,
+        hoverColor: s.primary.withValues(alpha: 0.04),
+        child: content,
+      );
+    }
+
+    final card = AnimatedContainer(
+      duration: Dimens.fast,
+      curve: Curves.easeOut,
+      width: widget.width,
+      height: widget.height,
+      decoration: BoxDecoration(
+        color: fill,
+        borderRadius: widget.borderRadius,
+        border: Border.all(color: s.outline.withValues(alpha: borderAlpha)),
+        boxShadow: _shadows(s),
+      ),
+      child: ClipRRect(
+        borderRadius: widget.borderRadius,
+        child: Material(type: MaterialType.transparency, child: content),
+      ),
+    );
+
+    final scaled = _interactive
+        ? AnimatedScale(
+      scale: _pressed ? 0.98 : 1,
+      duration: Dimens.fast,
+      curve: Curves.easeOut,
+      child: card,
+    )
+        : card;
+
+    return widget.margin == null
+        ? scaled
+        : Padding(padding: widget.margin!, child: scaled);
+  }
+}

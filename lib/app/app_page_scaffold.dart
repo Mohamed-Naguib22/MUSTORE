@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mustore/core/widgets/custom_appbar_widget.dart';
+import 'package:mustore/core/widgets/appbar/custom_appbar_widget.dart';
 import 'app_page.dart';
 
 class AppPageScaffold extends StatelessWidget {
