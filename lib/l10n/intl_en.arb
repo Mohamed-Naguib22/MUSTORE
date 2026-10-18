@@ -26,6 +26,11 @@
   "authSignUp": "Sign up",
   "authNoAccount": "Don't have an account?",
   "authHaveAccount": "Already have an account?",
+  "authEmailRequired": "Email is required",
+  "authEmailInvalid": "Enter a valid email",
+  "authPasswordTooShort": "At least {min} characters",
+  "@authPasswordTooShort": { "placeholders": { "min": { "type": "int" } } },
+
   "loginTitle": "Welcome back",
   "loginSubtitle": "Log in to continue shopping",
 

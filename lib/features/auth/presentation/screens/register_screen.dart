@@ -136,7 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   textInputAction: TextInputAction.next,
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.email],
-                  validator: AuthValidators.email,
+                  validator: AuthValidators.email(l10n),
                 ),
                 Dimens.gapLg,
                 AppTextField(
@@ -172,7 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   textInputAction: TextInputAction.next,
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.newPassword],
-                  validator: AuthValidators.password,
+                  validator: AuthValidators.password(l10n),
                 ),
                 Dimens.gapLg,
                 AppTextField(

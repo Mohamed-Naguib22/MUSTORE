@@ -26,6 +26,11 @@
   "authSignUp": "إنشاء حساب",
   "authNoAccount": "ليس لديك حساب؟",
   "authHaveAccount": "لديك حساب بالفعل؟",
+  "authEmailRequired": "البريد الإلكتروني مطلوب",
+  "authEmailInvalid": "أدخل بريداً إلكترونياً صحيحاً",
+  "authPasswordTooShort": "{min} أحرف على الأقل",
+  "@authPasswordTooShort": { "placeholders": { "min": { "type": "int" } } },
+
   "loginTitle": "مرحباً بعودتك",
   "loginSubtitle": "سجّل الدخول لمتابعة التسوق",
 

@@ -20,9 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(price) => "${price} EGP";
+  static String m0(min) => "At least ${min} characters";
 
-  static String m1(appName) => "Join ${appName} and start shopping";
+  static String m1(price) => "${price} EGP";
+
+  static String m2(appName) => "Join ${appName} and start shopping";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -36,6 +38,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "authEmail": MessageLookupByLibrary.simpleMessage("Email"),
         "authEmailHint":
             MessageLookupByLibrary.simpleMessage("name@example.com"),
+        "authEmailInvalid":
+            MessageLookupByLibrary.simpleMessage("Enter a valid email"),
+        "authEmailRequired":
+            MessageLookupByLibrary.simpleMessage("Email is required"),
         "authFirstName": MessageLookupByLibrary.simpleMessage("First name"),
         "authFirstNameHint":
             MessageLookupByLibrary.simpleMessage("Enter your first name"),
@@ -59,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter your password"),
         "authPasswordRequired":
             MessageLookupByLibrary.simpleMessage("Password is required"),
+        "authPasswordTooShort": m0,
         "authPasswordsMismatch":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
         "authPhone": MessageLookupByLibrary.simpleMessage("Phone number"),
@@ -107,10 +114,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "navHome": MessageLookupByLibrary.simpleMessage("Home"),
         "pageCheckout": MessageLookupByLibrary.simpleMessage("Checkout"),
         "pageEditProfile": MessageLookupByLibrary.simpleMessage("Edit profile"),
-        "priceEgp": m0,
+        "priceEgp": m1,
         "registerButton":
             MessageLookupByLibrary.simpleMessage("Create account"),
-        "registerSubtitle": m1,
+        "registerSubtitle": m2,
         "registerSuccess": MessageLookupByLibrary.simpleMessage(
             "Account created. Please log in."),
         "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),

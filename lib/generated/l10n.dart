@@ -290,6 +290,36 @@ class S {
     );
   }
 
+  /// `Email is required`
+  String get authEmailRequired {
+    return Intl.message(
+      'Email is required',
+      name: 'authEmailRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a valid email`
+  String get authEmailInvalid {
+    return Intl.message(
+      'Enter a valid email',
+      name: 'authEmailInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `At least {min} characters`
+  String authPasswordTooShort(int min) {
+    return Intl.message(
+      'At least $min characters',
+      name: 'authPasswordTooShort',
+      desc: '',
+      args: [min],
+    );
+  }
+
   /// `Welcome back`
   String get loginTitle {
     return Intl.message(

@@ -20,9 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(price) => "${price} ج.م";
+  static String m0(min) => "${min} أحرف على الأقل";
 
-  static String m1(appName) => "انضم إلى ${appName} وابدأ التسوق";
+  static String m1(price) => "${price} ج.م";
+
+  static String m2(appName) => "انضم إلى ${appName} وابدأ التسوق";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -36,6 +38,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "authEmail": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
         "authEmailHint":
             MessageLookupByLibrary.simpleMessage("name@example.com"),
+        "authEmailInvalid": MessageLookupByLibrary.simpleMessage(
+            "أدخل بريداً إلكترونياً صحيحاً"),
+        "authEmailRequired":
+            MessageLookupByLibrary.simpleMessage("البريد الإلكتروني مطلوب"),
         "authFirstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
         "authFirstNameHint":
             MessageLookupByLibrary.simpleMessage("أدخل اسمك الأول"),
@@ -57,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور"),
         "authPasswordRequired":
             MessageLookupByLibrary.simpleMessage("كلمة المرور مطلوبة"),
+        "authPasswordTooShort": m0,
         "authPasswordsMismatch":
             MessageLookupByLibrary.simpleMessage("كلمتا المرور غير متطابقتين"),
         "authPhone": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
@@ -107,9 +114,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "pageCheckout": MessageLookupByLibrary.simpleMessage("إتمام الشراء"),
         "pageEditProfile":
             MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
-        "priceEgp": m0,
+        "priceEgp": m1,
         "registerButton": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
-        "registerSubtitle": m1,
+        "registerSubtitle": m2,
         "registerSuccess": MessageLookupByLibrary.simpleMessage(
             "تم إنشاء الحساب. يرجى تسجيل الدخول."),
         "registerTitle": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),

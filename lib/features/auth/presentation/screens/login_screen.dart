@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textInputAction: TextInputAction.next,
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.email],
-                  validator: AuthValidators.email,
+                  validator: AuthValidators.email(l10n),
                 ),
                 Dimens.gapLg,
                 AppTextField(
