@@ -4,6 +4,7 @@ import 'package:mustore/app/di/injection.dart';
 import 'package:mustore/app/router/app_router.dart';
 import 'package:mustore/core/style/colors/app_theme.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
+import 'package:mustore/generated/l10n.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -15,7 +16,7 @@ class App extends StatelessWidget {
         BlocProvider<AuthCubit>.value(value: sl<AuthCubit>()),
       ],
       child: MaterialApp.router(
-        title: 'MUSTORE',
+        title: S.of(context).appTitle,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
