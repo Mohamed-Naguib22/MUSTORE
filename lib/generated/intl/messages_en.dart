@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "authLastNameHint":
             MessageLookupByLibrary.simpleMessage("Enter your last name"),
         "authLogIn": MessageLookupByLibrary.simpleMessage("Log in"),
+        "authLogOut": MessageLookupByLibrary.simpleMessage("Log out"),
         "authNoAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "authPassword": MessageLookupByLibrary.simpleMessage("Password"),

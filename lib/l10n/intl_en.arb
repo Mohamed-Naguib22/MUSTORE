@@ -30,6 +30,7 @@
   "authEmailInvalid": "Enter a valid email",
   "authPasswordTooShort": "At least {min} characters",
   "@authPasswordTooShort": { "placeholders": { "min": { "type": "int" } } },
+  "authLogOut": "Log out",
 
   "loginTitle": "Welcome back",
   "loginSubtitle": "Log in to continue shopping",

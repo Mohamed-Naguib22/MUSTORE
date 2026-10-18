@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/style/fonts/font_provider.dart';
 
 abstract final class AppTheme {
@@ -113,17 +114,28 @@ abstract final class AppTheme {
       labelSmall: FontsProvider.getOverLineTextStyle(isArabic: a, color: c),
     );
 
+    const buttonShape = RoundedRectangleBorder(borderRadius: Dimens.borderMd);
+    const buttonSize = Size(0, Dimens.buttonHeight);
+
     return ThemeData(
       useMaterial3: true,
       brightness: scheme.brightness,
       scaffoldBackgroundColor: background,
       colorScheme: scheme,
       textTheme: textTheme,
+      iconTheme: IconThemeData(color: scheme.onSurface, size: Dimens.iconMd),
+      dividerTheme: DividerThemeData(
+        color: scheme.outline,
+        thickness: 1,
+        space: 1,
+      ),
       appBarTheme: AppBarTheme(
         titleTextStyle: textTheme.titleLarge,
         backgroundColor: background,
+        foregroundColor: scheme.onSurface,
         surfaceTintColor: AppColors.transparent,
         scrolledUnderElevation: 0,
+        centerTitle: true,
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: scheme.surface,
@@ -146,14 +158,77 @@ abstract final class AppTheme {
           },
         ),
       ),
+      listTileTheme: ListTileThemeData(
+        contentPadding: Dimens.listTile,
+        iconColor: scheme.onSurfaceVariant,
+        textColor: scheme.onSurface,
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+              (s) => s.contains(WidgetState.selected)
+              ? scheme.onPrimary
+              : scheme.onSurfaceVariant,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+              (s) => s.contains(WidgetState.selected)
+              ? scheme.primary
+              : scheme.surfaceContainerHighest,
+        ),
+        trackOutlineColor: WidgetStateProperty.resolveWith(
+              (s) => s.contains(WidgetState.selected)
+              ? scheme.primary
+              : scheme.outline,
+        ),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: scheme.inverseSurface,
+        contentTextStyle: textTheme.bodyMedium?.copyWith(
+          color: scheme.onInverseSurface,
+        ),
+        shape: const RoundedRectangleBorder(borderRadius: Dimens.borderMd),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: scheme.surface,
+        surfaceTintColor: AppColors.transparent,
+        titleTextStyle: textTheme.titleLarge,
+        contentTextStyle: textTheme.bodyMedium,
+        shape: const RoundedRectangleBorder(borderRadius: Dimens.borderXl),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: scheme.surface,
+        surfaceTintColor: AppColors.transparent,
+        showDragHandle: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(Dimens.radiusXl),
+          ),
+        ),
+      ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: scheme.primary,
+        linearTrackColor: scheme.surfaceContainerHighest,
+      ),
       filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(textStyle: textTheme.labelLarge),
+        style: FilledButton.styleFrom(
+          textStyle: textTheme.labelLarge,
+          shape: buttonShape,
+          minimumSize: buttonSize,
+        ),
       ),
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(textStyle: textTheme.labelLarge),
+        style: TextButton.styleFrom(
+          textStyle: textTheme.labelLarge,
+          shape: buttonShape,
+        ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(textStyle: textTheme.labelLarge),
+        style: OutlinedButton.styleFrom(
+          textStyle: textTheme.labelLarge,
+          shape: buttonShape,
+          minimumSize: buttonSize,
+          side: BorderSide(color: scheme.outline),
+        ),
       ),
     );
   }

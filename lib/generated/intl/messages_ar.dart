@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "authLastNameHint":
             MessageLookupByLibrary.simpleMessage("أدخل اسم العائلة"),
         "authLogIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "authLogOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "authNoAccount": MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
         "authPassword": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
         "authPasswordHint":

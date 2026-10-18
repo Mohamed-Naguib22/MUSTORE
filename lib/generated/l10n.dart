@@ -320,6 +320,16 @@ class S {
     );
   }
 
+  /// `Log out`
+  String get authLogOut {
+    return Intl.message(
+      'Log out',
+      name: 'authLogOut',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Welcome back`
   String get loginTitle {
     return Intl.message(

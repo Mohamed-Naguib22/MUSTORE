@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
-import 'package:mustore/features/catalog/widgets/category/ategory_list_widget.dart';
+import 'package:mustore/features/catalog/widgets/category/category_list_widget.dart';
 import 'package:mustore/features/catalog/widgets/product/product_card_widget.dart';
 import 'package:mustore/features/catalog/widgets/product/products_row_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/banner_card_widget.dart';

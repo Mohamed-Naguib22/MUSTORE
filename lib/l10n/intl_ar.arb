@@ -30,6 +30,7 @@
   "authEmailInvalid": "أدخل بريداً إلكترونياً صحيحاً",
   "authPasswordTooShort": "{min} أحرف على الأقل",
   "@authPasswordTooShort": { "placeholders": { "min": { "type": "int" } } },
+  "authLogOut": "تسجيل الخروج",
 
   "loginTitle": "مرحباً بعودتك",
   "loginSubtitle": "سجّل الدخول لمتابعة التسوق",
