@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "40606005934",
+    "project_id": "mustoreapi",
+    "storage_bucket": "mustoreapi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40606005934:android:d26e6355b9dcc0df79cb3f",
+        "android_client_info": {
+          "package_name": "com.example.mustore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40606005934-7599ecsc82v9a3qt5mqc5gnnrsctv6uj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5kKO4rPbsVK6gObjYSflbDYEOHM5czCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40606005934-7599ecsc82v9a3qt5mqc5gnnrsctv6uj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
