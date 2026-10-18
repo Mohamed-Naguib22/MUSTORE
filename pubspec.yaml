@@ -29,6 +29,7 @@ dependencies:
   encrypt: ^5.0.3
   pointycastle: ^3.9.1
   shared_preferences: ^2.5.6
+  google_fonts: ^8.2.1
 
 dev_dependencies:
   flutter_test:

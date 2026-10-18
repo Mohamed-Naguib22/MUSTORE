@@ -1,3 +1,5 @@
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -22,22 +24,27 @@ class App extends StatelessWidget {
       child: BlocBuilder<SettingsCubit, SettingsState>(
         buildWhen: (p, c) =>
         p.themeMode != c.themeMode || p.locale != c.locale,
-        builder: (context, settings) => MaterialApp.router(
-          onGenerateTitle: (context) => S.of(context).appTitle,
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
-          themeMode: settings.themeMode,
-          locale: settings.locale,
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-          routerConfig: sl<AppRouter>().router,
-        ),
+        builder: (context, settings) {
+          final locale = settings.locale ?? PlatformDispatcher.instance.locale;
+          final isArabic = locale.languageCode == 'ar';
+
+          return MaterialApp.router(
+            onGenerateTitle: (context) => S.of(context).appTitle,
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.light(isArabic: isArabic),
+            darkTheme: AppTheme.dark(isArabic: isArabic),
+            themeMode: settings.themeMode,
+            locale: settings.locale,
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            routerConfig: sl<AppRouter>().router,
+          );
+        },
       ),
     );
   }
