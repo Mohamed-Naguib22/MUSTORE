@@ -26,7 +26,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(appName) => "انضم إلى ${appName} وابدأ التسوق";
 
-  static String m3(email) => "أدخل الرمز الذي أرسلناه إلى ${email}";
+  static String m3(email) =>
+      "أدخل الرمز المرسل إلى ${email} واختر كلمة مرور جديدة";
+
+  static String m4(email) => "أدخل الرمز الذي أرسلناه إلى ${email}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -60,6 +63,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل اسم العائلة"),
         "authLogIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "authLogOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+        "authNewPassword":
+            MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
+        "authNewPasswordHint":
+            MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور الجديدة"),
         "authNoAccount": MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
         "authOtp": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "authOtpHint": MessageLookupByLibrary.simpleMessage("أدخل الرمز"),
@@ -78,6 +85,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مثال: 01012345678"),
         "authPhoneRequired":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف مطلوب"),
+        "authRememberPassword":
+            MessageLookupByLibrary.simpleMessage("تتذكر كلمة المرور؟"),
         "authSignUp": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "bannerFreeShippingSubtitle":
             MessageLookupByLibrary.simpleMessage("على الطلبات فوق 500 ج.م"),
@@ -99,6 +108,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoryPhones": MessageLookupByLibrary.simpleMessage("هواتف"),
         "categorySports": MessageLookupByLibrary.simpleMessage("رياضة"),
         "fieldRequired": MessageLookupByLibrary.simpleMessage("مطلوب"),
+        "forgetPasswordButton":
+            MessageLookupByLibrary.simpleMessage("إرسال الرمز"),
+        "forgetPasswordSubtitle": MessageLookupByLibrary.simpleMessage(
+            "أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق"),
+        "forgetPasswordSuccess": MessageLookupByLibrary.simpleMessage(
+            "تم إرسال رمز التحقق إلى بريدك الإلكتروني"),
+        "forgetPasswordTitle":
+            MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
         "genderFemale": MessageLookupByLibrary.simpleMessage("أنثى"),
         "genderMale": MessageLookupByLibrary.simpleMessage("ذكر"),
         "homeBestSellers":
@@ -116,6 +133,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("تم تسجيل الدخول بنجاح"),
         "loginTitle": MessageLookupByLibrary.simpleMessage("مرحباً بعودتك"),
+        "logoutSuccess":
+            MessageLookupByLibrary.simpleMessage("تم تسجيل الخروج بنجاح"),
         "navAccount": MessageLookupByLibrary.simpleMessage("حسابي"),
         "navCart": MessageLookupByLibrary.simpleMessage("السلة"),
         "navCategories": MessageLookupByLibrary.simpleMessage("الفئات"),
@@ -129,6 +148,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerSuccess": MessageLookupByLibrary.simpleMessage(
             "تم إنشاء الحساب. يرجى تأكيد بريدك الإلكتروني."),
         "registerTitle": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
+        "resetPasswordButton":
+            MessageLookupByLibrary.simpleMessage("إعادة تعيين كلمة المرور"),
+        "resetPasswordSubtitle": m3,
+        "resetPasswordSuccess": MessageLookupByLibrary.simpleMessage(
+            "تمت إعادة تعيين كلمة المرور بنجاح"),
+        "resetPasswordTitle":
+            MessageLookupByLibrary.simpleMessage("إعادة تعيين كلمة المرور"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
         "settingsLanguage": MessageLookupByLibrary.simpleMessage("اللغة"),
         "settingsTheme": MessageLookupByLibrary.simpleMessage("المظهر"),
@@ -140,7 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم إرسال رمز جديد إلى بريدك الإلكتروني"),
         "verifyEmailResend":
             MessageLookupByLibrary.simpleMessage("إعادة إرسال الرمز"),
-        "verifyEmailSubtitle": m3,
+        "verifyEmailSubtitle": m4,
         "verifyEmailSuccess": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد البريد الإلكتروني بنجاح"),
         "verifyEmailTitle":

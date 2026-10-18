@@ -46,6 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void _openForgetPassword() {
+    context.pushNamed(AppPage.forgetPassword.name);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -100,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: AlignmentDirectional.centerEnd,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: _openForgetPassword,
                     child: Text(l10n.authForgotPassword),
                   ),
                 ),

@@ -26,7 +26,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(appName) => "Join ${appName} and start shopping";
 
-  static String m3(email) => "Enter the code we sent to ${email}";
+  static String m3(email) =>
+      "Enter the code sent to ${email} and choose a new password";
+
+  static String m4(email) => "Enter the code we sent to ${email}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -61,6 +64,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter your last name"),
         "authLogIn": MessageLookupByLibrary.simpleMessage("Log in"),
         "authLogOut": MessageLookupByLibrary.simpleMessage("Log out"),
+        "authNewPassword": MessageLookupByLibrary.simpleMessage("New password"),
+        "authNewPasswordHint":
+            MessageLookupByLibrary.simpleMessage("Enter your new password"),
         "authNoAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "authOtp": MessageLookupByLibrary.simpleMessage("Verification code"),
@@ -80,6 +86,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("e.g. 01012345678"),
         "authPhoneRequired":
             MessageLookupByLibrary.simpleMessage("Phone number is required"),
+        "authRememberPassword":
+            MessageLookupByLibrary.simpleMessage("Remember your password?"),
         "authSignUp": MessageLookupByLibrary.simpleMessage("Sign up"),
         "bannerFreeShippingSubtitle":
             MessageLookupByLibrary.simpleMessage("On orders above 500 EGP"),
@@ -101,6 +109,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoryPhones": MessageLookupByLibrary.simpleMessage("Phones"),
         "categorySports": MessageLookupByLibrary.simpleMessage("Sports"),
         "fieldRequired": MessageLookupByLibrary.simpleMessage("Required"),
+        "forgetPasswordButton":
+            MessageLookupByLibrary.simpleMessage("Send code"),
+        "forgetPasswordSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Enter your email and we\'ll send you a verification code"),
+        "forgetPasswordSuccess": MessageLookupByLibrary.simpleMessage(
+            "A verification code has been sent to your email"),
+        "forgetPasswordTitle":
+            MessageLookupByLibrary.simpleMessage("Forgot password?"),
         "genderFemale": MessageLookupByLibrary.simpleMessage("Female"),
         "genderMale": MessageLookupByLibrary.simpleMessage("Male"),
         "homeBestSellers": MessageLookupByLibrary.simpleMessage("Best sellers"),
@@ -117,6 +133,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("Logged in successfully"),
         "loginTitle": MessageLookupByLibrary.simpleMessage("Welcome back"),
+        "logoutSuccess":
+            MessageLookupByLibrary.simpleMessage("Logged out successfully"),
         "navAccount": MessageLookupByLibrary.simpleMessage("Account"),
         "navCart": MessageLookupByLibrary.simpleMessage("Cart"),
         "navCategories": MessageLookupByLibrary.simpleMessage("Categories"),
@@ -130,6 +148,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerSuccess": MessageLookupByLibrary.simpleMessage(
             "Account created. Please verify your email."),
         "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),
+        "resetPasswordButton":
+            MessageLookupByLibrary.simpleMessage("Reset password"),
+        "resetPasswordSubtitle": m3,
+        "resetPasswordSuccess":
+            MessageLookupByLibrary.simpleMessage("Password reset successfully"),
+        "resetPasswordTitle":
+            MessageLookupByLibrary.simpleMessage("Reset password"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "settingsLanguage": MessageLookupByLibrary.simpleMessage("Language"),
         "settingsTheme": MessageLookupByLibrary.simpleMessage("Theme"),
@@ -141,7 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "A new code has been sent to your email"),
         "verifyEmailResend":
             MessageLookupByLibrary.simpleMessage("Resend code"),
-        "verifyEmailSubtitle": m3,
+        "verifyEmailSubtitle": m4,
         "verifyEmailSuccess":
             MessageLookupByLibrary.simpleMessage("Email verified successfully"),
         "verifyEmailTitle":

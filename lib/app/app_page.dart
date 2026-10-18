@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/utils/enums/access_level.dart';
 import 'package:mustore/app/router/screens/splash_screen.dart';
+import 'package:mustore/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/login_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/register_screen.dart';
+import 'package:mustore/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/verify_email_screen.dart';
 import 'package:mustore/features/catalog/presentation/screens/categories_screen.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
@@ -25,6 +27,12 @@ enum AppPage {
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   verifyEmail('/verify-email', AccessLevel.guestOnly, VerifyEmailScreen.new,
+      parent: home, fullScreen: true, appBar: AppBarMode.none),
+
+  forgetPassword('/forget-password', AccessLevel.guestOnly, ForgetPasswordScreen.new,
+      parent: home, fullScreen: true, appBar: AppBarMode.none),
+
+  resetPassword('/reset-password', AccessLevel.guestOnly, ResetPasswordScreen.new,
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   home('/', AccessLevel.public, HomeScreen.new,
@@ -82,7 +90,7 @@ enum AppPage {
   final AppBarMode appBar;
 
   String titleOf(S l10n) => switch (this) {
-    splash || login || register || verifyEmail => '',
+    splash || login || register || verifyEmail || forgetPassword || resetPassword => '',
     home => l10n.navHome,
     cart => l10n.navCart,
     categories => l10n.navCategories,
@@ -92,7 +100,13 @@ enum AppPage {
     checkout => l10n.pageCheckout,
   };
 
-  bool get isAuthFlow => this == splash || this == login || this == register || this == verifyEmail;
+  bool get isAuthFlow =>
+      this == splash ||
+          this == login ||
+          this == register ||
+          this == verifyEmail ||
+          this == forgetPassword ||
+          this == resetPassword;
 
   String get localPath {
     if (parent == null) return path;

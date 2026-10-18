@@ -21,10 +21,22 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = S.of(context);
 
-    return BlocListener<SettingsCubit, SettingsState>(
-      listenWhen: (p, c) => c.failure != null && p.failure != c.failure,
-      listener: (context, state) =>
-          AppToast.error(context, state.failure!.localizedMessage(context)),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<SettingsCubit, SettingsState>(
+          listenWhen: (p, c) => c.failure != null && p.failure != c.failure,
+          listener: (context, state) =>
+              AppToast.error(context, state.failure!.localizedMessage(context)),
+        ),
+        BlocListener<AuthCubit, AuthState>(
+          listenWhen: (p, c) =>
+          c.action == AuthAction.revokeSession &&
+              c.status == RequestStatus.success &&
+              p.status != RequestStatus.success,
+          listener: (context, state) =>
+              AppToast.success(context, l10n.logoutSuccess),
+        ),
+      ],
       child: BlocBuilder<SettingsCubit, SettingsState>(
         buildWhen: (p, c) =>
         p.themeMode != c.themeMode || p.locale != c.locale,

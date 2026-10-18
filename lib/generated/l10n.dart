@@ -660,6 +660,126 @@ class S {
     );
   }
 
+  /// `Logged out successfully`
+  String get logoutSuccess {
+    return Intl.message(
+      'Logged out successfully',
+      name: 'logoutSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password?`
+  String get forgetPasswordTitle {
+    return Intl.message(
+      'Forgot password?',
+      name: 'forgetPasswordTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your email and we'll send you a verification code`
+  String get forgetPasswordSubtitle {
+    return Intl.message(
+      'Enter your email and we\'ll send you a verification code',
+      name: 'forgetPasswordSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send code`
+  String get forgetPasswordButton {
+    return Intl.message(
+      'Send code',
+      name: 'forgetPasswordButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A verification code has been sent to your email`
+  String get forgetPasswordSuccess {
+    return Intl.message(
+      'A verification code has been sent to your email',
+      name: 'forgetPasswordSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset password`
+  String get resetPasswordTitle {
+    return Intl.message(
+      'Reset password',
+      name: 'resetPasswordTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the code sent to {email} and choose a new password`
+  String resetPasswordSubtitle(Object email) {
+    return Intl.message(
+      'Enter the code sent to $email and choose a new password',
+      name: 'resetPasswordSubtitle',
+      desc: '',
+      args: [email],
+    );
+  }
+
+  /// `Reset password`
+  String get resetPasswordButton {
+    return Intl.message(
+      'Reset password',
+      name: 'resetPasswordButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password reset successfully`
+  String get resetPasswordSuccess {
+    return Intl.message(
+      'Password reset successfully',
+      name: 'resetPasswordSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New password`
+  String get authNewPassword {
+    return Intl.message(
+      'New password',
+      name: 'authNewPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your new password`
+  String get authNewPasswordHint {
+    return Intl.message(
+      'Enter your new password',
+      name: 'authNewPasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remember your password?`
+  String get authRememberPassword {
+    return Intl.message(
+      'Remember your password?',
+      name: 'authRememberPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Welcome back 👋`
   String get homeWelcome {
     return Intl.message(

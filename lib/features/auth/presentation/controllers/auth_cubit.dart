@@ -119,8 +119,21 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
   Future<void> externalLogin(ExternalLoginParams params) =>
       _runSession(AuthAction.externalLogin, () => _externalLogin(params));
 
-  Future<void> resetPassword(ResetPasswordParams params) =>
-      _runSession(AuthAction.resetPassword, () => _resetPassword(params));
+  Future<void> resetPassword({
+    required String email,
+    required String otp,
+    required String newPassword,
+  }) =>
+      _runSession(
+        AuthAction.resetPassword,
+            () => _resetPassword(
+          ResetPasswordParams(
+            email: email,
+            encryptedOtp: _otpEncryptionService.encrypt(otp),
+            newPasswordEncrypted: _passwordEncryption.encrypt(newPassword),
+          ),
+        ),
+      );
 
   Future<void> changePassword({
     required String currentPassword,

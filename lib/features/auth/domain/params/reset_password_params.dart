@@ -3,24 +3,24 @@ import 'package:equatable/equatable.dart';
 class ResetPasswordParams extends Equatable {
   final String email;
   final String encryptedOtp;
-  final String mewPasswordEncrypted;
+  final String newPasswordEncrypted;
 
   const ResetPasswordParams({
     required this.email,
     required this.encryptedOtp,
-    required this.mewPasswordEncrypted,
+    required this.newPasswordEncrypted,
   });
 
   Map<String, dynamic> toJson() => {
     'email': email,
-    'encryptedPassword': encryptedOtp,
-    'mewPasswordEncrypted': mewPasswordEncrypted,
+    'encryptedOtp': encryptedOtp,
+    'newPasswordEncrypted': newPasswordEncrypted,
   };
 
   @override
   List<Object?> get props => [
     email,
     encryptedOtp,
-    mewPasswordEncrypted,
+    newPasswordEncrypted,
   ];
 }
