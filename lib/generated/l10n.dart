@@ -330,6 +330,86 @@ class S {
     );
   }
 
+  /// `Enter the code`
+  String get authOtpHint {
+    return Intl.message(
+      'Enter the code',
+      name: 'authOtpHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification code is required`
+  String get authOtpRequired {
+    return Intl.message(
+      'Verification code is required',
+      name: 'authOtpRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification code`
+  String get authOtp {
+    return Intl.message(
+      'Verification code',
+      name: 'authOtp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify your email`
+  String get verifyEmailTitle {
+    return Intl.message(
+      'Verify your email',
+      name: 'verifyEmailTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the code we sent to {email}`
+  String verifyEmailSubtitle(Object email) {
+    return Intl.message(
+      'Enter the code we sent to $email',
+      name: 'verifyEmailSubtitle',
+      desc: '',
+      args: [email],
+    );
+  }
+
+  /// `Verify`
+  String get verifyEmailButton {
+    return Intl.message(
+      'Verify',
+      name: 'verifyEmailButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend code`
+  String get verifyEmailResend {
+    return Intl.message(
+      'Resend code',
+      name: 'verifyEmailResend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A new code has been sent to your email`
+  String get verifyEmailOtpResent {
+    return Intl.message(
+      'A new code has been sent to your email',
+      name: 'verifyEmailOtpResent',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Welcome back`
   String get loginTitle {
     return Intl.message(

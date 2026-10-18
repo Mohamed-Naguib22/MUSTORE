@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(appName) => "Join ${appName} and start shopping";
 
+  static String m3(email) => "Enter the code we sent to ${email}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appTitle": MessageLookupByLibrary.simpleMessage("MUSTORE"),
@@ -61,6 +63,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "authLogOut": MessageLookupByLibrary.simpleMessage("Log out"),
         "authNoAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
+        "authOtp": MessageLookupByLibrary.simpleMessage("Verification code"),
+        "authOtpHint": MessageLookupByLibrary.simpleMessage("Enter the code"),
+        "authOtpRequired": MessageLookupByLibrary.simpleMessage(
+            "Verification code is required"),
         "authPassword": MessageLookupByLibrary.simpleMessage("Password"),
         "authPasswordHint":
             MessageLookupByLibrary.simpleMessage("Enter your password"),
@@ -127,6 +133,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsTheme": MessageLookupByLibrary.simpleMessage("Theme"),
         "themeDark": MessageLookupByLibrary.simpleMessage("Dark"),
         "themeLight": MessageLookupByLibrary.simpleMessage("Light"),
-        "themeSystem": MessageLookupByLibrary.simpleMessage("System")
+        "themeSystem": MessageLookupByLibrary.simpleMessage("System"),
+        "verifyEmailButton": MessageLookupByLibrary.simpleMessage("Verify"),
+        "verifyEmailOtpResent": MessageLookupByLibrary.simpleMessage(
+            "A new code has been sent to your email"),
+        "verifyEmailResend":
+            MessageLookupByLibrary.simpleMessage("Resend code"),
+        "verifyEmailSubtitle": m3,
+        "verifyEmailTitle":
+            MessageLookupByLibrary.simpleMessage("Verify your email")
       };
 }

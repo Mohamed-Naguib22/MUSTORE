@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(appName) => "انضم إلى ${appName} وابدأ التسوق";
 
+  static String m3(email) => "أدخل الرمز الذي أرسلناه إلى ${email}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appTitle": MessageLookupByLibrary.simpleMessage("متجر"),
@@ -59,6 +61,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "authLogIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "authLogOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "authNoAccount": MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
+        "authOtp": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
+        "authOtpHint": MessageLookupByLibrary.simpleMessage("أدخل الرمز"),
+        "authOtpRequired":
+            MessageLookupByLibrary.simpleMessage("رمز التحقق مطلوب"),
         "authPassword": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
         "authPasswordHint":
             MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور"),
@@ -126,6 +132,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsTheme": MessageLookupByLibrary.simpleMessage("المظهر"),
         "themeDark": MessageLookupByLibrary.simpleMessage("داكن"),
         "themeLight": MessageLookupByLibrary.simpleMessage("فاتح"),
-        "themeSystem": MessageLookupByLibrary.simpleMessage("النظام")
+        "themeSystem": MessageLookupByLibrary.simpleMessage("النظام"),
+        "verifyEmailButton": MessageLookupByLibrary.simpleMessage("تأكيد"),
+        "verifyEmailOtpResent": MessageLookupByLibrary.simpleMessage(
+            "تم إرسال رمز جديد إلى بريدك الإلكتروني"),
+        "verifyEmailResend":
+            MessageLookupByLibrary.simpleMessage("إعادة إرسال الرمز"),
+        "verifyEmailSubtitle": m3,
+        "verifyEmailTitle":
+            MessageLookupByLibrary.simpleMessage("تأكيد البريد الإلكتروني")
       };
 }

@@ -31,6 +31,15 @@
   "authPasswordTooShort": "At least {min} characters",
   "@authPasswordTooShort": { "placeholders": { "min": { "type": "int" } } },
   "authLogOut": "Log out",
+  "authOtpHint": "Enter the code",
+  "authOtpRequired": "Verification code is required",
+  "authOtp": "Verification code",
+
+  "verifyEmailTitle": "Verify your email",
+  "verifyEmailSubtitle": "Enter the code we sent to {email}",
+  "verifyEmailButton": "Verify",
+  "verifyEmailResend": "Resend code",
+  "verifyEmailOtpResent": "A new code has been sent to your email",
 
   "loginTitle": "Welcome back",
   "loginSubtitle": "Log in to continue shopping",

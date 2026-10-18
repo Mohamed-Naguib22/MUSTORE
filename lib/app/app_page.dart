@@ -3,6 +3,7 @@ import 'package:mustore/core/utils/enums/access_level.dart';
 import 'package:mustore/app/router/screens/splash_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/login_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/register_screen.dart';
+import 'package:mustore/features/auth/presentation/screens/verify_email_screen.dart';
 import 'package:mustore/features/catalog/presentation/screens/categories_screen.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/account_screen.dart';
@@ -21,6 +22,9 @@ enum AppPage {
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   register('/register', AccessLevel.guestOnly, RegisterScreen.new,
+      parent: home, fullScreen: true, appBar: AppBarMode.none),
+
+  verifyEmail('/verify-email', AccessLevel.guestOnly, VerifyEmailScreen.new,
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   home('/', AccessLevel.public, HomeScreen.new,
@@ -78,7 +82,7 @@ enum AppPage {
   final AppBarMode appBar;
 
   String titleOf(S l10n) => switch (this) {
-    splash || login || register => '',
+    splash || login || register || verifyEmail => '',
     home => l10n.navHome,
     cart => l10n.navCart,
     categories => l10n.navCategories,
@@ -88,7 +92,7 @@ enum AppPage {
     checkout => l10n.pageCheckout,
   };
 
-  bool get isAuthFlow => this == splash || this == login || this == register;
+  bool get isAuthFlow => this == splash || this == login || this == register || this == verifyEmail;
 
   String get localPath {
     if (parent == null) return path;

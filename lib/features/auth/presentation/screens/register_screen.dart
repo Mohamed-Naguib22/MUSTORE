@@ -59,7 +59,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (context.canPop()) {
       context.pop();
     } else {
-      context.goNamed(AppPage.login.name);
+      context.pushReplacementNamed(
+        AppPage.verifyEmail.name,
+        extra: _email.text.trim(),
+      );
     }
   }
 

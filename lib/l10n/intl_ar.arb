@@ -31,6 +31,15 @@
   "authPasswordTooShort": "{min} أحرف على الأقل",
   "@authPasswordTooShort": { "placeholders": { "min": { "type": "int" } } },
   "authLogOut": "تسجيل الخروج",
+  "authOtp": "رمز التحقق",
+  "authOtpHint": "أدخل الرمز",
+  "authOtpRequired": "رمز التحقق مطلوب",
+
+  "verifyEmailTitle": "تأكيد البريد الإلكتروني",
+  "verifyEmailSubtitle": "أدخل الرمز الذي أرسلناه إلى {email}",
+  "verifyEmailButton": "تأكيد",
+  "verifyEmailResend": "إعادة إرسال الرمز",
+  "verifyEmailOtpResent": "تم إرسال رمز جديد إلى بريدك الإلكتروني",
 
   "loginTitle": "مرحباً بعودتك",
   "loginSubtitle": "سجّل الدخول لمتابعة التسوق",
