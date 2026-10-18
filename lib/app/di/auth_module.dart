@@ -1,0 +1,57 @@
+import 'package:get_it/get_it.dart';
+import 'package:mustore/core/network/api/api_client.dart';
+import 'package:mustore/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
+import 'package:mustore/features/auth/data/data_sources/remote/auth_remote_data_source_impl.dart';
+import 'package:mustore/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:mustore/features/auth/domain/repositories/auth_repository.dart';
+import 'package:mustore/features/auth/domain/use_cases/change_password_use_case.dart';
+import 'package:mustore/features/auth/domain/use_cases/external_login_use_case.dart';
+import 'package:mustore/features/auth/domain/use_cases/forget_password_use_case.dart';
+import 'package:mustore/features/auth/domain/use_cases/login_use_case.dart';
+import 'package:mustore/features/auth/domain/use_cases/refresh_token_use_case.dart';
+import 'package:mustore/features/auth/domain/use_cases/register_use_case.dart';
+import 'package:mustore/features/auth/domain/use_cases/resend_otp_use_case.dart';
+import 'package:mustore/features/auth/domain/use_cases/reset_password_use_case.dart';
+import 'package:mustore/features/auth/domain/use_cases/revoke_session_use_case.dart';
+import 'package:mustore/features/auth/domain/use_cases/verify_email_use_case.dart';
+import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
+
+void registerAuthModule(GetIt sl) {
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+        () => AuthRemoteDataSourceImpl(apiClient: sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<AuthRepository>(
+        () => AuthRepositoryImpl(
+      networkConnection: sl(),
+      remoteDataSource: sl(),
+      tokenStorage: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(() => LoginUseCase(sl()));
+  sl.registerLazySingleton(() => RegisterUseCase(sl()));
+  sl.registerLazySingleton(() => VerifyEmailUseCase(sl()));
+  sl.registerLazySingleton(() => ResendOtpUseCase(sl()));
+  sl.registerLazySingleton(() => ExternalLoginUseCase(sl()));
+  sl.registerLazySingleton(() => RefreshTokenUseCase(sl()));
+  sl.registerLazySingleton(() => RevokeSessionUseCase(sl()));
+  sl.registerLazySingleton(() => ForgetPasswordUseCase(sl()));
+  sl.registerLazySingleton(() => ResetPasswordUseCase(sl()));
+  sl.registerLazySingleton(() => ChangePasswordUseCase(sl()));
+
+  sl.registerLazySingleton(() => AuthCubit(
+    login: sl(),
+    register: sl(),
+    verifyEmail: sl(),
+    resendOtp: sl(),
+    externalLogin: sl(),
+    refreshToken: sl(),
+    revokeSession: sl(),
+    forgetPassword: sl(),
+    resetPassword: sl(),
+    changePassword: sl(),
+    tokenStorage: sl(),
+    sessionEvents: sl(),
+  ));
+}

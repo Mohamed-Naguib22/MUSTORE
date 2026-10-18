@@ -1,0 +1,46 @@
+import 'package:get_it/get_it.dart';
+import 'package:mustore/core/network/api/api_client.dart';
+import 'package:mustore/core/network/connectivity/network_connection.dart';
+import 'package:mustore/core/network/interceptors/auth_interceptor.dart';
+import 'package:mustore/core/storage/secure_storage.dart';
+import 'package:mustore/features/auth/data/constants/auth_endpoints.dart';
+import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
+import 'package:mustore/features/auth/data/data_sources/local/token_storage_impl.dart';
+import 'package:mustore/features/auth/domain/events/session_event.dart';
+import 'package:mustore/infrastructure/network/dio_api_client.dart';
+import 'package:mustore/infrastructure/network/network_connection_impl.dart';
+import 'package:mustore/infrastructure/storage/secure_storage_impl.dart';
+
+Future<void> registerCoreModule(GetIt sl) async {
+  sl.registerLazySingleton<SecureStorage>(() => SecureStorageImpl());
+  sl.registerLazySingleton<TokenStorage>(() => TokenStorageImpl(sl()));
+
+  sl.registerLazySingleton<SessionEvents>(() => SessionEvents(),
+    dispose: (e) => e.dispose(),
+  );
+
+  sl.registerLazySingleton<NetworkConnection>(() => NetworkConnectionImpl());
+
+  sl.registerLazySingleton<ApiClient>(
+        () => DioApiClient(interceptors: [
+      AuthInterceptor(
+        tokenStorage: sl(),
+        sessionEvents: sl(),
+        refreshPath: AuthEndpoints.refreshToken,
+        revokePath: AuthEndpoints.revokeSession,
+        publicPaths: {
+          AuthEndpoints.register,
+          AuthEndpoints.verifyEmail,
+          AuthEndpoints.resendOtp,
+          AuthEndpoints.login,
+          AuthEndpoints.externalLogin,
+          AuthEndpoints.refreshToken,
+          AuthEndpoints.revokeSession,
+          AuthEndpoints.forgetPassword,
+          AuthEndpoints.resetPassword,
+        },
+      ),
+    ]),
+    dispose: (client) => (client as DioApiClient).dispose(),
+  );
+}
