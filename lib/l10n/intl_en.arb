@@ -80,6 +80,8 @@
   "authNewPassword": "New password",
   "authNewPasswordHint": "Enter your new password",
   "authRememberPassword": "Remember your password?",
+  "authOr": "or",
+  "authContinueWithGoogle": "Continue with Google",
 
   "homeWelcome": "Welcome back 👋",
   "homeSearchHint": "Search products, categories...",

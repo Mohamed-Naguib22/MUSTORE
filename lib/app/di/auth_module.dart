@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mustore/core/network/api/api_client.dart';
+import 'package:mustore/core/services/auth/external_auth_service.dart';
 import 'package:mustore/core/services/encryption/otp_encryption_service.dart';
 import 'package:mustore/core/services/encryption/password_encryption_service.dart';
 import 'package:mustore/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
@@ -61,5 +62,6 @@ void registerAuthModule(GetIt sl) {
     sessionEvents: sl(),
     passwordEncryption: sl<PasswordEncryptionService>(),
     otpEncryptionService: sl<OtpEncryptionService>(),
+    externalAuthService: sl<ExternalAuthService>(),
   ));
 }

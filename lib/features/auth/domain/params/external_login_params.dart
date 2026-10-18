@@ -12,7 +12,7 @@ class ExternalLoginParams extends Equatable {
 
   Map<String, dynamic> toJson() => {
     'idToken': idToken,
-    'encryptedPassword': loginProvider.value,
+    'provider': loginProvider.value,
   };
 
   @override

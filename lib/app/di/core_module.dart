@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mustore/core/network/api/api_client.dart';
 import 'package:mustore/core/network/connectivity/network_connection.dart';
 import 'package:mustore/core/network/interceptors/auth_interceptor.dart';
+import 'package:mustore/core/services/auth/external_auth_service.dart';
 import 'package:mustore/core/services/encryption/encryption_service.dart';
 import 'package:mustore/core/services/encryption/otp_encryption_service.dart';
 import 'package:mustore/core/services/encryption/password_encryption_service.dart';
@@ -11,6 +12,7 @@ import 'package:mustore/features/auth/data/constants/auth_endpoints.dart';
 import 'package:mustore/features/auth/domain/events/session_event.dart';
 import 'package:mustore/infrastructure/network/dio_api_client.dart';
 import 'package:mustore/infrastructure/network/network_connection_impl.dart';
+import 'package:mustore/infrastructure/services/auth/firebase_external_auth_service_impl.dart';
 import 'package:mustore/infrastructure/services/encryption/otp_encryption_service_impl.dart';
 import 'package:mustore/infrastructure/services/encryption/password_encryption_service_impl.dart';
 import 'package:mustore/infrastructure/services/encryption/rsa_encryption_service.dart';
@@ -39,6 +41,10 @@ Future<void> registerCoreModule(GetIt sl) async {
         () => OtpEncryptionServiceImpl(
       rsaEncryptionService: sl<EncryptionService>(instanceName: 'rsa'),
     ),
+  );
+
+  sl.registerLazySingleton<ExternalAuthService>(
+        () => FirebaseExternalAuthServiceImpl(),
   );
 
   sl.registerLazySingleton<NetworkConnection>(() => NetworkConnectionImpl());

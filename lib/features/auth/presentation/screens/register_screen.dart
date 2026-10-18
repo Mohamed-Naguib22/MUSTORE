@@ -12,6 +12,7 @@ import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
 import 'package:mustore/features/auth/presentation/widgets/auth_scaffold.dart';
+import 'package:mustore/features/auth/presentation/widgets/external_login_section_widget.dart';
 import 'package:mustore/features/profile/domain/enums/gender.dart';
 import 'package:mustore/generated/l10n.dart';
 
@@ -191,6 +192,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Dimens.gapXl,
                 _RegisterButton(onPressed: _submit),
+                Dimens.gapXl,
+                const ExternalLoginSectionWidget(),
                 Dimens.gapXl,
                 Wrap(
                   alignment: WrapAlignment.center,

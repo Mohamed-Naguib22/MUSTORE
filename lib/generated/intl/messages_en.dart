@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm password"),
         "authConfirmPasswordHint":
             MessageLookupByLibrary.simpleMessage("Re-enter your password"),
+        "authContinueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Continue with Google"),
         "authCreatePasswordHint":
             MessageLookupByLibrary.simpleMessage("Create a password"),
         "authEmail": MessageLookupByLibrary.simpleMessage("Email"),
@@ -69,6 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter your new password"),
         "authNoAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
+        "authOr": MessageLookupByLibrary.simpleMessage("or"),
         "authOtp": MessageLookupByLibrary.simpleMessage("Verification code"),
         "authOtpHint": MessageLookupByLibrary.simpleMessage("Enter the code"),
         "authOtpRequired": MessageLookupByLibrary.simpleMessage(

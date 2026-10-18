@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure.dart';
+import 'package:mustore/core/services/auth/external_auth_service.dart';
 import 'package:mustore/core/services/encryption/otp_encryption_service.dart';
 import 'package:mustore/core/services/encryption/password_encryption_service.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
@@ -10,6 +11,7 @@ import 'package:mustore/core/utils/mixins/safe_emit_mixin.dart';
 import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
 import 'package:mustore/features/auth/domain/entities/auth_session.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
+import 'package:mustore/features/auth/domain/enums/login_provider.dart';
 import 'package:mustore/features/auth/domain/events/session_event.dart';
 import 'package:mustore/features/auth/domain/params/change_password_params.dart';
 import 'package:mustore/features/auth/domain/params/external_login_params.dart';
@@ -39,6 +41,7 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
   final TokenStorage _tokens;
   final PasswordEncryptionService _passwordEncryption;
   final OtpEncryptionService _otpEncryptionService;
+  final ExternalAuthService _externalAuth;
 
   StreamSubscription<SessionEvent>? _expiredSub;
 
@@ -57,6 +60,7 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
     required SessionEvents sessionEvents,
     required PasswordEncryptionService passwordEncryption,
     required OtpEncryptionService otpEncryptionService,
+    required ExternalAuthService externalAuthService,
   })  : _login = login,
         _register = register,
         _verifyEmail = verifyEmail,
@@ -69,6 +73,7 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
         _changePassword = changePassword,
         _passwordEncryption = passwordEncryption,
         _otpEncryptionService = otpEncryptionService,
+        _externalAuth = externalAuthService,
         _tokens = tokenStorage,
         super(const AuthState()) {
     _expiredSub = safeSubscribe(sessionEvents.stream, (event) {
@@ -116,8 +121,32 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
         ),
       );
 
-  Future<void> externalLogin(ExternalLoginParams params) =>
-      _runSession(AuthAction.externalLogin, () => _externalLogin(params));
+  Future<void> externalLogin(LoginProvider provider) async {
+    safeEmit(state.copyWith(
+      status: RequestStatus.loading,
+      action: AuthAction.externalLogin,
+    ));
+
+    final signIn = await _externalAuth.signIn(provider);
+
+    await signIn.fold(
+          (failure) async => safeEmit(state.copyWith(
+        status: RequestStatus.failure,
+        failure: failure,
+      )),
+          (idToken) async {
+        if (idToken == null) {
+          return safeEmit(state.copyWith(status: RequestStatus.initial));
+        }
+        await _runSession(
+          AuthAction.externalLogin,
+              () => _externalLogin(
+            ExternalLoginParams(idToken: idToken, loginProvider: provider),
+          ),
+        );
+      },
+    );
+  }
 
   Future<void> resetPassword({
     required String email,

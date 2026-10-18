@@ -780,6 +780,26 @@ class S {
     );
   }
 
+  /// `or`
+  String get authOr {
+    return Intl.message(
+      'or',
+      name: 'authOr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue with Google`
+  String get authContinueWithGoogle {
+    return Intl.message(
+      'Continue with Google',
+      name: 'authContinueWithGoogle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Welcome back 👋`
   String get homeWelcome {
     return Intl.message(

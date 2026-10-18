@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
         "authConfirmPasswordHint":
             MessageLookupByLibrary.simpleMessage("أعد إدخال كلمة المرور"),
+        "authContinueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("المتابعة باستخدام جوجل"),
         "authCreatePasswordHint":
             MessageLookupByLibrary.simpleMessage("أنشئ كلمة مرور"),
         "authEmail": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
@@ -68,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "authNewPasswordHint":
             MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور الجديدة"),
         "authNoAccount": MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
+        "authOr": MessageLookupByLibrary.simpleMessage("أو"),
         "authOtp": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
         "authOtpHint": MessageLookupByLibrary.simpleMessage("أدخل الرمز"),
         "authOtpRequired":
