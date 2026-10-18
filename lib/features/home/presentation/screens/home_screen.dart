@@ -9,6 +9,7 @@ import 'package:mustore/core/widgets/cards/app_card.dart';
 import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
+import 'package:mustore/generated/l10n.dart';
 
 const double _productCardHeight = 270;
 
@@ -17,21 +18,23 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context);
+
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             const SliverToBoxAdapter(child: _HomeHeader()),
             const SliverToBoxAdapter(child: _SearchField()),
-            const SliverToBoxAdapter(child: _PromoCarousel(banners: _banners)),
-            const SliverToBoxAdapter(child: _SectionHeader(title: 'Categories')),
-            const SliverToBoxAdapter(child: _CategoryList(categories: _categories)),
+            SliverToBoxAdapter(child: _PromoCarousel(banners: _banners(l10n))),
+            SliverToBoxAdapter(child: _SectionHeader(title: l10n.homeCategories)),
+            SliverToBoxAdapter(child: _CategoryList(categories: _categories(l10n))),
             SliverToBoxAdapter(
-              child: _SectionHeader(title: 'Best sellers', onSeeAll: () {}),
+              child: _SectionHeader(title: l10n.homeBestSellers, onSeeAll: () {}),
             ),
             const SliverToBoxAdapter(child: _ProductsRow(products: _products)),
             SliverToBoxAdapter(
-              child: _SectionHeader(title: 'New arrivals', onSeeAll: () {}),
+              child: _SectionHeader(title: l10n.homeNewArrivals, onSeeAll: () {}),
             ),
             SliverPadding(
               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -67,6 +70,7 @@ class _HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
+    final l10n = S.of(context);
     final isGuest = context.select(
           (AuthCubit c) => c.state.authStatus != AuthStatus.authenticated,
     );
@@ -85,11 +89,11 @@ class _HomeHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Welcome back 👋',
+                  l10n.homeWelcome,
                   style: text.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
                 ),
                 Text(
-                  'MUSTORE',
+                  l10n.appTitle,
                   style: text.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w800,
                     color: scheme.primary,
@@ -100,7 +104,7 @@ class _HomeHeader extends StatelessWidget {
           ),
           if (isGuest) ...[
             AppButton(
-              label: 'Log in',
+              label: l10n.authLogIn,
               variant: AppButtonVariant.tonal,
               expand: false,
               height: 36,
@@ -140,7 +144,7 @@ class _SearchField extends StatelessWidget {
       ),
       child: AppTextField(
         readOnly: true,
-        hint: 'Search products, categories...',
+        hint: S.of(context).homeSearchHint,
         prefixIcon: Icons.search_rounded,
         suffixIcon: IconButton(
           onPressed: () {},
@@ -225,6 +229,7 @@ class _BannerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
+    final l10n = S.of(context);
 
     return Container(
       padding: const EdgeInsetsDirectional.all(Dimens.lg + Dimens.xs),
@@ -257,7 +262,7 @@ class _BannerCard extends StatelessWidget {
                 ),
                 Dimens.gapMd,
                 AppButton(
-                  label: 'Shop now',
+                  label: l10n.homeShopNow,
                   expand: false,
                   height: 36,
                   backgroundColor: AppColors.onBanner,
@@ -308,7 +313,7 @@ class _SectionHeader extends StatelessWidget {
                   vertical: Dimens.xs,
                 ),
               ),
-              child: const Text('See all'),
+              child: Text(S.of(context).homeSeeAll),
             ),
         ],
       ),
@@ -403,6 +408,7 @@ class _ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
+    final l10n = S.of(context);
 
     return AppCard(
       padding: EdgeInsets.zero,
@@ -484,7 +490,7 @@ class _ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      '${product.finalPrice.toStringAsFixed(0)} EGP',
+                      l10n.priceEgp(product.finalPrice.round()),
                       style: text.titleSmall?.copyWith(
                         color: scheme.primary,
                         fontWeight: FontWeight.w800,
@@ -578,35 +584,35 @@ class _Product {
       discountPercent == null ? price : price * (100 - discountPercent!) / 100;
 }
 
-const _banners = [
+List<_Banner> _banners(S l10n) => [
   _Banner(
-    'Season Sale',
-    'Up to 50% off selected items',
+    l10n.bannerSeasonSaleTitle,
+    l10n.bannerSeasonSaleSubtitle,
     Icons.local_offer_rounded,
     AppColors.bannerPrimary,
   ),
   _Banner(
-    'New Arrivals',
-    'Fresh styles just landed',
+    l10n.bannerNewArrivalsTitle,
+    l10n.bannerNewArrivalsSubtitle,
     Icons.new_releases_rounded,
     AppColors.bannerSecondary,
   ),
   _Banner(
-    'Free Shipping',
-    'On orders above 500 EGP',
+    l10n.bannerFreeShippingTitle,
+    l10n.bannerFreeShippingSubtitle,
     Icons.local_shipping_rounded,
     AppColors.bannerSuccess,
   ),
 ];
 
-const _categories = [
-  _Category('Fashion', Icons.checkroom_rounded),
-  _Category('Phones', Icons.smartphone_rounded),
-  _Category('Laptops', Icons.laptop_mac_rounded),
-  _Category('Home', Icons.chair_rounded),
-  _Category('Beauty', Icons.brush_rounded),
-  _Category('Sports', Icons.sports_soccer_rounded),
-  _Category('Books', Icons.menu_book_rounded),
+List<_Category> _categories(S l10n) => [
+  _Category(l10n.categoryFashion, Icons.checkroom_rounded),
+  _Category(l10n.categoryPhones, Icons.smartphone_rounded),
+  _Category(l10n.categoryLaptops, Icons.laptop_mac_rounded),
+  _Category(l10n.categoryHome, Icons.chair_rounded),
+  _Category(l10n.categoryBeauty, Icons.brush_rounded),
+  _Category(l10n.categorySports, Icons.sports_soccer_rounded),
+  _Category(l10n.categoryBooks, Icons.menu_book_rounded),
 ];
 
 const _products = [

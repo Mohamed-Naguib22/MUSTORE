@@ -129,6 +129,550 @@ class S {
       args: [],
     );
   }
+
+  /// `Email`
+  String get authEmail {
+    return Intl.message(
+      'Email',
+      name: 'authEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `name@example.com`
+  String get authEmailHint {
+    return Intl.message(
+      'name@example.com',
+      name: 'authEmailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get authPassword {
+    return Intl.message(
+      'Password',
+      name: 'authPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your password`
+  String get authPasswordHint {
+    return Intl.message(
+      'Enter your password',
+      name: 'authPasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password is required`
+  String get authPasswordRequired {
+    return Intl.message(
+      'Password is required',
+      name: 'authPasswordRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password?`
+  String get authForgotPassword {
+    return Intl.message(
+      'Forgot password?',
+      name: 'authForgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in`
+  String get authLogIn {
+    return Intl.message(
+      'Log in',
+      name: 'authLogIn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up`
+  String get authSignUp {
+    return Intl.message(
+      'Sign up',
+      name: 'authSignUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't have an account?`
+  String get authNoAccount {
+    return Intl.message(
+      'Don\'t have an account?',
+      name: 'authNoAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?`
+  String get authHaveAccount {
+    return Intl.message(
+      'Already have an account?',
+      name: 'authHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome back`
+  String get loginTitle {
+    return Intl.message(
+      'Welcome back',
+      name: 'loginTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in to continue shopping`
+  String get loginSubtitle {
+    return Intl.message(
+      'Log in to continue shopping',
+      name: 'loginSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create account`
+  String get registerTitle {
+    return Intl.message(
+      'Create account',
+      name: 'registerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join {appName} and start shopping`
+  String registerSubtitle(String appName) {
+    return Intl.message(
+      'Join $appName and start shopping',
+      name: 'registerSubtitle',
+      desc: '',
+      args: [appName],
+    );
+  }
+
+  /// `Create account`
+  String get registerButton {
+    return Intl.message(
+      'Create account',
+      name: 'registerButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account created. Please log in.`
+  String get registerSuccess {
+    return Intl.message(
+      'Account created. Please log in.',
+      name: 'registerSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Required`
+  String get fieldRequired {
+    return Intl.message(
+      'Required',
+      name: 'fieldRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First name`
+  String get authFirstName {
+    return Intl.message(
+      'First name',
+      name: 'authFirstName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your first name`
+  String get authFirstNameHint {
+    return Intl.message(
+      'Enter your first name',
+      name: 'authFirstNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last name`
+  String get authLastName {
+    return Intl.message(
+      'Last name',
+      name: 'authLastName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your last name`
+  String get authLastNameHint {
+    return Intl.message(
+      'Enter your last name',
+      name: 'authLastNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get authPhone {
+    return Intl.message(
+      'Phone number',
+      name: 'authPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g. 01012345678`
+  String get authPhoneHint {
+    return Intl.message(
+      'e.g. 01012345678',
+      name: 'authPhoneHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number is required`
+  String get authPhoneRequired {
+    return Intl.message(
+      'Phone number is required',
+      name: 'authPhoneRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gender`
+  String get authGender {
+    return Intl.message(
+      'Gender',
+      name: 'authGender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select your gender`
+  String get authGenderHint {
+    return Intl.message(
+      'Select your gender',
+      name: 'authGenderHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select your gender`
+  String get authGenderRequired {
+    return Intl.message(
+      'Select your gender',
+      name: 'authGenderRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Male`
+  String get genderMale {
+    return Intl.message(
+      'Male',
+      name: 'genderMale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Female`
+  String get genderFemale {
+    return Intl.message(
+      'Female',
+      name: 'genderFemale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create a password`
+  String get authCreatePasswordHint {
+    return Intl.message(
+      'Create a password',
+      name: 'authCreatePasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm password`
+  String get authConfirmPassword {
+    return Intl.message(
+      'Confirm password',
+      name: 'authConfirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-enter your password`
+  String get authConfirmPasswordHint {
+    return Intl.message(
+      'Re-enter your password',
+      name: 'authConfirmPasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match`
+  String get authPasswordsMismatch {
+    return Intl.message(
+      'Passwords do not match',
+      name: 'authPasswordsMismatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome back 👋`
+  String get homeWelcome {
+    return Intl.message(
+      'Welcome back 👋',
+      name: 'homeWelcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search products, categories...`
+  String get homeSearchHint {
+    return Intl.message(
+      'Search products, categories...',
+      name: 'homeSearchHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shop now`
+  String get homeShopNow {
+    return Intl.message(
+      'Shop now',
+      name: 'homeShopNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See all`
+  String get homeSeeAll {
+    return Intl.message(
+      'See all',
+      name: 'homeSeeAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Categories`
+  String get homeCategories {
+    return Intl.message(
+      'Categories',
+      name: 'homeCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Best sellers`
+  String get homeBestSellers {
+    return Intl.message(
+      'Best sellers',
+      name: 'homeBestSellers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New arrivals`
+  String get homeNewArrivals {
+    return Intl.message(
+      'New arrivals',
+      name: 'homeNewArrivals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Season Sale`
+  String get bannerSeasonSaleTitle {
+    return Intl.message(
+      'Season Sale',
+      name: 'bannerSeasonSaleTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Up to 50% off selected items`
+  String get bannerSeasonSaleSubtitle {
+    return Intl.message(
+      'Up to 50% off selected items',
+      name: 'bannerSeasonSaleSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Arrivals`
+  String get bannerNewArrivalsTitle {
+    return Intl.message(
+      'New Arrivals',
+      name: 'bannerNewArrivalsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fresh styles just landed`
+  String get bannerNewArrivalsSubtitle {
+    return Intl.message(
+      'Fresh styles just landed',
+      name: 'bannerNewArrivalsSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Free Shipping`
+  String get bannerFreeShippingTitle {
+    return Intl.message(
+      'Free Shipping',
+      name: 'bannerFreeShippingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `On orders above 500 EGP`
+  String get bannerFreeShippingSubtitle {
+    return Intl.message(
+      'On orders above 500 EGP',
+      name: 'bannerFreeShippingSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fashion`
+  String get categoryFashion {
+    return Intl.message(
+      'Fashion',
+      name: 'categoryFashion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phones`
+  String get categoryPhones {
+    return Intl.message(
+      'Phones',
+      name: 'categoryPhones',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Laptops`
+  String get categoryLaptops {
+    return Intl.message(
+      'Laptops',
+      name: 'categoryLaptops',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get categoryHome {
+    return Intl.message(
+      'Home',
+      name: 'categoryHome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Beauty`
+  String get categoryBeauty {
+    return Intl.message(
+      'Beauty',
+      name: 'categoryBeauty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sports`
+  String get categorySports {
+    return Intl.message(
+      'Sports',
+      name: 'categorySports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Books`
+  String get categoryBooks {
+    return Intl.message(
+      'Books',
+      name: 'categoryBooks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{price} EGP`
+  String priceEgp(num price) {
+    final NumberFormat priceNumberFormat =
+        NumberFormat.decimalPattern(Intl.getCurrentLocale());
+    final String priceString = priceNumberFormat.format(price);
+
+    return Intl.message(
+      '$priceString EGP',
+      name: 'priceEgp',
+      desc: '',
+      args: [priceString],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

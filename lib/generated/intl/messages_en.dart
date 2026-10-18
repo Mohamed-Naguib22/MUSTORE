@@ -20,10 +20,94 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(price) => "${price} EGP";
+
+  static String m1(appName) => "Join ${appName} and start shopping";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appTitle": MessageLookupByLibrary.simpleMessage("MUSTORE"),
+        "authConfirmPassword":
+            MessageLookupByLibrary.simpleMessage("Confirm password"),
+        "authConfirmPasswordHint":
+            MessageLookupByLibrary.simpleMessage("Re-enter your password"),
+        "authCreatePasswordHint":
+            MessageLookupByLibrary.simpleMessage("Create a password"),
+        "authEmail": MessageLookupByLibrary.simpleMessage("Email"),
+        "authEmailHint":
+            MessageLookupByLibrary.simpleMessage("name@example.com"),
+        "authFirstName": MessageLookupByLibrary.simpleMessage("First name"),
+        "authFirstNameHint":
+            MessageLookupByLibrary.simpleMessage("Enter your first name"),
+        "authForgotPassword":
+            MessageLookupByLibrary.simpleMessage("Forgot password?"),
+        "authGender": MessageLookupByLibrary.simpleMessage("Gender"),
+        "authGenderHint":
+            MessageLookupByLibrary.simpleMessage("Select your gender"),
+        "authGenderRequired":
+            MessageLookupByLibrary.simpleMessage("Select your gender"),
+        "authHaveAccount":
+            MessageLookupByLibrary.simpleMessage("Already have an account?"),
+        "authLastName": MessageLookupByLibrary.simpleMessage("Last name"),
+        "authLastNameHint":
+            MessageLookupByLibrary.simpleMessage("Enter your last name"),
+        "authLogIn": MessageLookupByLibrary.simpleMessage("Log in"),
+        "authNoAccount":
+            MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
+        "authPassword": MessageLookupByLibrary.simpleMessage("Password"),
+        "authPasswordHint":
+            MessageLookupByLibrary.simpleMessage("Enter your password"),
+        "authPasswordRequired":
+            MessageLookupByLibrary.simpleMessage("Password is required"),
+        "authPasswordsMismatch":
+            MessageLookupByLibrary.simpleMessage("Passwords do not match"),
+        "authPhone": MessageLookupByLibrary.simpleMessage("Phone number"),
+        "authPhoneHint":
+            MessageLookupByLibrary.simpleMessage("e.g. 01012345678"),
+        "authPhoneRequired":
+            MessageLookupByLibrary.simpleMessage("Phone number is required"),
+        "authSignUp": MessageLookupByLibrary.simpleMessage("Sign up"),
+        "bannerFreeShippingSubtitle":
+            MessageLookupByLibrary.simpleMessage("On orders above 500 EGP"),
+        "bannerFreeShippingTitle":
+            MessageLookupByLibrary.simpleMessage("Free Shipping"),
+        "bannerNewArrivalsSubtitle":
+            MessageLookupByLibrary.simpleMessage("Fresh styles just landed"),
+        "bannerNewArrivalsTitle":
+            MessageLookupByLibrary.simpleMessage("New Arrivals"),
+        "bannerSeasonSaleSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Up to 50% off selected items"),
+        "bannerSeasonSaleTitle":
+            MessageLookupByLibrary.simpleMessage("Season Sale"),
+        "categoryBeauty": MessageLookupByLibrary.simpleMessage("Beauty"),
+        "categoryBooks": MessageLookupByLibrary.simpleMessage("Books"),
+        "categoryFashion": MessageLookupByLibrary.simpleMessage("Fashion"),
+        "categoryHome": MessageLookupByLibrary.simpleMessage("Home"),
+        "categoryLaptops": MessageLookupByLibrary.simpleMessage("Laptops"),
+        "categoryPhones": MessageLookupByLibrary.simpleMessage("Phones"),
+        "categorySports": MessageLookupByLibrary.simpleMessage("Sports"),
+        "fieldRequired": MessageLookupByLibrary.simpleMessage("Required"),
+        "genderFemale": MessageLookupByLibrary.simpleMessage("Female"),
+        "genderMale": MessageLookupByLibrary.simpleMessage("Male"),
+        "homeBestSellers": MessageLookupByLibrary.simpleMessage("Best sellers"),
+        "homeCategories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "homeNewArrivals": MessageLookupByLibrary.simpleMessage("New arrivals"),
+        "homeSearchHint": MessageLookupByLibrary.simpleMessage(
+            "Search products, categories..."),
+        "homeSeeAll": MessageLookupByLibrary.simpleMessage("See all"),
+        "homeShopNow": MessageLookupByLibrary.simpleMessage("Shop now"),
+        "homeWelcome": MessageLookupByLibrary.simpleMessage("Welcome back 👋"),
         "languageSystem": MessageLookupByLibrary.simpleMessage("System"),
+        "loginSubtitle":
+            MessageLookupByLibrary.simpleMessage("Log in to continue shopping"),
+        "loginTitle": MessageLookupByLibrary.simpleMessage("Welcome back"),
+        "priceEgp": m0,
+        "registerButton":
+            MessageLookupByLibrary.simpleMessage("Create account"),
+        "registerSubtitle": m1,
+        "registerSuccess": MessageLookupByLibrary.simpleMessage(
+            "Account created. Please log in."),
+        "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "settingsLanguage": MessageLookupByLibrary.simpleMessage("Language"),
         "settingsTheme": MessageLookupByLibrary.simpleMessage("Theme"),

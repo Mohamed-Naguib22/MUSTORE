@@ -11,6 +11,7 @@ import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
 import 'package:mustore/features/auth/presentation/widgets/auth_scaffold.dart';
+import 'package:mustore/generated/l10n.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -40,16 +41,15 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _openRegister() {
-    final from = GoRouterState.of(context).uri.queryParameters['from'];
     context.pushNamed(
       AppPage.register.name,
-      queryParameters: {if (from != null) 'from': from},
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = S.of(context);
 
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (_, curr) =>
@@ -60,8 +60,8 @@ class _LoginScreenState extends State<LoginScreen> {
         AppToast.error(context, message);
       },
       child: AuthScaffold(
-        title: 'Welcome back',
-        subtitle: 'Log in to continue shopping',
+        title: l10n.loginTitle,
+        subtitle: l10n.loginSubtitle,
         child: Form(
           key: _formKey,
           child: AutofillGroup(
@@ -69,8 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 AppTextField(
                   controller: _email,
-                  label: 'Email',
-                  hint: 'name@example.com',
+                  label: l10n.authEmail,
+                  hint: l10n.authEmailHint,
                   prefixIcon: Icons.mail_outline_rounded,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
@@ -81,21 +81,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 Dimens.gapLg,
                 AppTextField(
                   controller: _password,
-                  label: 'Password',
-                  hint: 'Enter your password',
+                  label: l10n.authPassword,
+                  hint: l10n.authPasswordHint,
                   prefixIcon: Icons.lock_outline_rounded,
                   isPassword: true,
                   textInputAction: TextInputAction.done,
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.password],
                   onSubmitted: (_) => _submit(),
-                  validator: (v) => AuthValidators.required(v, 'Password is required'),
+                  validator: (v) => AuthValidators.required(v, l10n.authPasswordRequired),
                 ),
                 Align(
                   alignment: AlignmentDirectional.centerEnd,
                   child: TextButton(
                     onPressed: () {},
-                    child: const Text('Forgot password?'),
+                    child: Text(l10n.authForgotPassword),
                   ),
                 ),
                 Dimens.gapSm,
@@ -106,14 +106,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account?",
+                      l10n.authNoAccount,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                     TextButton(
                       onPressed: _openRegister,
-                      child: const Text('Sign up'),
+                      child: Text(l10n.authSignUp),
                     ),
                   ],
                 ),
@@ -139,7 +139,7 @@ class _LoginButton extends StatelessWidget {
           c.state.status == RequestStatus.loading,
     );
     return AppButton(
-      label: 'Log in',
+      label: S.of(context).authLogIn,
       isLoading: isLoading,
       onPressed: onPressed,
     );

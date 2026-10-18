@@ -13,6 +13,7 @@ import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
 import 'package:mustore/features/auth/presentation/widgets/auth_scaffold.dart';
 import 'package:mustore/features/profile/domain/enums/gender.dart';
+import 'package:mustore/generated/l10n.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -62,11 +63,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  String _genderLabel(Gender g) => g.name[0].toUpperCase() + g.name.substring(1);
+  String _genderLabel(S l10n, Gender g) => switch (g) {
+    Gender.male => l10n.genderMale,
+    Gender.female => l10n.genderFemale,
+  };
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = S.of(context);
 
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (_, curr) =>
@@ -79,13 +84,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if (message.isEmpty) return;
           AppToast.error(context, message);
         } else {
-          AppToast.success(context, 'Account created. Please log in.');
+          AppToast.success(context, l10n.registerSuccess);
           _openLogin();
         }
       },
       child: AuthScaffold(
-        title: 'Create account',
-        subtitle: 'Join MUSTORE and start shopping',
+        title: l10n.registerTitle,
+        subtitle: l10n.registerSubtitle(l10n.appTitle),
         child: Form(
           key: _formKey,
           child: AutofillGroup(
@@ -97,26 +102,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Expanded(
                       child: AppTextField(
                         controller: _firstName,
-                        label: 'First name',
-                        hint: 'Enter your first name',
+                        label: l10n.authFirstName,
+                        hint: l10n.authFirstNameHint,
                         prefixIcon: Icons.person_outline_rounded,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         autofillHints: const [AutofillHints.givenName],
-                        validator: (v) => AuthValidators.required(v, 'Required'),
+                        validator: (v) => AuthValidators.required(v, l10n.fieldRequired),
                       ),
                     ),
                     Dimens.gapMd,
                     Expanded(
                       child: AppTextField(
                         controller: _lastName,
-                        label: 'Last name',
-                        hint: 'Enter your last name',
+                        label: l10n.authLastName,
+                        hint: l10n.authLastNameHint,
                         prefixIcon: Icons.person_outline_rounded,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         autofillHints: const [AutofillHints.familyName],
-                        validator: (v) => AuthValidators.required(v, 'Required'),
+                        validator: (v) => AuthValidators.required(v, l10n.fieldRequired),
                       ),
                     ),
                   ],
@@ -124,8 +129,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Dimens.gapLg,
                 AppTextField(
                   controller: _email,
-                  label: 'Email',
-                  hint: 'name@example.com',
+                  label: l10n.authEmail,
+                  hint: l10n.authEmailHint,
                   prefixIcon: Icons.mail_outline_rounded,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
@@ -136,32 +141,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Dimens.gapLg,
                 AppTextField(
                   controller: _phone,
-                  label: 'Phone number',
-                  hint: 'e.g. 01012345678',
+                  label: l10n.authPhone,
+                  hint: l10n.authPhoneHint,
                   prefixIcon: Icons.phone_outlined,
                   keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.next,
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.telephoneNumber],
-                  validator: (v) => AuthValidators.required(v, 'Phone number is required'),
+                  validator: (v) => AuthValidators.required(v, l10n.authPhoneRequired),
                 ),
                 Dimens.gapLg,
                 AppDropdownField<Gender>(
-                  label: 'Gender',
-                  hint: 'Select your gender',
+                  label: l10n.authGender,
+                  hint: l10n.authGenderHint,
                   prefixIcon: Icons.wc_rounded,
                   items: [
                     for (final g in Gender.values)
-                      DropdownMenuItem(value: g, child: Text(_genderLabel(g))),
+                      DropdownMenuItem(value: g, child: Text(_genderLabel(l10n, g))),
                   ],
                   onChanged: (g) => _gender = g,
-                  validator: (g) => g == null ? 'Select your gender' : null,
+                  validator: (g) => g == null ? l10n.authGenderRequired : null,
                 ),
                 Dimens.gapLg,
                 AppTextField(
                   controller: _password,
-                  label: 'Password',
-                  hint: 'Create a password',
+                  label: l10n.authPassword,
+                  hint: l10n.authCreatePasswordHint,
                   prefixIcon: Icons.lock_outline_rounded,
                   isPassword: true,
                   textInputAction: TextInputAction.next,
@@ -172,14 +177,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Dimens.gapLg,
                 AppTextField(
                   controller: _confirm,
-                  label: 'Confirm password',
-                  hint: 'Re-enter your password',
+                  label: l10n.authConfirmPassword,
+                  hint: l10n.authConfirmPasswordHint,
                   prefixIcon: Icons.lock_outline_rounded,
                   isPassword: true,
                   textInputAction: TextInputAction.done,
                   textDirection: TextDirection.ltr,
                   onSubmitted: (_) => _submit(),
-                  validator: (v) => v == _password.text ? null : 'Passwords do not match',
+                  validator: (v) => v == _password.text ? null : l10n.authPasswordsMismatch,
                 ),
                 Dimens.gapXl,
                 _RegisterButton(onPressed: _submit),
@@ -189,14 +194,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      'Already have an account?',
+                      l10n.authHaveAccount,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                     TextButton(
                       onPressed: _openLogin,
-                      child: const Text('Log in'),
+                      child: Text(l10n.authLogIn),
                     ),
                   ],
                 ),
@@ -222,7 +227,7 @@ class _RegisterButton extends StatelessWidget {
           c.state.status == RequestStatus.loading,
     );
     return AppButton(
-      label: 'Create account',
+      label: S.of(context).registerButton,
       isLoading: isLoading,
       onPressed: onPressed,
     );
