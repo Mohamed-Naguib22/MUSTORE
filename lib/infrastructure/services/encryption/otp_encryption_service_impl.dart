@@ -1,4 +1,4 @@
-import 'package:mustore/core/config/password_encryption_config.dart';
+import 'package:mustore/core/config/otp_encryption_config.dart';
 import 'package:mustore/core/services/encryption/encryption_service.dart';
 import 'package:mustore/core/services/encryption/otp_encryption_service.dart';
 
@@ -11,5 +11,5 @@ final class OtpEncryptionServiceImpl implements OtpEncryptionService {
 
   @override
   String encrypt(String plainText) =>
-      _rsa.encrypt(plainText, PasswordEncryptionConfig.publicKey);
+      _rsa.encrypt(plainText, OtpEncryptionConfig.publicKey);
 }

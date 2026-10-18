@@ -113,6 +113,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "languageSystem": MessageLookupByLibrary.simpleMessage("النظام"),
         "loginSubtitle":
             MessageLookupByLibrary.simpleMessage("سجّل الدخول لمتابعة التسوق"),
+        "loginSuccess":
+            MessageLookupByLibrary.simpleMessage("تم تسجيل الدخول بنجاح"),
         "loginTitle": MessageLookupByLibrary.simpleMessage("مرحباً بعودتك"),
         "navAccount": MessageLookupByLibrary.simpleMessage("حسابي"),
         "navCart": MessageLookupByLibrary.simpleMessage("السلة"),
@@ -125,7 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerButton": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "registerSubtitle": m2,
         "registerSuccess": MessageLookupByLibrary.simpleMessage(
-            "تم إنشاء الحساب. يرجى تسجيل الدخول."),
+            "تم إنشاء الحساب. يرجى تأكيد بريدك الإلكتروني."),
         "registerTitle": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
         "settingsLanguage": MessageLookupByLibrary.simpleMessage("اللغة"),
@@ -139,6 +141,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "verifyEmailResend":
             MessageLookupByLibrary.simpleMessage("إعادة إرسال الرمز"),
         "verifyEmailSubtitle": m3,
+        "verifyEmailSuccess": MessageLookupByLibrary.simpleMessage(
+            "تم تأكيد البريد الإلكتروني بنجاح"),
         "verifyEmailTitle":
             MessageLookupByLibrary.simpleMessage("تأكيد البريد الإلكتروني")
       };

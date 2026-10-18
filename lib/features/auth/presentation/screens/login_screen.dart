@@ -53,11 +53,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (_, curr) =>
-      curr.action == AuthAction.login && curr.status == RequestStatus.failure,
+      curr.action == AuthAction.login &&
+          (curr.status == RequestStatus.failure ||
+              curr.status == RequestStatus.success),
       listener: (context, state) {
-        final message = state.failure?.localizedMessage(context) ?? '';
-        if (message.isEmpty) return;
-        AppToast.error(context, message);
+        if (state.status == RequestStatus.failure) {
+          final message = state.failure?.localizedMessage(context) ?? '';
+          if (message.isEmpty) return;
+          AppToast.error(context, message);
+        } else {
+          AppToast.success(context, l10n.loginSuccess);
+        }
       },
       child: AuthScaffold(
         title: l10n.loginTitle,

@@ -460,10 +460,10 @@ class S {
     );
   }
 
-  /// `Account created. Please log in.`
+  /// `Account created. Please verify your email.`
   String get registerSuccess {
     return Intl.message(
-      'Account created. Please log in.',
+      'Account created. Please verify your email.',
       name: 'registerSuccess',
       desc: '',
       args: [],
@@ -635,6 +635,26 @@ class S {
     return Intl.message(
       'Passwords do not match',
       name: 'authPasswordsMismatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logged in successfully`
+  String get loginSuccess {
+    return Intl.message(
+      'Logged in successfully',
+      name: 'loginSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email verified successfully`
+  String get verifyEmailSuccess {
+    return Intl.message(
+      'Email verified successfully',
+      name: 'verifyEmailSuccess',
       desc: '',
       args: [],
     );

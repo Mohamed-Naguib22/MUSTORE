@@ -11,7 +11,7 @@ class VerifyEmailParams extends Equatable {
 
   Map<String, dynamic> toJson() => {
     'email': email,
-    'encryptedPassword': encryptedOtp,
+    'encryptedOtp': encryptedOtp,
   };
 
   @override

@@ -50,16 +50,17 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
 
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (_, curr) =>
-      (curr.action == AuthAction.verifyEmail &&
-          curr.status == RequestStatus.failure) ||
-          (curr.action == AuthAction.resendOtp &&
-              (curr.status == RequestStatus.failure ||
-                  curr.status == RequestStatus.success)),
+      (curr.action == AuthAction.verifyEmail ||
+          curr.action == AuthAction.resendOtp) &&
+          (curr.status == RequestStatus.failure ||
+              curr.status == RequestStatus.success),
       listener: (context, state) {
         if (state.status == RequestStatus.failure) {
           final message = state.failure?.localizedMessage(context) ?? '';
           if (message.isEmpty) return;
           AppToast.error(context, message);
+        } else if (state.action == AuthAction.verifyEmail) {
+          AppToast.success(context, l10n.verifyEmailSuccess);
         } else {
           AppToast.success(context, l10n.verifyEmailOtpResent);
         }

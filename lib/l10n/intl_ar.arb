@@ -48,7 +48,7 @@
   "registerSubtitle": "انضم إلى {appName} وابدأ التسوق",
   "@registerSubtitle": { "placeholders": { "appName": { "type": "String" } } },
   "registerButton": "إنشاء حساب",
-  "registerSuccess": "تم إنشاء الحساب. يرجى تسجيل الدخول.",
+  "registerSuccess": "تم إنشاء الحساب. يرجى تأكيد بريدك الإلكتروني.",
   "fieldRequired": "مطلوب",
   "authFirstName": "الاسم الأول",
   "authFirstNameHint": "أدخل اسمك الأول",
@@ -66,6 +66,8 @@
   "authConfirmPassword": "تأكيد كلمة المرور",
   "authConfirmPasswordHint": "أعد إدخال كلمة المرور",
   "authPasswordsMismatch": "كلمتا المرور غير متطابقتين",
+  "loginSuccess": "تم تسجيل الدخول بنجاح",
+  "verifyEmailSuccess": "تم تأكيد البريد الإلكتروني بنجاح",
 
   "homeWelcome": "مرحباً بعودتك 👋",
   "homeSearchHint": "ابحث عن المنتجات والفئات...",

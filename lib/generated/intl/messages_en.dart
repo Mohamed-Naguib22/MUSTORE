@@ -114,6 +114,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "languageSystem": MessageLookupByLibrary.simpleMessage("System"),
         "loginSubtitle":
             MessageLookupByLibrary.simpleMessage("Log in to continue shopping"),
+        "loginSuccess":
+            MessageLookupByLibrary.simpleMessage("Logged in successfully"),
         "loginTitle": MessageLookupByLibrary.simpleMessage("Welcome back"),
         "navAccount": MessageLookupByLibrary.simpleMessage("Account"),
         "navCart": MessageLookupByLibrary.simpleMessage("Cart"),
@@ -126,7 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create account"),
         "registerSubtitle": m2,
         "registerSuccess": MessageLookupByLibrary.simpleMessage(
-            "Account created. Please log in."),
+            "Account created. Please verify your email."),
         "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "settingsLanguage": MessageLookupByLibrary.simpleMessage("Language"),
@@ -140,6 +142,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "verifyEmailResend":
             MessageLookupByLibrary.simpleMessage("Resend code"),
         "verifyEmailSubtitle": m3,
+        "verifyEmailSuccess":
+            MessageLookupByLibrary.simpleMessage("Email verified successfully"),
         "verifyEmailTitle":
             MessageLookupByLibrary.simpleMessage("Verify your email")
       };

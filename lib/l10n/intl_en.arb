@@ -48,7 +48,7 @@
   "registerSubtitle": "Join {appName} and start shopping",
   "@registerSubtitle": { "placeholders": { "appName": { "type": "String" } } },
   "registerButton": "Create account",
-  "registerSuccess": "Account created. Please log in.",
+  "registerSuccess": "Account created. Please verify your email.",
   "fieldRequired": "Required",
   "authFirstName": "First name",
   "authFirstNameHint": "Enter your first name",
@@ -66,6 +66,8 @@
   "authConfirmPassword": "Confirm password",
   "authConfirmPasswordHint": "Re-enter your password",
   "authPasswordsMismatch": "Passwords do not match",
+  "loginSuccess": "Logged in successfully",
+  "verifyEmailSuccess": "Email verified successfully",
 
   "homeWelcome": "Welcome back 👋",
   "homeSearchHint": "Search products, categories...",

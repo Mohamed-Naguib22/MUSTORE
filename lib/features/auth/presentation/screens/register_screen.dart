@@ -59,10 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (context.canPop()) {
       context.pop();
     } else {
-      context.pushReplacementNamed(
-        AppPage.verifyEmail.name,
-        extra: _email.text.trim(),
-      );
+      context.goNamed(AppPage.login.name);
     }
   }
 
@@ -88,7 +85,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           AppToast.error(context, message);
         } else {
           AppToast.success(context, l10n.registerSuccess);
-          _openLogin();
+          context.pushReplacementNamed(
+            AppPage.verifyEmail.name,
+            extra: _email.text.trim(),
+          );
         }
       },
       child: AuthScaffold(
