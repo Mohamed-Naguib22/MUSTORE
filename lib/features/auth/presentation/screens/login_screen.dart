@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mustore/app/app_page.dart';
 import 'package:mustore/core/error/failure_message.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
+import 'package:mustore/core/widgets/buttons/app_button.dart';
+import 'package:mustore/core/widgets/feedback/app_toast.dart';
+import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
 import 'package:mustore/features/auth/presentation/widgets/auth_scaffold.dart';
@@ -45,20 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
 
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (_, curr) =>
-      curr.action == AuthAction.login &&
-          curr.status == RequestStatus.failure,
+      curr.action == AuthAction.login && curr.status == RequestStatus.failure,
       listener: (context, state) {
         final message = state.failure?.localizedMessage(context) ?? '';
         if (message.isEmpty) return;
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(content: Text(message), backgroundColor: scheme.error),
-          );
+        AppToast.error(context, message);
       },
       child: AuthScaffold(
         title: 'Welcome back',
@@ -68,24 +67,29 @@ class _LoginScreenState extends State<LoginScreen> {
           child: AutofillGroup(
             child: Column(
               children: [
-                AuthTextField(
+                AppTextField(
                   controller: _email,
                   label: 'Email',
-                  icon: Icons.mail_outline_rounded,
+                  hint: 'name@example.com',
+                  prefixIcon: Icons.mail_outline_rounded,
                   keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.email],
                   validator: AuthValidators.email,
                 ),
-                const SizedBox(height: 14),
-                PasswordField(
+                Dimens.gapLg,
+                AppTextField(
                   controller: _password,
+                  label: 'Password',
+                  hint: 'Enter your password',
+                  prefixIcon: Icons.lock_outline_rounded,
+                  isPassword: true,
                   textInputAction: TextInputAction.done,
+                  textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.password],
-                  onSubmitted: _submit,
-                  validator: (v) => AuthValidators.required(
-                    v,
-                    'Password is required',
-                  ),
+                  onSubmitted: (_) => _submit(),
+                  validator: (v) => AuthValidators.required(v, 'Password is required'),
                 ),
                 Align(
                   alignment: AlignmentDirectional.centerEnd,
@@ -94,15 +98,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text('Forgot password?'),
                   ),
                 ),
-                const SizedBox(height: 8),
+                Dimens.gapSm,
                 _LoginButton(onPressed: _submit),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Dimens.gapXl,
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
                       "Don't have an account?",
-                      style: TextStyle(color: scheme.onSurfaceVariant),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
                     TextButton(
                       onPressed: _openRegister,
@@ -131,7 +138,7 @@ class _LoginButton extends StatelessWidget {
       c.state.action == AuthAction.login &&
           c.state.status == RequestStatus.loading,
     );
-    return AuthSubmitButton(
+    return AppButton(
       label: 'Log in',
       isLoading: isLoading,
       onPressed: onPressed,

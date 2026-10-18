@@ -3,7 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mustore/app/app_page.dart';
 import 'package:mustore/core/error/failure_message.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
+import 'package:mustore/core/widgets/buttons/app_button.dart';
+import 'package:mustore/core/widgets/feedback/app_toast.dart';
+import 'package:mustore/core/widgets/inputs/app_dropdown_field.dart';
+import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
 import 'package:mustore/features/auth/presentation/widgets/auth_scaffold.dart';
@@ -57,12 +62,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  String _genderLabel(Gender g) =>
-      g.name[0].toUpperCase() + g.name.substring(1);
+  String _genderLabel(Gender g) => g.name[0].toUpperCase() + g.name.substring(1);
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
 
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (_, curr) =>
@@ -70,18 +74,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           (curr.status == RequestStatus.failure ||
               curr.status == RequestStatus.success),
       listener: (context, state) {
-        final messenger = ScaffoldMessenger.of(context)..hideCurrentSnackBar();
         if (state.status == RequestStatus.failure) {
           final message = state.failure?.localizedMessage(context) ?? '';
           if (message.isEmpty) return;
-          messenger.showSnackBar(
-            SnackBar(content: Text(message), backgroundColor: scheme.error),
-          );
+          AppToast.error(context, message);
         } else {
-          // TODO: replace with the verify-email screen once it exists
-          messenger.showSnackBar(
-            const SnackBar(content: Text('Account created. Please log in.')),
-          );
+          AppToast.success(context, 'Account created. Please log in.');
           _openLogin();
         }
       },
@@ -97,56 +95,61 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: AuthTextField(
+                      child: AppTextField(
                         controller: _firstName,
                         label: 'First name',
-                        icon: Icons.person_outline_rounded,
+                        hint: 'Enter your first name',
+                        prefixIcon: Icons.person_outline_rounded,
                         keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
                         autofillHints: const [AutofillHints.givenName],
-                        validator: (v) =>
-                            AuthValidators.required(v, 'Required'),
+                        validator: (v) => AuthValidators.required(v, 'Required'),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    Dimens.gapMd,
                     Expanded(
-                      child: AuthTextField(
+                      child: AppTextField(
                         controller: _lastName,
                         label: 'Last name',
-                        icon: Icons.person_outline_rounded,
+                        hint: 'Enter your last name',
+                        prefixIcon: Icons.person_outline_rounded,
                         keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
                         autofillHints: const [AutofillHints.familyName],
-                        validator: (v) =>
-                            AuthValidators.required(v, 'Required'),
+                        validator: (v) => AuthValidators.required(v, 'Required'),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 14),
-                AuthTextField(
+                Dimens.gapLg,
+                AppTextField(
                   controller: _email,
                   label: 'Email',
-                  icon: Icons.mail_outline_rounded,
+                  hint: 'name@example.com',
+                  prefixIcon: Icons.mail_outline_rounded,
                   keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.email],
                   validator: AuthValidators.email,
                 ),
-                const SizedBox(height: 14),
-                AuthTextField(
+                Dimens.gapLg,
+                AppTextField(
                   controller: _phone,
                   label: 'Phone number',
-                  icon: Icons.phone_outlined,
+                  hint: 'e.g. 01012345678',
+                  prefixIcon: Icons.phone_outlined,
                   keyboardType: TextInputType.phone,
+                  textInputAction: TextInputAction.next,
+                  textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.telephoneNumber],
-                  validator: (v) =>
-                      AuthValidators.required(v, 'Phone number is required'),
+                  validator: (v) => AuthValidators.required(v, 'Phone number is required'),
                 ),
-                const SizedBox(height: 14),
-                DropdownButtonFormField<Gender>(
-                  decoration: authDecoration(
-                    context,
-                    label: 'Gender',
-                    icon: Icons.wc_rounded,
-                  ),
+                Dimens.gapLg,
+                AppDropdownField<Gender>(
+                  label: 'Gender',
+                  hint: 'Select your gender',
+                  prefixIcon: Icons.wc_rounded,
                   items: [
                     for (final g in Gender.values)
                       DropdownMenuItem(value: g, child: Text(_genderLabel(g))),
@@ -154,30 +157,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onChanged: (g) => _gender = g,
                   validator: (g) => g == null ? 'Select your gender' : null,
                 ),
-                const SizedBox(height: 14),
-                PasswordField(
+                Dimens.gapLg,
+                AppTextField(
                   controller: _password,
+                  label: 'Password',
+                  hint: 'Create a password',
+                  prefixIcon: Icons.lock_outline_rounded,
+                  isPassword: true,
+                  textInputAction: TextInputAction.next,
+                  textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.newPassword],
                   validator: AuthValidators.password,
                 ),
-                const SizedBox(height: 14),
-                PasswordField(
+                Dimens.gapLg,
+                AppTextField(
                   controller: _confirm,
                   label: 'Confirm password',
+                  hint: 'Re-enter your password',
+                  prefixIcon: Icons.lock_outline_rounded,
+                  isPassword: true,
                   textInputAction: TextInputAction.done,
-                  onSubmitted: _submit,
-                  validator: (v) =>
-                  v == _password.text ? null : 'Passwords do not match',
+                  textDirection: TextDirection.ltr,
+                  onSubmitted: (_) => _submit(),
+                  validator: (v) => v == _password.text ? null : 'Passwords do not match',
                 ),
-                const SizedBox(height: 24),
+                Dimens.gapXl,
                 _RegisterButton(onPressed: _submit),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Dimens.gapXl,
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
                       'Already have an account?',
-                      style: TextStyle(color: scheme.onSurfaceVariant),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
                     TextButton(
                       onPressed: _openLogin,
@@ -206,7 +221,7 @@ class _RegisterButton extends StatelessWidget {
       c.state.action == AuthAction.register &&
           c.state.status == RequestStatus.loading,
     );
-    return AuthSubmitButton(
+    return AppButton(
       label: 'Create account',
       isLoading: isLoading,
       onPressed: onPressed,
