@@ -57,12 +57,6 @@ extension DioExceptionX on DioException {
 }
 
 extension FailureX on Failure {
-  bool get isUnauthorized => switch (this) {
-    ServerFailure(:final statusCode) =>
-    statusCode == HttpStatusCodes.unauthorized,
-    _ => false,
-  };
-
   DioException toDioException(RequestOptions options) => DioException(
     requestOptions: options,
     error: this,

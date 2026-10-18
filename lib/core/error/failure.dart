@@ -1,7 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:mustore/core/network/http/http_status_codes.dart';
 
 sealed class Failure extends Equatable {
   const Failure();
+
+  bool get isUnauthorized => false;
 
   @override
   List<Object?> get props => [];
@@ -17,6 +20,9 @@ final class ServerFailure extends Failure {
   final int? statusCode;
 
   final String? serverMessage;
+
+  @override
+  bool get isUnauthorized => statusCode == HttpStatusCodes.unauthorized;
 
   @override
   List<Object?> get props => [statusCode, serverMessage];

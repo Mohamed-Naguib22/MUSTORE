@@ -7,6 +7,7 @@ import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/utils/mixins/safe_emit_mixin.dart';
 import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
 import 'package:mustore/features/auth/domain/entities/auth_session.dart';
+import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/domain/events/session_event.dart';
 import 'package:mustore/features/auth/domain/params/change_password_params.dart';
 import 'package:mustore/features/auth/domain/params/external_login_params.dart';
@@ -65,6 +66,7 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
         safeEmit(state.copyWith(
           status: RequestStatus.success,
           action: AuthAction.revokeSession,
+          authStatus: AuthStatus.unauthenticated,
           clearSession: true,
         ));
       }
@@ -131,8 +133,41 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
     safeEmit(state.copyWith(
       status: RequestStatus.success,
       action: AuthAction.revokeSession,
+      authStatus: AuthStatus.unauthenticated,
       clearSession: true,
     ));
+  }
+
+  Future<void> restoreSession() async {
+    final tokens = await _tokens.read();
+
+    if (tokens == null || tokens.isRefreshTokenExpired) {
+      await _tokens.clear();
+      return safeEmit(state.copyWith(authStatus: AuthStatus.unauthenticated));
+    }
+
+    if (tokens.accessTokenExpirationDate.isAfter(DateTime.now())) {
+      return safeEmit(state.copyWith(authStatus: AuthStatus.authenticated));
+    }
+
+    final result = await _refreshToken(
+      RefreshTokenParams(refreshToken: tokens.refreshToken),
+    );
+
+    await result.fold(
+          (failure) async {
+        if (failure.isUnauthorized) {
+          await _tokens.clear();
+          safeEmit(state.copyWith(authStatus: AuthStatus.unauthenticated));
+        } else {
+          safeEmit(state.copyWith(authStatus: AuthStatus.authenticated));
+        }
+      },
+          (session) async => safeEmit(state.copyWith(
+        session: session,
+        authStatus: AuthStatus.authenticated,
+      )),
+    );
   }
 
   @override
@@ -152,7 +187,11 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
     safeFold<Failure, AuthSession>(
       result,
       onLeft: (f) => state.copyWith(status: RequestStatus.failure, failure: f),
-      onRight: (s) => state.copyWith(status: RequestStatus.success, session: s),
+      onRight: (s) => state.copyWith(
+        status: RequestStatus.success,
+        session: s,
+        authStatus: AuthStatus.authenticated,
+      ),
     );
   }
 

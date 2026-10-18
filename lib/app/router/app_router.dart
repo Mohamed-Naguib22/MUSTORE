@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mustore/app/router/screens/not_found_screen.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
+import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/screens/login_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/register_screen.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
@@ -10,7 +12,16 @@ import 'access_level.dart';
 import 'app_page.dart';
 
 class AppRouter {
-  final auth = ValueNotifier(AuthStatus.unknown);
+  AppRouter(AuthCubit authCubit)
+      : auth = ValueNotifier(authCubit.state.authStatus) {
+    _sub = authCubit.stream
+        .map((s) => s.authStatus)
+        .distinct()
+        .listen((status) => auth.value = status);
+  }
+
+  final ValueNotifier<AuthStatus> auth;
+  late final StreamSubscription<AuthStatus> _sub;
 
   late final GoRouter router = GoRouter(
     refreshListenable: auth,
@@ -25,6 +36,7 @@ class AppRouter {
   );
 
   void dispose() {
+    _sub.cancel();
     router.dispose();
     auth.dispose();
   }
