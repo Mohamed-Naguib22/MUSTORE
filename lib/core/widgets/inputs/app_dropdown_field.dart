@@ -8,7 +8,7 @@ class AppDropdownField<T> extends StatelessWidget {
     super.key,
     required this.items,
     required this.onChanged,
-    this.value,
+    this.initialValue,
     this.label,
     this.hint,
     this.helperText,
@@ -22,7 +22,7 @@ class AppDropdownField<T> extends StatelessWidget {
 
   final List<DropdownMenuItem<T>> items;
   final ValueChanged<T?>? onChanged;
-  final T? value;
+  final T? initialValue;
   final String? label;
   final String? hint;
   final String? helperText;
@@ -39,7 +39,7 @@ class AppDropdownField<T> extends StatelessWidget {
     final s = theme.colorScheme;
 
     final field = DropdownButtonFormField<T>(
-      value: value,
+      initialValue: initialValue,
       items: items,
       onChanged: enabled ? onChanged : null,
       validator: validator,
