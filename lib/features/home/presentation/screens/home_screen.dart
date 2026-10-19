@@ -70,8 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _categoriesSection(S l10n, CategoryState state) {
     final items = state.rootCategories;
-    final isLoading = items.isEmpty &&
-        (state.status.isInitial || state.status.isLoading);
+    final isLoading = state.status.isInitial || state.status.isLoading;
 
     final header = SliverToBoxAdapter(
       child: HomeSectionHeaderWidget(title: l10n.homeCategories),
@@ -105,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
           header,
           SliverToBoxAdapter(
             child: CategoryListWidget(
-              categories: isLoading ? Category.fakeList(_categoriesTake) : items,
+              categories: items.isEmpty ? Category.fakeList(_categoriesTake) : items,
               onTap: (category) {},
             ),
           ),
