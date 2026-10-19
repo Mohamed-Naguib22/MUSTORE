@@ -28,10 +28,19 @@ class AppRouter {
   late final StreamSubscription<AuthStatus> _sub;
   final _rootKey = GlobalKey<NavigatorState>();
 
+  bool _reloading = false;
+
   late final GoRouter router = GoRouter(
     navigatorKey: _rootKey,
     refreshListenable: auth,
-    redirect: (_, state) => _redirect(auth.value, state.uri),
+    redirect: (_, state) {
+      if (_reloading) {
+        return AppPage.match(state.uri.path) == AppPage.splash
+            ? null
+            : AppPage.splash.path;
+      }
+      return _redirect(auth.value, state.uri);
+    },
     errorBuilder: (_, _) => const NotFoundScreen(),
     routes: [
       ..._routesOf(null),
@@ -46,6 +55,15 @@ class AppRouter {
       ),
     ],
   );
+
+  Future<void> reload() async {
+    if (_reloading) return;
+    _reloading = true;
+    router.refresh();
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    _reloading = false;
+    router.refresh();
+  }
 
   List<RouteBase> _routesOf(AppPage? parent) => [
     for (final p in AppPage.values)

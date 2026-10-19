@@ -22,30 +22,35 @@ class App extends StatelessWidget {
         BlocProvider<AuthCubit>.value(value: sl<AuthCubit>()),
         BlocProvider<SettingsCubit>.value(value: sl<SettingsCubit>()),
       ],
-      child: BlocBuilder<SettingsCubit, SettingsState>(
-        buildWhen: (p, c) =>
-        p.themeMode != c.themeMode || p.locale != c.locale,
-        builder: (context, settings) {
-          final locale = settings.locale ?? PlatformDispatcher.instance.locale;
-          final isArabic = locale.languageCode == LanguageCodes.ar;
+      child: BlocListener<SettingsCubit, SettingsState>(
+        listenWhen: (p, c) => p.locale != c.locale,
+        listener: (_, _) => sl<AppRouter>().reload(),
+        child: BlocBuilder<SettingsCubit, SettingsState>(
+          buildWhen: (p, c) =>
+          p.themeMode != c.themeMode || p.locale != c.locale,
+          builder: (context, settings) {
+            final locale =
+                settings.locale ?? PlatformDispatcher.instance.locale;
+            final isArabic = locale.languageCode == LanguageCodes.ar;
 
-          return MaterialApp.router(
-            onGenerateTitle: (context) => S.of(context).appTitle,
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.light(isArabic: isArabic),
-            darkTheme: AppTheme.dark(isArabic: isArabic),
-            themeMode: settings.themeMode,
-            locale: settings.locale,
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: S.delegate.supportedLocales,
-            routerConfig: sl<AppRouter>().router,
-          );
-        },
+            return MaterialApp.router(
+              onGenerateTitle: (context) => S.of(context).appTitle,
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme.light(isArabic: isArabic),
+              darkTheme: AppTheme.dark(isArabic: isArabic),
+              themeMode: settings.themeMode,
+              locale: settings.locale,
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              routerConfig: sl<AppRouter>().router,
+            );
+          },
+        ),
       ),
     );
   }
