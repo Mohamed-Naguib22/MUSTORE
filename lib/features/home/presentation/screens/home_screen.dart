@@ -46,36 +46,42 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(child: HomeHeaderWidget()),
-            const SliverToBoxAdapter(child: HomeSearchFieldWidget()),
-            SliverToBoxAdapter(child: PromoCarouselWidget(banners: _banners(l10n))),
-            SliverToBoxAdapter(child: HomeSectionHeaderWidget(title: l10n.homeCategories)),
-            SliverToBoxAdapter(child: CategoryListWidget(categories: _categories(l10n))),
-            SliverToBoxAdapter(
-              child: HomeSectionHeaderWidget(title: l10n.homeBestSellers, onSeeAll: () {}),
-            ),
-            const SliverToBoxAdapter(child: ProductsRowWidget(products: _products)),
-            SliverToBoxAdapter(
-              child: HomeSectionHeaderWidget(title: l10n.homeNewArrivals, onSeeAll: () {}),
-            ),
-            SliverPadding(
-              padding: const EdgeInsetsDirectional.fromSTEB(
-                Dimens.lg,
-                0,
-                Dimens.lg,
-                Dimens.xl,
-              ),
-              sliver: SliverGrid.builder(
-                itemCount: _products.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: Dimens.md,
-                  crossAxisSpacing: Dimens.md,
-                  mainAxisExtent: kProductCardHeight,
-                ),
-                itemBuilder: (_, i) => ProductCardWidget(product: _products[i]),
+        child: Column(
+          children: [
+            const HomeHeaderWidget(),
+            const HomeSearchFieldWidget(),
+            Expanded(
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(child: PromoCarouselWidget(banners: _banners(l10n))),
+                  SliverToBoxAdapter(child: HomeSectionHeaderWidget(title: l10n.homeCategories)),
+                  SliverToBoxAdapter(child: CategoryListWidget(categories: _categories(l10n))),
+                  SliverToBoxAdapter(
+                    child: HomeSectionHeaderWidget(title: l10n.homeBestSellers, onSeeAll: () {}),
+                  ),
+                  const SliverToBoxAdapter(child: ProductsRowWidget(products: _products)),
+                  SliverToBoxAdapter(
+                    child: HomeSectionHeaderWidget(title: l10n.homeNewArrivals, onSeeAll: () {}),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      Dimens.lg,
+                      0,
+                      Dimens.lg,
+                      Dimens.xl,
+                    ),
+                    sliver: SliverGrid.builder(
+                      itemCount: _products.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: Dimens.md,
+                        crossAxisSpacing: Dimens.md,
+                        mainAxisExtent: kProductCardHeight,
+                      ),
+                      itemBuilder: (_, i) => ProductCardWidget(product: _products[i]),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

@@ -136,6 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "genderMale": MessageLookupByLibrary.simpleMessage("Male"),
         "homeBestSellers": MessageLookupByLibrary.simpleMessage("Best sellers"),
         "homeCategories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "homeDeliverTo": MessageLookupByLibrary.simpleMessage("Deliver to"),
         "homeNewArrivals": MessageLookupByLibrary.simpleMessage("New arrivals"),
         "homeSearchHint": MessageLookupByLibrary.simpleMessage(
             "Search products, categories..."),

@@ -3,7 +3,22 @@ import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/generated/l10n.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
-  const HomeHeaderWidget({super.key});
+  const HomeHeaderWidget({
+    super.key,
+    this.location = 'Cairo, Egypt',
+    this.notificationCount = 2,
+    this.onLocationTap,
+    this.onFavoritesTap,
+    this.onNotificationsTap,
+  });
+
+  final String location;
+  final int notificationCount;
+  final VoidCallback? onLocationTap;
+  final VoidCallback? onFavoritesTap;
+  final VoidCallback? onNotificationsTap;
+
+  static const double _tile = Dimens.iconLg;
 
   @override
   Widget build(BuildContext context) {
@@ -15,41 +30,126 @@ class HomeHeaderWidget extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(
         Dimens.lg,
         Dimens.md,
-        Dimens.sm,
+        Dimens.lg,
         Dimens.xs,
       ),
       child: Row(
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l10n.homeWelcome,
-                  style: text.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
+            child: Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: InkWell(
+                onTap: onLocationTap,
+                borderRadius: Dimens.borderMd,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: _tile,
+                      height: _tile,
+                      decoration: BoxDecoration(
+                        color: scheme.primaryContainer,
+                        borderRadius: Dimens.borderMd,
+                      ),
+                      child: Icon(
+                        Icons.location_on_rounded,
+                        color: scheme.onPrimaryContainer,
+                      ),
+                    ),
+                    Dimens.gapSm,
+                    Flexible(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.homeDeliverTo,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: text.bodySmall?.copyWith(
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  location,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: text.titleSmall,
+                                ),
+                              ),
+                              Dimens.gapXxs,
+                              Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                size: Dimens.iconSm,
+                                color: scheme.onSurfaceVariant,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  l10n.appTitle,
-                  style: text.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: scheme.primary,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_border_rounded),
+          Dimens.gapSm,
+          _ActionButton(
+            icon: Icons.favorite_border_rounded,
+            onTap: onFavoritesTap,
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Badge(
-              label: Text('2'),
-              child: Icon(Icons.notifications_outlined),
-            ),
+          Dimens.gapSm,
+          _ActionButton(
+            icon: Icons.notifications_none_rounded,
+            badgeCount: notificationCount,
+            onTap: onNotificationsTap,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  const _ActionButton({
+    required this.icon,
+    this.onTap,
+    this.badgeCount = 0,
+  });
+
+  final IconData icon;
+  final VoidCallback? onTap;
+  final int badgeCount;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    Widget child = Icon(icon, color: scheme.onSurface);
+    if (badgeCount > 0) {
+      child = Badge.count(
+        count: badgeCount,
+        backgroundColor: scheme.error,
+        textColor: scheme.onError,
+        child: child,
+      );
+    }
+
+    return Material(
+      color: scheme.surfaceContainerHighest,
+      borderRadius: Dimens.borderMd,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap ?? () {},
+        child: SizedBox(
+          width: HomeHeaderWidget._tile,
+          height: HomeHeaderWidget._tile,
+          child: Center(child: child),
+        ),
       ),
     );
   }

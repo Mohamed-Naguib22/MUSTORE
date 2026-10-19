@@ -990,6 +990,16 @@ class S {
     );
   }
 
+  /// `Deliver to`
+  String get homeDeliverTo {
+    return Intl.message(
+      'Deliver to',
+      name: 'homeDeliverTo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Season Sale`
   String get bannerSeasonSaleTitle {
     return Intl.message(
