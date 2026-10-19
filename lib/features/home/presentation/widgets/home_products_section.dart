@@ -27,15 +27,14 @@ class HomeProductsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = section.data.items;
 
-    final isLoading = items.isEmpty &&
-        (section.status == PaginationStatus.initial ||
-            section.status == PaginationStatus.loading);
+    final isLoading = section.status == PaginationStatus.initial ||
+        section.status == PaginationStatus.loading;
 
     if (items.isEmpty && !isLoading) {
       return const SliverToBoxAdapter(child: SizedBox.shrink());
     }
 
-    final products = isLoading ? Product.fakeList() : items;
+    final products = items.isEmpty ? Product.fakeList() : items;
 
     return AppSliverSkeleton(
       isLoading: isLoading,
