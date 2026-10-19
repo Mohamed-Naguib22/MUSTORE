@@ -7,7 +7,11 @@ import 'package:mustore/features/catalog/presentation/controllers/category/categ
 
 class CategoryCubit extends Cubit<CategoryState>
     with SafeEmitMixin<CategoryState> {
-  CategoryCubit(this._getRootCategories) : super(const CategoryState());
+
+  CategoryCubit({
+    required GetRootCategoriesUseCase getRootCategories,
+  }) : _getRootCategories = getRootCategories,
+        super(const CategoryState());
 
   final GetRootCategoriesUseCase _getRootCategories;
 

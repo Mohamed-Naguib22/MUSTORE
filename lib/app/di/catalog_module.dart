@@ -1,18 +1,29 @@
 import 'package:get_it/get_it.dart';
 import 'package:mustore/core/network/api/api_client.dart';
+import 'package:mustore/features/catalog/data/data_sources/remote/category/category_remote_data_source.dart';
+import 'package:mustore/features/catalog/data/data_sources/remote/category/category_remote_data_source_impl.dart';
 import 'package:mustore/features/catalog/data/data_sources/remote/product/product_remote_data_source.dart';
 import 'package:mustore/features/catalog/data/data_sources/remote/product/product_remote_data_source_impl.dart';
+import 'package:mustore/features/catalog/data/repositories/category_repository_impl.dart';
 import 'package:mustore/features/catalog/data/repositories/product_repository_impl.dart';
+import 'package:mustore/features/catalog/domain/repositories/category_repository.dart';
 import 'package:mustore/features/catalog/domain/repositories/product_repository.dart';
+import 'package:mustore/features/catalog/domain/use_cases/category/get_root_categories_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/product/get_best_seller_products_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/product/get_new_arrivals_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/product/get_previously_ordered_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/product/get_products_on_sale_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/product/get_recently_viewed_products_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/product/get_recommended_products_use_case.dart';
+import 'package:mustore/features/catalog/presentation/controllers/category/category_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_cubit.dart';
 
 void registerCatalogModule(GetIt sl) {
+  registerProductModule(sl);
+  registerCategoryModule(sl);
+}
+
+void registerProductModule(GetIt sl) {
   sl.registerLazySingleton<ProductRemoteDataSource>(
         () => ProductRemoteDataSourceImpl(apiClient: sl<ApiClient>()),
   );
@@ -31,12 +42,35 @@ void registerCatalogModule(GetIt sl) {
   sl.registerLazySingleton(() => GetProductsOnSaleUseCase(sl()));
   sl.registerLazySingleton(() => GetBestSellerProductsUseCase(sl()));
 
-  sl.registerFactory(() => ProductsCubit(
-    getRecentlyViewed: sl(),
-    getPreviouslyOrdered: sl(),
-    getNewArrivals: sl(),
-    getRecommended: sl(),
-    getOnSale: sl(),
-    getBestSeller: sl(),
-  ));
+  sl.registerFactory(
+        () => ProductsCubit(
+      getRecentlyViewed: sl(),
+      getPreviouslyOrdered: sl(),
+      getNewArrivals: sl(),
+      getRecommended: sl(),
+      getOnSale: sl(),
+      getBestSeller: sl(),
+    ),
+  );
+}
+
+void registerCategoryModule(GetIt sl) {
+  sl.registerLazySingleton<CategoryRemoteDataSource>(
+        () => CategoryRemoteDataSourceImpl(apiClient: sl<ApiClient>()),
+  );
+
+  sl.registerLazySingleton<CategoryRepository>(
+        () => CategoryRepositoryImpl(
+      remoteDataSource: sl(),
+      networkConnection: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(() => GetRootCategoriesUseCase(sl()));
+
+  sl.registerFactory(
+        () => CategoryCubit(
+      getRootCategories: sl(),
+    ),
+  );
 }
