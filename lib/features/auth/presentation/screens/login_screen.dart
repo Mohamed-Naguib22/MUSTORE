@@ -73,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       child: AuthScaffold(
+        icon: Icons.login_rounded,
         title: l10n.loginTitle,
         subtitle: l10n.loginSubtitle,
         child: Form(

@@ -68,6 +68,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
         }
       },
       child: AuthScaffold(
+        icon: Icons.mark_email_read_outlined,
         title: l10n.verifyEmailTitle,
         subtitle: l10n.verifyEmailSubtitle(_email),
         child: Form(

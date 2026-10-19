@@ -72,6 +72,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         }
       },
       child: AuthScaffold(
+        icon: Icons.lock_reset_rounded,
         title: l10n.forgetPasswordTitle,
         subtitle: l10n.forgetPasswordSubtitle,
         child: Form(

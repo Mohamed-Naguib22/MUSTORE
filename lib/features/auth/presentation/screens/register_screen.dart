@@ -95,6 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }
       },
       child: AuthScaffold(
+        icon: Icons.person_add_alt_1_rounded,
         title: l10n.registerTitle,
         subtitle: l10n.registerSubtitle(l10n.appTitle),
         child: Form(

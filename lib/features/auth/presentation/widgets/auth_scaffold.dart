@@ -4,11 +4,13 @@ import 'package:mustore/core/style/dimens/dimens.dart';
 class AuthScaffold extends StatelessWidget {
   const AuthScaffold({
     super.key,
+    required this.icon,
     required this.title,
     required this.subtitle,
     required this.child,
   });
 
+  final IconData icon;
   final String title;
   final String subtitle;
   final Widget child;
@@ -31,11 +33,31 @@ class AuthScaffold extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: text.headlineSmall?.copyWith(height: 1.25),
+                  Row(
+                    children: [
+                      Container(
+                        width: Dimens.iconLg,
+                        height: Dimens.iconLg,
+                        decoration: BoxDecoration(
+                          color: scheme.primaryContainer,
+                          borderRadius: Dimens.borderMd,
+                        ),
+                        child: Icon(
+                          icon,
+                          size: Dimens.iconMd,
+                          color: scheme.onPrimaryContainer,
+                        ),
+                      ),
+                      Dimens.gapMd,
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: text.headlineSmall?.copyWith(height: 1.25),
+                        ),
+                      ),
+                    ],
                   ),
-                  Dimens.gapSm,
+                  Dimens.gapMd,
                   Text(
                     subtitle,
                     style: text.bodyMedium?.copyWith(

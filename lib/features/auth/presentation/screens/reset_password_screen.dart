@@ -73,6 +73,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         }
       },
       child: AuthScaffold(
+        icon: Icons.password_rounded,
         title: l10n.resetPasswordTitle,
         subtitle: l10n.resetPasswordSubtitle(_email),
         child: Form(
