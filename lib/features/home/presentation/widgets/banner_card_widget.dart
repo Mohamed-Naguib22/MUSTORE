@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
+import 'package:mustore/core/widgets/cards/app_card.dart'; // adjust path if needed
 import 'package:mustore/generated/l10n.dart';
 
 class HomeBanner {
@@ -18,27 +19,23 @@ class HomeBanner {
   final List<Color> colors;
 }
 
-
 class BannerCardWidget extends StatelessWidget {
   const BannerCardWidget({super.key, required this.banner});
 
   final HomeBanner banner;
+
+  static const double _iconBadge = Dimens.iconXl + Dimens.xl;
+  static const double _buttonHeight = Dimens.xxl + Dimens.xs;
 
   @override
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
     final l10n = S.of(context);
 
-    return Container(
-      padding: const EdgeInsetsDirectional.all(Dimens.lg + Dimens.xs),
-      decoration: BoxDecoration(
-        borderRadius: Dimens.borderXl,
-        gradient: LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomEnd,
-          colors: banner.colors,
-        ),
-      ),
+    return AppCard(
+      variant: AppCardVariant.filled,
+      color: banner.colors.first,
+      padding: const EdgeInsetsDirectional.all(Dimens.xl),
       child: Row(
         children: [
           Expanded(
@@ -48,6 +45,8 @@ class BannerCardWidget extends StatelessWidget {
               children: [
                 Text(
                   banner.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: text.titleLarge?.copyWith(
                     color: AppColors.onBanner,
                     fontWeight: FontWeight.w800,
@@ -56,13 +55,17 @@ class BannerCardWidget extends StatelessWidget {
                 Dimens.gapXs,
                 Text(
                   banner.subtitle,
-                  style: text.bodyMedium?.copyWith(color: AppColors.onBannerMuted),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: text.bodyMedium?.copyWith(
+                    color: AppColors.onBannerMuted,
+                  ),
                 ),
-                Dimens.gapMd,
+                Dimens.gapLg,
                 AppButton(
                   label: l10n.homeShopNow,
                   expand: false,
-                  height: 36,
+                  height: _buttonHeight,
                   backgroundColor: AppColors.onBanner,
                   foregroundColor: banner.colors.first,
                   onPressed: () {},
@@ -70,7 +73,21 @@ class BannerCardWidget extends StatelessWidget {
               ],
             ),
           ),
-          Icon(banner.icon, size: Dimens.iconXl, color: AppColors.bannerIcon),
+          Dimens.gapMd,
+          Container(
+            width: _iconBadge,
+            height: _iconBadge,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.onBanner.withValues(alpha: 0.16),
+            ),
+            child: Icon(
+              banner.icon,
+              size: Dimens.iconLg,
+              color: AppColors.onBanner,
+            ),
+          ),
         ],
       ),
     );

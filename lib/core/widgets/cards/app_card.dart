@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
 
 enum AppCardVariant {
   elevated,
@@ -19,6 +19,7 @@ class AppCard extends StatefulWidget {
     this.margin,
     this.borderRadius = Dimens.borderLg,
     this.color,
+    this.borderColor,
     this.width,
     this.height,
   });
@@ -31,6 +32,7 @@ class AppCard extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final BorderRadius borderRadius;
   final Color? color;
+  final Color? borderColor;
 
   final double? width;
   final double? height;
@@ -61,6 +63,8 @@ class _AppCardState extends State<AppCard> {
       AppCardVariant.filled => 0.3,
     };
 
+    final border = widget.borderColor ?? s.outline.withValues(alpha: borderAlpha);
+
     Widget content = Padding(padding: widget.padding, child: widget.child);
 
     if (_interactive) {
@@ -83,7 +87,7 @@ class _AppCardState extends State<AppCard> {
       decoration: BoxDecoration(
         color: fill,
         borderRadius: widget.borderRadius,
-        border: Border.all(color: s.outline.withValues(alpha: borderAlpha)),
+        border: Border.all(color: border),
       ),
       child: ClipRRect(
         borderRadius: widget.borderRadius,

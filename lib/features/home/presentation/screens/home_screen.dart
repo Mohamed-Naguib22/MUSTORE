@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/pagination/pagination_state.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/feedback/app_message_widget.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
 import 'package:mustore/features/catalog/domain/entities/product/product.dart';
@@ -141,6 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             pageSize: _pageSize,
                           ),
                         ),
+                      ),
+                      const SliverToBoxAdapter(
+                        child: SizedBox(height: Dimens.xxxl),
                       ),
                     ],
                   ),
