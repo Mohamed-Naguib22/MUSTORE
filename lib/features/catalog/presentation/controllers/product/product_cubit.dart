@@ -5,12 +5,12 @@ import 'package:mustore/core/pagination/pagination_state.dart';
 import 'package:mustore/core/use_case/use_case.dart';
 import 'package:mustore/core/utils/mixins/safe_emit_mixin.dart';
 import 'package:mustore/features/catalog/domain/entities/product/product.dart';
-import 'package:mustore/features/catalog/domain/use_cases/get_best_seller_products_use_case.dart';
-import 'package:mustore/features/catalog/domain/use_cases/get_new_arrivals_use_case.dart';
-import 'package:mustore/features/catalog/domain/use_cases/get_previously_ordered_use_case.dart';
-import 'package:mustore/features/catalog/domain/use_cases/get_products_on_sale_use_case.dart';
-import 'package:mustore/features/catalog/domain/use_cases/get_recently_viewed_products_use_case.dart';
-import 'package:mustore/features/catalog/domain/use_cases/get_recommended_products_use_case.dart';
+import 'package:mustore/features/catalog/domain/use_cases/product/get_best_seller_products_use_case.dart';
+import 'package:mustore/features/catalog/domain/use_cases/product/get_new_arrivals_use_case.dart';
+import 'package:mustore/features/catalog/domain/use_cases/product/get_previously_ordered_use_case.dart';
+import 'package:mustore/features/catalog/domain/use_cases/product/get_products_on_sale_use_case.dart';
+import 'package:mustore/features/catalog/domain/use_cases/product/get_recently_viewed_products_use_case.dart';
+import 'package:mustore/features/catalog/domain/use_cases/product/get_recommended_products_use_case.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState>

@@ -2,8 +2,8 @@ import 'package:mustore/core/network/api/api_client.dart';
 import 'package:mustore/core/pagination/pagination_params.dart';
 import 'package:mustore/core/pagination/pagination_response_model.dart';
 import 'package:mustore/features/catalog/data/constants/product_endpoints.dart';
-import 'package:mustore/features/catalog/data/data_sources/remote/product_remote_data_source.dart';
-import 'package:mustore/features/catalog/data/models/product_model.dart';
+import 'package:mustore/features/catalog/data/data_sources/remote/product/product_remote_data_source.dart';
+import 'package:mustore/features/catalog/data/models/product/product_model.dart';
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   const ProductRemoteDataSourceImpl({required ApiClient apiClient})

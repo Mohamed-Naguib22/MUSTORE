@@ -4,7 +4,7 @@ import 'package:mustore/core/network/connectivity/network_connection.dart';
 import 'package:mustore/core/pagination/pagination_params.dart';
 import 'package:mustore/core/pagination/paginated_list.dart';
 import 'package:mustore/core/utils/mixins/network_mixin.dart';
-import 'package:mustore/features/catalog/data/data_sources/remote/product_remote_data_source.dart';
+import 'package:mustore/features/catalog/data/data_sources/remote/product/product_remote_data_source.dart';
 import 'package:mustore/features/catalog/domain/entities/product/product.dart';
 import 'package:mustore/features/catalog/domain/repositories/product_repository.dart';
 

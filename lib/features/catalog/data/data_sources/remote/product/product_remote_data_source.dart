@@ -1,6 +1,6 @@
 import 'package:mustore/core/pagination/pagination_params.dart';
 import 'package:mustore/core/pagination/pagination_response_model.dart';
-import 'package:mustore/features/catalog/data/models/product_model.dart';
+import 'package:mustore/features/catalog/data/models/product/product_model.dart';
 
 abstract interface class ProductRemoteDataSource {
   Future<PaginationResponseModel<ProductModel>> getRecentlyViewedProducts(PaginationParams params,);

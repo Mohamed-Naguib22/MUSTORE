@@ -1,4 +1,4 @@
-import 'package:mustore/features/catalog/data/models/product_sale_model.dart';
+import 'package:mustore/features/catalog/data/models/product/product_sale_model.dart';
 import 'package:mustore/features/catalog/domain/entities/product/product.dart';
 import 'package:mustore/features/catalog/domain/enums/currency.dart';
 
