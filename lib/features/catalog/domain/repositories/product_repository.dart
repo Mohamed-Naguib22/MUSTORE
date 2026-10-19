@@ -10,4 +10,5 @@ abstract interface class ProductRepository {
   Future<Either<Failure, PaginatedList<Product>>> getNewArrivals(PaginationParams params,);
   Future<Either<Failure, PaginatedList<Product>>> getRecommendedProducts(PaginationParams params,);
   Future<Either<Failure, PaginatedList<Product>>> getProductsOnSale(PaginationParams params,);
+  Future<Either<Failure, PaginatedList<Product>>> bestSellerProducts(PaginationParams params,);
 }

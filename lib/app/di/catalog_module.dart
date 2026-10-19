@@ -4,6 +4,7 @@ import 'package:mustore/features/catalog/data/data_sources/remote/product_remote
 import 'package:mustore/features/catalog/data/data_sources/remote/product_remote_data_source_impl.dart';
 import 'package:mustore/features/catalog/data/repositories/product_repository_impl.dart';
 import 'package:mustore/features/catalog/domain/repositories/product_repository.dart';
+import 'package:mustore/features/catalog/domain/use_cases/get_best_seller_products_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/get_new_arrivals_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/get_previously_ordered_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/get_products_on_sale_use_case.dart';
@@ -28,6 +29,7 @@ void registerCatalogModule(GetIt sl) {
   sl.registerLazySingleton(() => GetNewArrivalsUseCase(sl()));
   sl.registerLazySingleton(() => GetRecommendedProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetProductsOnSaleUseCase(sl()));
+  sl.registerLazySingleton(() => GetBestSellerProductsUseCase(sl()));
 
   sl.registerFactory(() => ProductsCubit(
     getRecentlyViewed: sl(),
@@ -35,5 +37,6 @@ void registerCatalogModule(GetIt sl) {
     getNewArrivals: sl(),
     getRecommended: sl(),
     getOnSale: sl(),
+    getBestSeller: sl(),
   ));
 }

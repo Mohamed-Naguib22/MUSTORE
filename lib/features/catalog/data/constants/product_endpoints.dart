@@ -9,4 +9,5 @@ abstract final class ProductEndpoints {
   static const String newArrivals = 'GetNewArrivals';
   static const String recommendedProducts = 'GetRecommendedProducts';
   static const String productsOnSale = 'GetProductsOnSale';
+  static const String bestSellerProducts = 'GetBestSellerProducts';
 }

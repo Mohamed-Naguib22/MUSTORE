@@ -5,6 +5,7 @@ import 'package:mustore/core/pagination/pagination_state.dart';
 import 'package:mustore/core/use_case/use_case.dart';
 import 'package:mustore/core/utils/mixins/safe_emit_mixin.dart';
 import 'package:mustore/features/catalog/domain/entities/product/product.dart';
+import 'package:mustore/features/catalog/domain/use_cases/get_best_seller_products_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/get_new_arrivals_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/get_previously_ordered_use_case.dart';
 import 'package:mustore/features/catalog/domain/use_cases/get_products_on_sale_use_case.dart';
@@ -20,11 +21,13 @@ class ProductsCubit extends Cubit<ProductsState>
     required GetNewArrivalsUseCase getNewArrivals,
     required GetRecommendedProductsUseCase getRecommended,
     required GetProductsOnSaleUseCase getOnSale,
+    required GetBestSellerProductsUseCase getBestSeller,
   })  : _getRecentlyViewed = getRecentlyViewed,
         _getPreviouslyOrdered = getPreviouslyOrdered,
         _getNewArrivals = getNewArrivals,
         _getRecommended = getRecommended,
         _getOnSale = getOnSale,
+        _getBestSeller = getBestSeller,
         super(ProductsState());
 
   final GetRecentlyViewedProductsUseCase _getRecentlyViewed;
@@ -32,6 +35,7 @@ class ProductsCubit extends Cubit<ProductsState>
   final GetNewArrivalsUseCase _getNewArrivals;
   final GetRecommendedProductsUseCase _getRecommended;
   final GetProductsOnSaleUseCase _getOnSale;
+  final GetBestSellerProductsUseCase _getBestSeller;
 
   Future<void> fetchRecentlyViewed({bool loadMore = false}) => _fetch(
     current: state.recentlyViewed,
@@ -64,6 +68,13 @@ class ProductsCubit extends Cubit<ProductsState>
   Future<void> fetchOnSale({bool loadMore = false}) => _fetch(
     current: state.onSale,
     useCase: _getOnSale,
+    update: (s) => state.copyWith(onSale: s),
+    loadMore: loadMore,
+  );
+
+  Future<void> fetchBestSeller({bool loadMore = false}) => _fetch(
+    current: state.onSale,
+    useCase: _getBestSeller,
     update: (s) => state.copyWith(onSale: s),
     loadMore: loadMore,
   );

@@ -8,4 +8,5 @@ abstract interface class ProductRemoteDataSource {
   Future<PaginationResponseModel<ProductModel>> getNewArrivals(PaginationParams params,);
   Future<PaginationResponseModel<ProductModel>> getRecommendedProducts(PaginationParams params,);
   Future<PaginationResponseModel<ProductModel>> getProductsOnSale(PaginationParams params,);
+  Future<PaginationResponseModel<ProductModel>> bestSellerProducts(PaginationParams params,);
 }

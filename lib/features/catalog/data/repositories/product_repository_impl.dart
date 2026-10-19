@@ -48,4 +48,10 @@ class ProductRepositoryImpl with NetworkMixin implements ProductRepository {
       PaginationParams params) =>
       onlineOnly<PaginatedList<Product>>(
               () => _remote.getProductsOnSale(params));
+
+  @override
+  Future<Either<Failure, PaginatedList<Product>>> bestSellerProducts(
+      PaginationParams params) =>
+      onlineOnly<PaginatedList<Product>>(
+              () => _remote.bestSellerProducts(params));
 }

@@ -36,6 +36,11 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       PaginationParams params) =>
       _getProducts(ProductEndpoints.productsOnSale, params);
 
+  @override
+  Future<PaginationResponseModel<ProductModel>> bestSellerProducts(
+      PaginationParams params) =>
+      _getProducts(ProductEndpoints.bestSellerProducts, params);
+
   Future<PaginationResponseModel<ProductModel>> _getProducts(
       String endpoint,
       PaginationParams params,
