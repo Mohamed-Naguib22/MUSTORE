@@ -5,6 +5,7 @@ import 'package:mustore/app/app_page.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
+import 'package:mustore/core/validators/app_validators.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/buttons/app_text_button.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
@@ -113,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         autofillHints: const [AutofillHints.givenName],
-                        validator: (v) => AuthValidators.required(v, l10n.fieldRequired),
+                        validator: AppValidators.required(l10n.fieldRequired),
                       ),
                     ),
                     Dimens.gapMd,
@@ -126,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         autofillHints: const [AutofillHints.familyName],
-                        validator: (v) => AuthValidators.required(v, l10n.fieldRequired),
+                        validator: AppValidators.required(l10n.fieldRequired),
                       ),
                     ),
                   ],
@@ -141,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   textInputAction: TextInputAction.next,
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.email],
-                  validator: AuthValidators.email(l10n),
+                  validator: AppValidators.email(l10n),
                 ),
                 Dimens.gapLg,
                 AppTextField(
@@ -153,7 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   textInputAction: TextInputAction.next,
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.telephoneNumber],
-                  validator: (v) => AuthValidators.required(v, l10n.authPhoneRequired),
+                  validator: AppValidators.required(l10n.authPhoneRequired),
                 ),
                 Dimens.gapLg,
                 AppDropdownField<Gender>(
@@ -177,7 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   textInputAction: TextInputAction.next,
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.newPassword],
-                  validator: AuthValidators.password(l10n),
+                  validator: AppValidators.password(l10n),
                 ),
                 Dimens.gapLg,
                 AppTextField(

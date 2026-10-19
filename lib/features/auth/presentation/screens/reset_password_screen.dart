@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
+import 'package:mustore/core/validators/app_validators.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/buttons/app_text_button.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
@@ -86,8 +87,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 textDirection: TextDirection.ltr,
-                validator: (v) =>
-                    AuthValidators.required(v, l10n.authOtpRequired),
+                validator: AppValidators.required(l10n.authOtpRequired),
               ),
               Dimens.gapLg,
               AppTextField(
@@ -99,7 +99,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 textInputAction: TextInputAction.next,
                 textDirection: TextDirection.ltr,
                 autofillHints: const [AutofillHints.newPassword],
-                validator: AuthValidators.password(l10n),
+                validator: AppValidators.password(l10n),
               ),
               Dimens.gapLg,
               AppTextField(

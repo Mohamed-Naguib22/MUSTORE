@@ -5,6 +5,7 @@ import 'package:mustore/app/app_page.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
+import 'package:mustore/core/validators/app_validators.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/buttons/app_text_button.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
@@ -88,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textInputAction: TextInputAction.next,
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.email],
-                  validator: AuthValidators.email(l10n),
+                  validator: AppValidators.email(l10n),
                 ),
                 Dimens.gapLg,
                 AppTextField(
@@ -101,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textDirection: TextDirection.ltr,
                   autofillHints: const [AutofillHints.password],
                   onSubmitted: (_) => _submit(),
-                  validator: (v) => AuthValidators.required(v, l10n.authPasswordRequired),
+                  validator: AppValidators.required(l10n.authPasswordRequired),
                 ),
                 Align(
                   alignment: AlignmentDirectional.centerEnd,

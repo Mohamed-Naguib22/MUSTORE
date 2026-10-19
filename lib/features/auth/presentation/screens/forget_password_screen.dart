@@ -5,6 +5,7 @@ import 'package:mustore/app/app_page.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
+import 'package:mustore/core/validators/app_validators.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/buttons/app_text_button.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
@@ -87,7 +88,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 textDirection: TextDirection.ltr,
                 autofillHints: const [AutofillHints.email],
                 onSubmitted: (_) => _submit(),
-                validator: AuthValidators.email(l10n),
+                validator: AppValidators.email(l10n),
               ),
               Dimens.gapXl,
               _SendButton(onPressed: _submit),
