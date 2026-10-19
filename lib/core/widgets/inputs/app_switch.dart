@@ -7,16 +7,21 @@ class AppSwitch extends StatelessWidget {
     required this.value,
     required this.onChanged,
     this.activeColor,
+    this.activeThumb,
+    this.inactiveThumb,
   });
 
   final bool value;
   final ValueChanged<bool>? onChanged;
   final Color? activeColor;
 
-  static const _width = 48.0;
-  static const _height = 28.0;
-  static const _thumb = 22.0;
-  static const _pad = 3.0;
+  final Widget? activeThumb;
+  final Widget? inactiveThumb;
+
+  static const _width = Dimens.xxxl + Dimens.xs;
+  static const _height = Dimens.xxl;
+  static const _pad = Dimens.xxs;
+  static const _thumb = _height - 2 * _pad - 2;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,8 @@ class AppSwitch extends StatelessWidget {
     final track = value ? (activeColor ?? s.primary) : s.surfaceContainerHighest;
     final border = value ? (activeColor ?? s.primary) : s.outline;
     final thumb = value ? s.onPrimary : s.onSurfaceVariant;
-    final thumbSize = value ? _thumb : _thumb - Dimens.xs;
+    final content = value ? activeThumb : inactiveThumb;
+    final thumbSize = (value || content != null) ? _thumb : _thumb - Dimens.xs;
 
     return Semantics(
       toggled: value,
@@ -64,10 +70,21 @@ class AppSwitch extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: s.shadow.withValues(alpha: 0.2),
-                      blurRadius: 3,
+                      blurRadius: 4,
                       offset: const Offset(0, 1),
                     ),
                   ],
+                ),
+                child: content == null
+                    ? null
+                    : ClipOval(
+                  child: AnimatedSwitcher(
+                    duration: Dimens.fast,
+                    child: SizedBox.expand(
+                      key: ValueKey(value),
+                      child: content,
+                    ),
+                  ),
                 ),
               ),
             ),

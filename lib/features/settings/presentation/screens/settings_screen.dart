@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/services/localization/language_codes.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/utils/constants/app_assets.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
-import 'package:mustore/core/widgets/buttons/app_button.dart';
-import 'package:mustore/core/widgets/cards/app_card.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
 import 'package:mustore/core/widgets/inputs/app_switch.dart';
+import 'package:mustore/core/widgets/media/app_asset.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
@@ -39,8 +39,7 @@ class SettingsScreen extends StatelessWidget {
         ),
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(
-        buildWhen: (p, c) =>
-        p.themeMode != c.themeMode || p.locale != c.locale,
+        buildWhen: (p, c) => p.themeMode != c.themeMode || p.locale != c.locale,
         builder: (context, state) {
           final cubit = context.read<SettingsCubit>();
           final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -54,20 +53,56 @@ class SettingsScreen extends StatelessWidget {
                 title: l10n.settingsTheme,
                 children: [
                   _SwitchTile(
+                    leading: _LeadingBox(
+                      child: AnimatedSwitcher(
+                        duration: Dimens.fast,
+                        transitionBuilder: (child, anim) => ScaleTransition(
+                          scale: anim,
+                          child: FadeTransition(opacity: anim, child: child),
+                        ),
+                        child: Icon(
+                          isDark
+                              ? Icons.dark_mode_rounded
+                              : Icons.light_mode_rounded,
+                          key: ValueKey(isDark),
+                        ),
+                      ),
+                    ),
                     title: l10n.themeDark,
                     value: isDark,
-                    onChanged: (v) => cubit
-                        .changeTheme(v ? ThemeMode.dark : ThemeMode.light),
+                    onChanged: (v) =>
+                        cubit.changeTheme(v ? ThemeMode.dark : ThemeMode.light),
                   ),
                 ],
               ),
               Dimens.gapXl,
-              _SwitchTile(
-                title: LanguageCodes.arabicLabel,
-                value: isArabic,
-                onChanged: (v) => cubit.changeLocale(
-                  v ? LanguageCodes.arabic : LanguageCodes.english,
-                ),
+              _Section(
+                title: l10n.settingsLanguage,
+                children: [
+                  _SwitchTile(
+                    leading: _LeadingBox(
+                      transparent: true,
+                      child: ClipRRect(
+                        borderRadius: Dimens.borderSm,
+                        child: SizedBox(
+                          width: Dimens.xxl,
+                          height: Dimens.xl,
+                          child: AppAsset(
+                            isArabic ? AppAssets.flagEg : AppAssets.flagEn,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    title: isArabic
+                        ? LanguageCodes.arabicLabel
+                        : LanguageCodes.englishLabel,
+                    value: isArabic,
+                    onChanged: (v) => cubit.changeLocale(
+                      v ? LanguageCodes.arabic : LanguageCodes.english,
+                    ),
+                  ),
+                ],
               ),
               const _LogoutSection(),
             ],
@@ -79,10 +114,12 @@ class SettingsScreen extends StatelessWidget {
 }
 
 class _Section extends StatelessWidget {
-  const _Section({required this.title, required this.children});
+  const _Section({required this.children, this.title});
 
-  final String title;
+  final String? title;
   final List<Widget> children;
+
+  static const double _dividerInset = Dimens.lg + Dimens.iconLg + Dimens.md;
 
   @override
   Widget build(BuildContext context) {
@@ -92,27 +129,35 @@ class _Section extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsetsDirectional.only(
-            start: Dimens.xs,
-            bottom: Dimens.sm,
-          ),
-          child: Text(
-            title,
-            style: theme.textTheme.titleSmall?.copyWith(
-              color: cs.onSurfaceVariant,
-              fontWeight: FontWeight.w600,
+        if (title != null)
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+              start: Dimens.sm,
+              bottom: Dimens.sm,
+            ),
+            child: Text(
+              title!,
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: cs.onSurfaceVariant,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
-        ),
-        AppCard(
-          variant: AppCardVariant.outlined,
+        Material(
           color: cs.surface,
-          padding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: Dimens.borderLg,
+            side: BorderSide(color: cs.outlineVariant),
+          ),
           child: Column(
             children: [
               for (var i = 0; i < children.length; i++) ...[
-                if (i > 0) Divider(height: 1, color: cs.outline),
+                if (i > 0)
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(start: _dividerInset),
+                    child: Divider(),
+                  ),
                 children[i],
               ],
             ],
@@ -123,34 +168,116 @@ class _Section extends StatelessWidget {
   }
 }
 
+class _TileRow extends StatelessWidget {
+  const _TileRow({
+    required this.title,
+    this.leading,
+    this.trailing,
+    this.titleColor,
+    this.onTap,
+  });
+
+  final Widget? leading;
+  final String title;
+  final Widget? trailing;
+  final Color? titleColor;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return MergeSemantics(
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: Dimens.lg,
+            vertical: Dimens.md,
+          ),
+          child: Row(
+            children: [
+              if (leading != null) ...[
+                leading!,
+                Dimens.gapMd,
+              ],
+              Expanded(
+                child: Text(
+                  title,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: titleColor,
+                  ),
+                ),
+              ),
+              if (trailing != null) ...[
+                Dimens.gapMd,
+                trailing!,
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _SwitchTile extends StatelessWidget {
   const _SwitchTile({
     required this.title,
     required this.value,
     required this.onChanged,
+    this.leading,
   });
 
+  final Widget? leading;
   final String title;
   final bool value;
   final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return InkWell(
+    return _TileRow(
+      leading: leading,
+      title: title,
       onTap: () => onChanged(!value),
-      child: Padding(
-        padding: Dimens.listTile,
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(title, style: theme.textTheme.bodyLarge),
-            ),
-            Dimens.gapMd,
-            AppSwitch(value: value, onChanged: onChanged),
-          ],
+      trailing: AppSwitch(value: value, onChanged: onChanged),
+    );
+  }
+}
+
+class _LeadingBox extends StatelessWidget {
+  const _LeadingBox({
+    required this.child,
+    this.transparent = false,
+    this.color,
+    this.foreground,
+  });
+
+  final Widget child;
+  final bool transparent;
+  final Color? color;
+  final Color? foreground;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
+    return Container(
+      width: Dimens.iconLg,
+      height: Dimens.iconLg,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: transparent ? null : (color ?? cs.primaryContainer),
+        borderRadius: Dimens.borderMd,
+        border: transparent ? Border.all(color: cs.outlineVariant) : null,
+      ),
+      child: IconTheme(
+        data: IconThemeData(
+          color: foreground ?? cs.onPrimaryContainer,
+          size: Dimens.iconMd,
         ),
+        child: child,
       ),
     );
   }
@@ -161,6 +288,8 @@ class _LogoutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
     final signedIn = context.select(
           (AuthCubit c) => c.state.authStatus == AuthStatus.authenticated,
     );
@@ -175,11 +304,29 @@ class _LogoutSection extends StatelessWidget {
     return Column(
       children: [
         Dimens.gapXl,
-        AppButton(
-          label: S.of(context).authLogOut,
-          variant: AppButtonVariant.danger,
-          isLoading: isLoading,
-          onPressed: () => context.read<AuthCubit>().logout(),
+        _Section(
+          children: [
+            _TileRow(
+              leading: _LeadingBox(
+                color: cs.errorContainer,
+                foreground: cs.onErrorContainer,
+                child: const Icon(Icons.logout_rounded),
+              ),
+              title: S.of(context).authLogOut,
+              titleColor: cs.error,
+              onTap: isLoading ? null : () => context.read<AuthCubit>().logout(),
+              trailing: isLoading
+                  ? SizedBox(
+                width: Dimens.iconMd,
+                height: Dimens.iconMd,
+                child: CircularProgressIndicator(
+                  strokeWidth: Dimens.xxs,
+                  color: cs.error,
+                ),
+              )
+                  : null,
+            ),
+          ],
         ),
       ],
     );

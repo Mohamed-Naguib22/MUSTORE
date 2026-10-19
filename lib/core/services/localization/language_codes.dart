@@ -8,4 +8,5 @@ abstract final class LanguageCodes {
   static const english = Locale(en);
 
   static const arabicLabel = 'العربية';
+  static const englishLabel = 'English';
 }
