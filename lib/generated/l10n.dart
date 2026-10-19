@@ -610,10 +610,10 @@ class S {
     );
   }
 
-  /// `Enter your first name`
+  /// `e.g. John`
   String get authFirstNameHint {
     return Intl.message(
-      'Enter your first name',
+      'e.g. John',
       name: 'authFirstNameHint',
       desc: '',
       args: [],
@@ -630,10 +630,10 @@ class S {
     );
   }
 
-  /// `Enter your last name`
+  /// `e.g. Doe`
   String get authLastNameHint {
     return Intl.message(
-      'Enter your last name',
+      'e.g. Doe',
       name: 'authLastNameHint',
       desc: '',
       args: [],

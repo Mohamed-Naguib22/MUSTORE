@@ -50,8 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "authEmailRequired":
             MessageLookupByLibrary.simpleMessage("Email is required"),
         "authFirstName": MessageLookupByLibrary.simpleMessage("First name"),
-        "authFirstNameHint":
-            MessageLookupByLibrary.simpleMessage("Enter your first name"),
+        "authFirstNameHint": MessageLookupByLibrary.simpleMessage("e.g. John"),
         "authForgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot password?"),
         "authGender": MessageLookupByLibrary.simpleMessage("Gender"),
@@ -62,8 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "authHaveAccount":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "authLastName": MessageLookupByLibrary.simpleMessage("Last name"),
-        "authLastNameHint":
-            MessageLookupByLibrary.simpleMessage("Enter your last name"),
+        "authLastNameHint": MessageLookupByLibrary.simpleMessage("e.g. Doe"),
         "authLogIn": MessageLookupByLibrary.simpleMessage("Log in"),
         "authLogOut": MessageLookupByLibrary.simpleMessage("Log out"),
         "authNewPassword": MessageLookupByLibrary.simpleMessage("New password"),

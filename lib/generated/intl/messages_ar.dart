@@ -50,8 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "authEmailRequired":
             MessageLookupByLibrary.simpleMessage("البريد الإلكتروني مطلوب"),
         "authFirstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
-        "authFirstNameHint":
-            MessageLookupByLibrary.simpleMessage("أدخل اسمك الأول"),
+        "authFirstNameHint": MessageLookupByLibrary.simpleMessage("مثال: محمد"),
         "authForgotPassword":
             MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
         "authGender": MessageLookupByLibrary.simpleMessage("النوع"),
@@ -61,8 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "authHaveAccount":
             MessageLookupByLibrary.simpleMessage("لديك حساب بالفعل؟"),
         "authLastName": MessageLookupByLibrary.simpleMessage("اسم العائلة"),
-        "authLastNameHint":
-            MessageLookupByLibrary.simpleMessage("أدخل اسم العائلة"),
+        "authLastNameHint": MessageLookupByLibrary.simpleMessage("مثال: أحمد"),
         "authLogIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "authLogOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "authNewPassword":
