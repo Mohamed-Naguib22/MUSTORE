@@ -78,6 +78,6 @@ String? _redirect(AuthStatus auth, Uri uri) {
     case AccessLevel.guestOnly:
       return signedIn ? AppPage.home.path : null;
     case AccessLevel.authenticated:
-      return signedIn ? null : AppPage.login.path;
+      return signedIn ? null : AppPage.signInRequired.path;
   }
 }

@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^3.11.0
   firebase_auth: ^5.7.0
   flutter_svg: ^2.3.0
+  lottie: ^3.6.1
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +46,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/flags/
+    - assets/lottie/
 
 flutter_intl:
   enabled: true

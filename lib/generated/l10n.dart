@@ -440,6 +440,46 @@ class S {
     );
   }
 
+  /// `Sign in to continue`
+  String get signInRequiredTitle {
+    return Intl.message(
+      'Sign in to continue',
+      name: 'signInRequiredTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You need an account to access this page. Log in or create one to get started.`
+  String get signInRequiredMessage {
+    return Intl.message(
+      'You need an account to access this page. Log in or create one to get started.',
+      name: 'signInRequiredMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in`
+  String get signInRequiredAction {
+    return Intl.message(
+      'Log in',
+      name: 'signInRequiredAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create an account`
+  String get signInRequiredSignUp {
+    return Intl.message(
+      'Create an account',
+      name: 'signInRequiredSignUp',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Verify your email`
   String get verifyEmailTitle {
     return Intl.message(

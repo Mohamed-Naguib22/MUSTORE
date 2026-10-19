@@ -5,6 +5,7 @@ import 'package:mustore/features/auth/presentation/screens/forget_password_scree
 import 'package:mustore/features/auth/presentation/screens/login_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/register_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/reset_password_screen.dart';
+import 'package:mustore/features/auth/presentation/screens/sign_in_required_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/verify_email_screen.dart';
 import 'package:mustore/features/catalog/presentation/screens/categories_screen.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
@@ -33,6 +34,9 @@ enum AppPage {
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   resetPassword('/reset-password', AccessLevel.guestOnly, ResetPasswordScreen.new,
+      parent: home, fullScreen: true, appBar: AppBarMode.none),
+
+  signInRequired('/sign-in-required', AccessLevel.guestOnly, SignInRequiredScreen.new,
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   home('/', AccessLevel.public, HomeScreen.new,
@@ -90,7 +94,8 @@ enum AppPage {
   final AppBarMode appBar;
 
   String titleOf(S l10n) => switch (this) {
-    splash || login || register || verifyEmail || forgetPassword || resetPassword => '',
+    splash || login || register || verifyEmail ||
+    forgetPassword || resetPassword || signInRequired => '',
     home => l10n.navHome,
     cart => l10n.navCart,
     categories => l10n.navCategories,
@@ -106,7 +111,8 @@ enum AppPage {
           this == register ||
           this == verifyEmail ||
           this == forgetPassword ||
-          this == resetPassword;
+          this == resetPassword ||
+          this == signInRequired;
 
   String get localPath {
     if (parent == null) return path;

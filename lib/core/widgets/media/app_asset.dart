@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 
 class AppAsset extends StatelessWidget {
   const AppAsset(
@@ -10,6 +11,8 @@ class AppAsset extends StatelessWidget {
         this.color,
         this.fit = BoxFit.contain,
         this.semanticLabel,
+        this.repeat = true,
+        this.animate = true,
       });
 
   final String path;
@@ -18,8 +21,12 @@ class AppAsset extends StatelessWidget {
   final Color? color;
   final BoxFit fit;
   final String? semanticLabel;
+  final bool repeat;
+  final bool animate;
 
-  bool get _isSvg => path.toLowerCase().endsWith('.svg');
+  String get _ext => path.toLowerCase();
+  bool get _isSvg => _ext.endsWith('.svg');
+  bool get _isLottie => _ext.endsWith('.json') || _ext.endsWith('.lottie');
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +39,31 @@ class AppAsset extends StatelessWidget {
         semanticsLabel: semanticLabel,
         colorFilter:
         color == null ? null : ColorFilter.mode(color!, BlendMode.srcIn),
+      );
+    }
+
+    if (_isLottie) {
+      return Semantics(
+        label: semanticLabel,
+        image: true,
+        child: Lottie.asset(
+          path,
+          width: width,
+          height: height,
+          fit: fit,
+          repeat: repeat,
+          animate: animate,
+          delegates: color == null
+              ? null
+              : LottieDelegates(
+            values: [
+              ValueDelegate.colorFilter(
+                const ['**'],
+                value: ColorFilter.mode(color!, BlendMode.srcATop),
+              ),
+            ],
+          ),
+        ),
       );
     }
 

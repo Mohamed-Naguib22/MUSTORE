@@ -176,6 +176,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsAccount": MessageLookupByLibrary.simpleMessage("الحساب"),
         "settingsLanguage": MessageLookupByLibrary.simpleMessage("اللغة"),
         "settingsTheme": MessageLookupByLibrary.simpleMessage("المظهر"),
+        "signInRequiredAction":
+            MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "signInRequiredMessage": MessageLookupByLibrary.simpleMessage(
+            "تحتاج إلى حساب للوصول إلى هذه الصفحة. سجّل الدخول أو أنشئ حسابًا للبدء."),
+        "signInRequiredSignUp":
+            MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
+        "signInRequiredTitle":
+            MessageLookupByLibrary.simpleMessage("سجّل الدخول للمتابعة"),
         "themeDark": MessageLookupByLibrary.simpleMessage("داكن"),
         "themeLight": MessageLookupByLibrary.simpleMessage("فاتح"),
         "themeSystem": MessageLookupByLibrary.simpleMessage("النظام"),

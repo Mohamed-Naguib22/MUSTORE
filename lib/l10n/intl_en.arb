@@ -45,6 +45,11 @@
   "authOtpRequired": "Verification code is required",
   "authOtp": "Verification code",
 
+  "signInRequiredTitle": "Sign in to continue",
+  "signInRequiredMessage": "You need an account to access this page. Log in or create one to get started.",
+  "signInRequiredAction": "Log in",
+  "signInRequiredSignUp": "Create an account",
+
   "verifyEmailTitle": "Verify your email",
   "verifyEmailSubtitle": "Enter the code we sent to {email}",
   "verifyEmailButton": "Verify",

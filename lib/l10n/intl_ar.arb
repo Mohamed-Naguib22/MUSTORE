@@ -46,6 +46,11 @@
   "authOtpRequired": "رمز التحقق مطلوب",
   "authOr": "أو",
   "authContinueWithGoogle": "المتابعة باستخدام جوجل",
+  "signInRequiredSignUp": "إنشاء حساب",
+
+  "signInRequiredTitle": "سجّل الدخول للمتابعة",
+  "signInRequiredMessage": "تحتاج إلى حساب للوصول إلى هذه الصفحة. سجّل الدخول أو أنشئ حسابًا للبدء.",
+  "signInRequiredAction": "تسجيل الدخول",
 
   "verifyEmailTitle": "تأكيد البريد الإلكتروني",
   "verifyEmailSubtitle": "أدخل الرمز الذي أرسلناه إلى {email}",

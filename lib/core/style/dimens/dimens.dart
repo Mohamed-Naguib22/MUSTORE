@@ -45,6 +45,8 @@ abstract final class Dimens {
   static const double iconLg = 40;
   static const double iconXl = 72;
 
+  static const double illustration = 220;
+
   static const double buttonHeight = 48;
 
   static const Duration fast = Duration(milliseconds: 150);
