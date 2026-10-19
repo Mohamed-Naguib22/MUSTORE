@@ -27,6 +27,21 @@ class Product extends Equatable {
     this.sale,
   });
 
+  const Product.fake({int index = 0})
+      : id = 'placeholder_$index',
+        name = 'Product placeholder name',
+        description = null,
+        price = 1000,
+        rating = 4.5,
+        numberOfReviews = 0,
+        isAddedToWishlist = false,
+        currency = CurrencyCode.egp,
+        imageUrl = '',
+        sale = null;
+
+  static List<Product> fakeList([int count = 6]) =>
+      List.generate(count, (i) => Product.fake(index: i));
+
   @override
   List<Object?> get props => [
     id,
