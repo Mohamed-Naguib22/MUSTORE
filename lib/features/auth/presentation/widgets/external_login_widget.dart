@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/utils/constants/app_assets.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
+import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
+import 'package:mustore/core/widgets/media/app_asset.dart';
 import 'package:mustore/features/auth/domain/enums/login_provider.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
 import 'package:mustore/generated/l10n.dart';
 
-class ExternalLoginSectionWidget extends StatelessWidget {
-  const ExternalLoginSectionWidget({super.key});
+class ExternalLoginWidget extends StatelessWidget {
+  const ExternalLoginWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,20 +72,17 @@ class _GoogleButton extends StatelessWidget {
           c.state.status == RequestStatus.loading,
     );
 
-    return SizedBox(
-      width: double.infinity,
-      child: OutlinedButton.icon(
-        onPressed: isLoading
-            ? null
-            : () => context.read<AuthCubit>().externalLogin(LoginProvider.google),
-        icon: isLoading
-            ? const SizedBox.square(
-          dimension: 18,
-          child: CircularProgressIndicator(strokeWidth: 2),
-        )
-            : const Icon(Icons.g_mobiledata_rounded, size: 28),
-        label: Text(S.of(context).authContinueWithGoogle),
+    return AppButton(
+      label: S.of(context).authContinueWithGoogle,
+      variant: AppButtonVariant.tonal,
+      foregroundColor: Theme.of(context).colorScheme.onSurface,
+      isLoading: isLoading,
+      leading: const AppAsset(
+        AppAssets.google,
+        width: Dimens.iconMd - Dimens.xs,
+        height: Dimens.iconMd - Dimens.xs,
       ),
+      onPressed: () => context.read<AuthCubit>().externalLogin(LoginProvider.google),
     );
   }
 }

@@ -33,7 +33,6 @@ class AppButton extends StatefulWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
   final bool expand;
-
   final double height;
   final BorderRadius borderRadius;
 
@@ -73,10 +72,10 @@ class _AppButtonState extends State<AppButton> {
   List<BoxShadow> _shadows(Color bg, bool elevated, Color shadowColor) {
     if (!elevated) return const [];
     final (blur, dy, alpha) = _pressed
-        ? (4.0, 1.0, 0.25)
+        ? (2.0, 1.0, 0.12)
         : _hovered
-        ? (18.0, 8.0, 0.40)
-        : (12.0, 4.0, 0.32);
+        ? (10.0, 4.0, 0.22)
+        : (6.0, 2.0, 0.18);
     final custom = widget.backgroundColor != null;
     return [
       BoxShadow(
