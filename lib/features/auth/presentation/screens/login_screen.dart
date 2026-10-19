@@ -6,12 +6,13 @@ import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
+import 'package:mustore/core/widgets/buttons/app_text_button.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
 import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
 import 'package:mustore/features/auth/presentation/widgets/auth_scaffold.dart';
-import 'package:mustore/features/auth/presentation/widgets/external_login_section_widget.dart';
+import 'package:mustore/features/auth/presentation/widgets/external_login_widget.dart';
 import 'package:mustore/generated/l10n.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -104,15 +105,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Align(
                   alignment: AlignmentDirectional.centerEnd,
-                  child: TextButton(
+                  child: AppTextButton(
+                    label: l10n.authForgotPassword,
                     onPressed: _openForgetPassword,
-                    child: Text(l10n.authForgotPassword),
+                    compact: true,
                   ),
                 ),
                 Dimens.gapSm,
                 _LoginButton(onPressed: _submit),
                 Dimens.gapXl,
-                const ExternalLoginSectionWidget(),
+                const ExternalLoginWidget(),
                 Dimens.gapXl,
                 Wrap(
                   alignment: WrapAlignment.center,
@@ -124,9 +126,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
-                    TextButton(
+                    AppTextButton(
+                      label: l10n.authSignUp,
                       onPressed: _openRegister,
-                      child: Text(l10n.authSignUp),
+                      compact: true,
                     ),
                   ],
                 ),

@@ -10,6 +10,7 @@ class AppButton extends StatefulWidget {
     required this.label,
     required this.onPressed,
     this.icon,
+    this.leading,
     this.trailingIcon,
     this.variant = AppButtonVariant.primary,
     this.isLoading = false,
@@ -22,10 +23,9 @@ class AppButton extends StatefulWidget {
   });
 
   final String label;
-
   final VoidCallback? onPressed;
-
   final IconData? icon;
+  final Widget? leading;
   final IconData? trailingIcon;
   final AppButtonVariant variant;
   final bool isLoading;
@@ -109,7 +109,10 @@ class _AppButtonState extends State<AppButton> {
       mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (widget.icon != null) ...[
+        if (widget.leading != null) ...[
+          widget.leading!,
+          Dimens.gapSm,
+        ] else if (widget.icon != null) ...[
           Icon(widget.icon, size: Dimens.iconMd - Dimens.xs, color: c.fg),
           Dimens.gapSm,
         ],

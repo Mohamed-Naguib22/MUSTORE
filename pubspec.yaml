@@ -32,6 +32,7 @@ dependencies:
   google_fonts: ^8.2.1
   firebase_core: ^3.11.0
   firebase_auth: ^5.7.0
+  flutter_svg: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +42,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/
 
 flutter_intl:
   enabled: true

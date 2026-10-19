@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/widgets/buttons/app_text_button.dart';
 import 'package:mustore/generated/l10n.dart';
 
 class HomeSectionHeaderWidget extends StatelessWidget {
@@ -24,17 +25,10 @@ class HomeSectionHeaderWidget extends StatelessWidget {
             ),
           ),
           if (onSeeAll != null)
-            TextButton(
+            AppTextButton(
+              label: S.of(context).homeSeeAll,
               onPressed: onSeeAll,
-              style: TextButton.styleFrom(
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: Dimens.sm,
-                  vertical: Dimens.xs,
-                ),
-              ),
-              child: Text(S.of(context).homeSeeAll),
+              compact: true,
             ),
         ],
       ),

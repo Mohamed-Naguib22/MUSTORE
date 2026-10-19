@@ -6,6 +6,7 @@ import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
+import 'package:mustore/core/widgets/buttons/app_text_button.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
 import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/auth/domain/params/forget_password_params.dart';
@@ -101,9 +102,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
-                  TextButton(
+                  AppTextButton(
+                    label: l10n.authLogIn,
                     onPressed: _openLogin,
-                    child: Text(l10n.authLogIn),
+                    compact: true,
                   ),
                 ],
               ),

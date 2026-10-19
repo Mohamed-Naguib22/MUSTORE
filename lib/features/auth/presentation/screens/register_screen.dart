@@ -6,13 +6,14 @@ import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
+import 'package:mustore/core/widgets/buttons/app_text_button.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
 import 'package:mustore/core/widgets/inputs/app_dropdown_field.dart';
 import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
 import 'package:mustore/features/auth/presentation/widgets/auth_scaffold.dart';
-import 'package:mustore/features/auth/presentation/widgets/external_login_section_widget.dart';
+import 'package:mustore/features/auth/presentation/widgets/external_login_widget.dart';
 import 'package:mustore/features/profile/domain/enums/gender.dart';
 import 'package:mustore/generated/l10n.dart';
 
@@ -193,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Dimens.gapXl,
                 _RegisterButton(onPressed: _submit),
                 Dimens.gapXl,
-                const ExternalLoginSectionWidget(),
+                const ExternalLoginWidget(),
                 Dimens.gapXl,
                 Wrap(
                   alignment: WrapAlignment.center,
@@ -205,9 +206,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
-                    TextButton(
+                    AppTextButton(
+                      label: l10n.authLogIn,
                       onPressed: _openLogin,
-                      child: Text(l10n.authLogIn),
+                      compact: true,
                     ),
                   ],
                 ),
