@@ -5,6 +5,7 @@ import 'package:mustore/app/app_page.dart';
 import 'package:mustore/app/app_page_scaffold.dart';
 import 'package:mustore/app/router/main_shell.dart';
 import 'package:mustore/app/router/screens/not_found_screen.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/access_level.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
@@ -51,7 +52,14 @@ class AppRouter {
         path: page.localPath,
         name: page.name,
         parentNavigatorKey: page.fullScreen ? _rootKey : null,
-        builder: (_, _) => AppPageScaffold(page: page, child: page.builder()),
+        pageBuilder: (_, state) => CustomTransitionPage(
+          key: state.pageKey,
+          transitionDuration: Dimens.normal,
+          reverseTransitionDuration: Dimens.normal,
+          child: AppPageScaffold(page: page, child: page.builder()),
+          transitionsBuilder: (context, animation, secondary, child) =>
+              _transition(page, context, animation, secondary, child),
+        ),
         routes: routes,
       );
 
@@ -60,6 +68,46 @@ class AppRouter {
     router.dispose();
     auth.dispose();
   }
+}
+
+Widget _transition(
+    AppPage page,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondary,
+    Widget child,
+    ) {
+  final enter = animation.drive(CurveTween(curve: Curves.easeOutCubic));
+  final exit = secondary.drive(CurveTween(curve: Curves.easeOutCubic));
+
+  if (page == AppPage.splash) {
+    return FadeTransition(opacity: enter, child: child);
+  }
+
+  if (page.fullScreen) {
+    return FadeTransition(
+      opacity: enter,
+      child: SlideTransition(
+        position: enter.drive(
+          Tween(begin: const Offset(0, 0.06), end: Offset.zero),
+        ),
+        child: child,
+      ),
+    );
+  }
+
+  final dx = Directionality.of(context) == TextDirection.rtl ? -1.0 : 1.0;
+  return SlideTransition(
+    position: exit.drive(
+      Tween(begin: Offset.zero, end: Offset(-0.15 * dx, 0)),
+    ),
+    child: SlideTransition(
+      position: enter.drive(
+        Tween(begin: Offset(0.25 * dx, 0), end: Offset.zero),
+      ),
+      child: FadeTransition(opacity: enter, child: child),
+    ),
+  );
 }
 
 String? _redirect(AuthStatus auth, Uri uri) {
