@@ -1,11 +1,12 @@
 import 'package:mustore/core/storage/secure_storage.dart';
+import 'package:mustore/core/storage/storage_keys.dart';
 import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
 import 'package:mustore/features/auth/domain/entities/auth_tokens.dart';
 
 class TokenStorageImpl implements TokenStorage {
   TokenStorageImpl(this._storage);
 
-  static const _key = 'auth_tokens';
+  static const _key = StorageKeys.authTokens;
 
   final SecureStorage _storage;
   AuthTokens? _cache;

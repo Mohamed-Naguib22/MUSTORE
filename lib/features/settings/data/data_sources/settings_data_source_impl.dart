@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/storage/local_storage.dart';
+import 'package:mustore/core/storage/storage_keys.dart';
 import 'package:mustore/features/settings/data/data_sources/settings_data_source.dart';
 
 class SettingsLocalDataSourceImpl implements SettingsLocalDataSource {
@@ -7,8 +8,8 @@ class SettingsLocalDataSourceImpl implements SettingsLocalDataSource {
 
   final LocalStorage _storage;
 
-  static const _themeKey = 'settings.theme';
-  static const _localeKey = 'settings.locale';
+  static const _themeKey = StorageKeys.settingsTheme;
+  static const _localeKey = StorageKeys.settingsLocale;
 
   @override
   Future<ThemeMode> readTheme() async {
