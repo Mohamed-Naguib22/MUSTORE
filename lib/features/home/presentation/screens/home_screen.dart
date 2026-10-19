@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/widgets/feedback/app_toast.dart';
 import 'package:mustore/features/catalog/presentation/widgets/category/category_list_widget.dart';
 import 'package:mustore/features/catalog/presentation/widgets/product/product_card_widget.dart';
 import 'package:mustore/features/catalog/presentation/widgets/product/products_row_widget.dart';
@@ -13,7 +14,6 @@ import 'package:mustore/features/home/presentation/widgets/home_search_field_wid
 import 'package:mustore/features/home/presentation/widgets/home_section_header_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/promo_carousel_widget.dart';
 import 'package:mustore/generated/l10n.dart';
-import 'package:toastification/toastification.dart';
 
 class HomeCategory {
   const HomeCategory(this.name, this.icon);
@@ -63,13 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
       listenWhen: (p, c) => p.failure != c.failure && c.failure != null,
       listener: (context, state) {
         final message = state.failure!.localizedMessage(context);
+
         if (message.isEmpty) return;
-        toastification.show(
-          context: context,
-          type: ToastificationType.error,
-          title: Text(message),
-          autoCloseDuration: const Duration(seconds: 4),
-        );
+
+        AppToast.error(context, message);
       },
       child: Scaffold(
         body: SafeArea(

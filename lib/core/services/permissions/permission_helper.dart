@@ -15,6 +15,11 @@ abstract final class PermissionHelper {
     AppPermission.location,
   ];
 
+  static final Set<AppPermission> _inFlight = {};
+
+  static bool isRequesting(AppPermission appPermission) =>
+      _inFlight.contains(appPermission);
+
   static Future<Map<AppPermission, PermissionStatus>>
   requestStartupPermissions() async {
     final results = <AppPermission, PermissionStatus>{};
@@ -34,7 +39,14 @@ abstract final class PermissionHelper {
         status.isRestricted) {
       return status;
     }
-    return permission.request();
+
+    if (!_inFlight.add(appPermission)) return status;
+
+    try {
+      return await permission.request();
+    } finally {
+      _inFlight.remove(appPermission);
+    }
   }
 
   static Future<bool> isGranted(AppPermission appPermission) =>

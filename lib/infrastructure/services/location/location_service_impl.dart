@@ -5,6 +5,7 @@ import 'package:mustore/core/error/exceptions.dart';
 import 'package:mustore/core/error/failure.dart';
 import 'package:mustore/core/services/location/location_service.dart';
 import 'package:mustore/core/services/permissions/permission_helper.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LocationServiceImpl implements LocationService {
   LocationServiceImpl({Geocoding? geocoding})
@@ -16,8 +17,16 @@ class LocationServiceImpl implements LocationService {
   Future<Either<Failure, String>> currentLocationName() async {
     try {
       if (!await PermissionHelper.isGranted(AppPermission.location)) {
-        throw const NoDataFoundException();
+        if (PermissionHelper.isRequesting(AppPermission.location)) {
+          return const Left(NoDataFailure());
+        }
+
+        final status = await PermissionHelper.request(AppPermission.location);
+        if (!(status.isGranted || status.isLimited)) {
+          return const Left(NoDataFailure());
+        }
       }
+
       if (!await Geolocator.isLocationServiceEnabled()) {
         throw const NoDataFoundException();
       }
