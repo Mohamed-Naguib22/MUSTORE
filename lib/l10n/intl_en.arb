@@ -57,10 +57,10 @@
   "verifyEmailOtpResent": "A new code has been sent to your email",
 
   "loginTitle": "Welcome back",
-  "loginSubtitle": "Log in to continue shopping",
+  "loginSubtitle": "Log in to continue shopping 🛍️",
 
   "registerTitle": "Create account",
-  "registerSubtitle": "Join {appName} and start shopping",
+  "registerSubtitle": "Join {appName} and start shopping 🛒",
   "@registerSubtitle": { "placeholders": { "appName": { "type": "String" } } },
   "registerButton": "Create account",
   "registerSuccess": "Account created. Please verify your email.",

@@ -540,10 +540,10 @@ class S {
     );
   }
 
-  /// `Log in to continue shopping`
+  /// `Log in to continue shopping 🛍️`
   String get loginSubtitle {
     return Intl.message(
-      'Log in to continue shopping',
+      'Log in to continue shopping 🛍️',
       name: 'loginSubtitle',
       desc: '',
       args: [],
@@ -560,10 +560,10 @@ class S {
     );
   }
 
-  /// `Join {appName} and start shopping`
+  /// `Join {appName} and start shopping 🛒`
   String registerSubtitle(String appName) {
     return Intl.message(
-      'Join $appName and start shopping',
+      'Join $appName and start shopping 🛒',
       name: 'registerSubtitle',
       desc: '',
       args: [appName],

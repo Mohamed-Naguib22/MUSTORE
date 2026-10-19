@@ -24,7 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(price) => "${price} EGP";
 
-  static String m2(appName) => "Join ${appName} and start shopping";
+  static String m2(appName) => "Join ${appName} and start shopping 🛒";
 
   static String m3(email) =>
       "Enter the code sent to ${email} and choose a new password";
@@ -145,8 +145,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeShopNow": MessageLookupByLibrary.simpleMessage("Shop now"),
         "homeWelcome": MessageLookupByLibrary.simpleMessage("Welcome back 👋"),
         "languageSystem": MessageLookupByLibrary.simpleMessage("System"),
-        "loginSubtitle":
-            MessageLookupByLibrary.simpleMessage("Log in to continue shopping"),
+        "loginSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Log in to continue shopping 🛍️"),
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("Logged in successfully"),
         "loginTitle": MessageLookupByLibrary.simpleMessage("Welcome back"),

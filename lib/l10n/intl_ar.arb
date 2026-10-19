@@ -59,10 +59,10 @@
   "verifyEmailOtpResent": "تم إرسال رمز جديد إلى بريدك الإلكتروني",
 
   "loginTitle": "مرحباً بعودتك",
-  "loginSubtitle": "سجّل الدخول لمتابعة التسوق",
+  "loginSubtitle": "سجّل الدخول لمتابعة التسوق 🛍️",
 
   "registerTitle": "إنشاء حساب",
-  "registerSubtitle": "انضم إلى {appName} وابدأ التسوق",
+  "registerSubtitle": "انضم إلى {appName} وابدأ التسوق 🛒",
   "@registerSubtitle": { "placeholders": { "appName": { "type": "String" } } },
   "registerButton": "إنشاء حساب",
   "registerSuccess": "تم إنشاء الحساب. يرجى تأكيد بريدك الإلكتروني.",

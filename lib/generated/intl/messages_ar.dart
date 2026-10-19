@@ -24,7 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(price) => "${price} ج.م";
 
-  static String m2(appName) => "انضم إلى ${appName} وابدأ التسوق";
+  static String m2(appName) => "انضم إلى ${appName} وابدأ التسوق 🛒";
 
   static String m3(email) =>
       "أدخل الرمز المرسل إلى ${email} واختر كلمة مرور جديدة";
@@ -145,8 +145,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeShopNow": MessageLookupByLibrary.simpleMessage("تسوق الآن"),
         "homeWelcome": MessageLookupByLibrary.simpleMessage("مرحباً بعودتك 👋"),
         "languageSystem": MessageLookupByLibrary.simpleMessage("النظام"),
-        "loginSubtitle":
-            MessageLookupByLibrary.simpleMessage("سجّل الدخول لمتابعة التسوق"),
+        "loginSubtitle": MessageLookupByLibrary.simpleMessage(
+            "سجّل الدخول لمتابعة التسوق 🛍️"),
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("تم تسجيل الدخول بنجاح"),
         "loginTitle": MessageLookupByLibrary.simpleMessage("مرحباً بعودتك"),
