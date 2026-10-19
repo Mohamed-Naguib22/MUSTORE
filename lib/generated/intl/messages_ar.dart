@@ -173,6 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resetPasswordTitle":
             MessageLookupByLibrary.simpleMessage("إعادة تعيين كلمة المرور"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
+        "settingsAccount": MessageLookupByLibrary.simpleMessage("الحساب"),
         "settingsLanguage": MessageLookupByLibrary.simpleMessage("اللغة"),
         "settingsTheme": MessageLookupByLibrary.simpleMessage("المظهر"),
         "themeDark": MessageLookupByLibrary.simpleMessage("داكن"),

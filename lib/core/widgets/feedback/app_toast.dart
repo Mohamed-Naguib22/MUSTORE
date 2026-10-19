@@ -12,7 +12,8 @@ abstract final class AppToast {
         String? title,
         Duration? duration,
         Alignment alignment = Alignment.topCenter,
-      }) => _show(context, _ToastKind.success, message, title, duration, alignment);
+      }) =>
+      _show(context, _ToastKind.success, message, title, duration, alignment);
 
   static ToastificationItem error(
       BuildContext context,
@@ -20,7 +21,8 @@ abstract final class AppToast {
         String? title,
         Duration? duration,
         Alignment alignment = Alignment.topCenter,
-      }) => _show(context, _ToastKind.error, message, title, duration, alignment);
+      }) =>
+      _show(context, _ToastKind.error, message, title, duration, alignment);
 
   static ToastificationItem warning(
       BuildContext context,
@@ -28,7 +30,8 @@ abstract final class AppToast {
         String? title,
         Duration? duration,
         Alignment alignment = Alignment.topCenter,
-      }) => _show(context, _ToastKind.warning, message, title, duration, alignment);
+      }) =>
+      _show(context, _ToastKind.warning, message, title, duration, alignment);
 
   static ToastificationItem info(
       BuildContext context,
@@ -36,7 +39,8 @@ abstract final class AppToast {
         String? title,
         Duration? duration,
         Alignment alignment = Alignment.topCenter,
-      }) => _show(context, _ToastKind.info, message, title, duration, alignment);
+      }) =>
+      _show(context, _ToastKind.info, message, title, duration, alignment);
 
   static void dismissAll() => toastification.dismissAll();
 
@@ -53,10 +57,26 @@ abstract final class AppToast {
     final text = theme.textTheme;
 
     final (accent, icon, type) = switch (kind) {
-      _ToastKind.success => (s.tertiary, Icons.check_circle_rounded, ToastificationType.success),
-      _ToastKind.error => (s.error, Icons.error_rounded, ToastificationType.error),
-      _ToastKind.warning => (AppColors.warning, Icons.warning_amber_rounded, ToastificationType.warning),
-      _ToastKind.info => (s.primary, Icons.info_rounded, ToastificationType.info),
+      _ToastKind.success => (
+      s.tertiary,
+      Icons.check_rounded,
+      ToastificationType.success,
+      ),
+      _ToastKind.error => (
+      s.error,
+      Icons.close_rounded,
+      ToastificationType.error,
+      ),
+      _ToastKind.warning => (
+      AppColors.warning,
+      Icons.priority_high_rounded,
+      ToastificationType.warning,
+      ),
+      _ToastKind.info => (
+      s.primary,
+      Icons.info_outline_rounded,
+      ToastificationType.info,
+      ),
     };
 
     return toastification.show(
@@ -71,7 +91,10 @@ abstract final class AppToast {
         title ?? message,
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
-        style: text.titleSmall?.copyWith(color: s.onSurface),
+        style: text.titleSmall?.copyWith(
+          color: s.onSurface,
+          fontWeight: FontWeight.w600,
+        ),
       ),
       description: title == null
           ? null
@@ -81,28 +104,24 @@ abstract final class AppToast {
         overflow: TextOverflow.ellipsis,
         style: text.bodyMedium?.copyWith(color: s.onSurfaceVariant),
       ),
-      icon: Icon(icon, color: accent),
+      icon: Container(
+        width: Dimens.iconLg,
+        height: Dimens.iconLg,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: accent.withValues(alpha: 0.12),
+          borderRadius: Dimens.borderSm,
+        ),
+        child: Icon(icon, size: Dimens.iconMd, color: accent),
+      ),
       primaryColor: accent,
       backgroundColor: s.surface,
       foregroundColor: s.onSurface,
       borderRadius: Dimens.borderMd,
+      borderSide: BorderSide(color: s.outlineVariant),
       margin: Dimens.screen,
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: Dimens.lg,
-        vertical: Dimens.md,
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: s.shadow.withValues(alpha: 0.06),
-          blurRadius: 3,
-          offset: const Offset(0, 1),
-        ),
-        BoxShadow(
-          color: s.shadow.withValues(alpha: 0.12),
-          blurRadius: 24,
-          offset: const Offset(0, 8),
-        ),
-      ],
+      padding: const EdgeInsetsDirectional.all(Dimens.md),
+      boxShadow: const [],
       showProgressBar: false,
     );
   }

@@ -289,6 +289,7 @@ class _LogoutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final l10n = S.of(context);
 
     final signedIn = context.select(
           (AuthCubit c) => c.state.authStatus == AuthStatus.authenticated,
@@ -305,6 +306,7 @@ class _LogoutSection extends StatelessWidget {
       children: [
         Dimens.gapXl,
         _Section(
+          title: l10n.settingsAccount,
           children: [
             _TileRow(
               leading: _LeadingBox(
@@ -312,7 +314,7 @@ class _LogoutSection extends StatelessWidget {
                 foreground: cs.onErrorContainer,
                 child: const Icon(Icons.logout_rounded),
               ),
-              title: S.of(context).authLogOut,
+              title: l10n.authLogOut,
               titleColor: cs.error,
               onTap: isLoading ? null : () => context.read<AuthCubit>().logout(),
               trailing: isLoading

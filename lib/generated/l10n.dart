@@ -160,6 +160,16 @@ class S {
     );
   }
 
+  /// `Account`
+  String get settingsAccount {
+    return Intl.message(
+      'Account',
+      name: 'settingsAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `System`
   String get themeSystem {
     return Intl.message(
