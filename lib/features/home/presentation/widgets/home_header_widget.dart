@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 import 'package:mustore/generated/l10n.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   const HomeHeaderWidget({
     super.key,
-    this.location = 'Cairo, Egypt',
     this.notificationCount = 2,
     this.onLocationTap,
     this.onFavoritesTap,
     this.onNotificationsTap,
   });
 
-  final String location;
   final int notificationCount;
   final VoidCallback? onLocationTap;
   final VoidCallback? onFavoritesTap;
@@ -74,11 +74,16 @@ class HomeHeaderWidget extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Flexible(
-                                child: Text(
-                                  location,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: text.titleSmall,
+                                child: BlocBuilder<HomeCubit, HomeState>(
+                                  buildWhen: (p, c) => p.location != c.location,
+                                  builder: (context, state) {
+                                    return Text(
+                                      state.location,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: text.titleSmall,
+                                    );
+                                  },
                                 ),
                               ),
                               Dimens.gapXxs,

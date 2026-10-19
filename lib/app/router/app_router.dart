@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mustore/app/app_page.dart';
 import 'package:mustore/app/app_page_scaffold.dart';
+import 'package:mustore/app/di/injection.dart';
 import 'package:mustore/app/router/main_shell.dart';
 import 'package:mustore/app/router/screens/not_found_screen.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/access_level.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
+import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 
 class AppRouter {
   AppRouter(AuthCubit authCubit)
@@ -56,12 +59,24 @@ class AppRouter {
           key: state.pageKey,
           transitionDuration: Dimens.normal,
           reverseTransitionDuration: Dimens.normal,
-          child: AppPageScaffold(page: page, child: page.builder()),
+          child: AppPageScaffold(page: page, child: _providers(page)),
           transitionsBuilder: (context, animation, secondary, child) =>
               _transition(page, context, animation, secondary, child),
         ),
         routes: routes,
       );
+
+  Widget _providers(AppPage page) {
+    final child = page.builder();
+
+    return switch (page) {
+      AppPage.home => BlocProvider(
+        create: (_) => sl<HomeCubit>(),
+        child: child,
+      ),
+      _ => child,
+    };
+  }
 
   void dispose() {
     _sub.cancel();

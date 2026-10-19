@@ -8,6 +8,7 @@ import 'package:mustore/core/services/encryption/encryption_service.dart';
 import 'package:mustore/core/services/encryption/otp_encryption_service.dart';
 import 'package:mustore/core/services/encryption/password_encryption_service.dart';
 import 'package:mustore/core/services/localization/language_provider.dart';
+import 'package:mustore/core/services/location/location_service.dart';
 import 'package:mustore/core/storage/local_storage.dart';
 import 'package:mustore/core/storage/secure_storage.dart';
 import 'package:mustore/features/auth/data/constants/auth_endpoints.dart';
@@ -20,6 +21,7 @@ import 'package:mustore/infrastructure/services/encryption/otp_encryption_servic
 import 'package:mustore/infrastructure/services/encryption/password_encryption_service_impl.dart';
 import 'package:mustore/infrastructure/services/encryption/rsa_encryption_service.dart';
 import 'package:mustore/infrastructure/services/localization/settings_language_provider.dart';
+import 'package:mustore/infrastructure/services/location/location_service_impl.dart';
 import 'package:mustore/infrastructure/storage/preferences_storage_impl.dart';
 import 'package:mustore/infrastructure/storage/secure_storage_impl.dart';
 
@@ -56,6 +58,8 @@ Future<void> registerCoreModule(GetIt sl) async {
   );
 
   sl.registerLazySingleton<NetworkConnection>(() => NetworkConnectionImpl());
+
+  sl.registerLazySingleton<LocationService>(() => LocationServiceImpl());
 
   sl.registerLazySingleton<ApiClient>(
         () => DioApiClient(interceptors: [

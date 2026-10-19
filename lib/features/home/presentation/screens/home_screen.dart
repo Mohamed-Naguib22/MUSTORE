@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/features/catalog/presentation/widgets/category/category_list_widget.dart';
 import 'package:mustore/features/catalog/presentation/widgets/product/product_card_widget.dart';
 import 'package:mustore/features/catalog/presentation/widgets/product/products_row_widget.dart';
+import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 import 'package:mustore/features/home/presentation/widgets/banner_card_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/home_header_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/home_search_field_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/home_section_header_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/promo_carousel_widget.dart';
 import 'package:mustore/generated/l10n.dart';
+import 'package:toastification/toastification.dart';
 
 class HomeCategory {
   const HomeCategory(this.name, this.icon);
@@ -37,54 +41,78 @@ class HomeProduct {
       discountPercent == null ? price : price * (100 - discountPercent!) / 100;
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeCubit>().loadLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = S.of(context);
 
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const HomeHeaderWidget(),
-            const HomeSearchFieldWidget(),
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(child: PromoCarouselWidget(banners: _banners(l10n))),
-                  SliverToBoxAdapter(child: HomeSectionHeaderWidget(title: l10n.homeCategories)),
-                  SliverToBoxAdapter(child: CategoryListWidget(categories: _categories(l10n))),
-                  SliverToBoxAdapter(
-                    child: HomeSectionHeaderWidget(title: l10n.homeBestSellers, onSeeAll: () {}),
-                  ),
-                  const SliverToBoxAdapter(child: ProductsRowWidget(products: _products)),
-                  SliverToBoxAdapter(
-                    child: HomeSectionHeaderWidget(title: l10n.homeNewArrivals, onSeeAll: () {}),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                      Dimens.lg,
-                      0,
-                      Dimens.lg,
-                      Dimens.xl,
+    return BlocListener<HomeCubit, HomeState>(
+      listenWhen: (p, c) => p.failure != c.failure && c.failure != null,
+      listener: (context, state) {
+        final message = state.failure!.localizedMessage(context);
+        if (message.isEmpty) return;
+        toastification.show(
+          context: context,
+          type: ToastificationType.error,
+          title: Text(message),
+          autoCloseDuration: const Duration(seconds: 4),
+        );
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              const HomeHeaderWidget(),
+              const HomeSearchFieldWidget(),
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(child: PromoCarouselWidget(banners: _banners(l10n))),
+                    SliverToBoxAdapter(child: HomeSectionHeaderWidget(title: l10n.homeCategories)),
+                    SliverToBoxAdapter(child: CategoryListWidget(categories: _categories(l10n))),
+                    SliverToBoxAdapter(
+                      child: HomeSectionHeaderWidget(title: l10n.homeBestSellers, onSeeAll: () {}),
                     ),
-                    sliver: SliverGrid.builder(
-                      itemCount: _products.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: Dimens.md,
-                        crossAxisSpacing: Dimens.md,
-                        mainAxisExtent: kProductCardHeight,
+                    const SliverToBoxAdapter(child: ProductsRowWidget(products: _products)),
+                    SliverToBoxAdapter(
+                      child: HomeSectionHeaderWidget(title: l10n.homeNewArrivals, onSeeAll: () {}),
+                    ),
+                    SliverPadding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                        Dimens.lg,
+                        0,
+                        Dimens.lg,
+                        Dimens.xl,
                       ),
-                      itemBuilder: (_, i) => ProductCardWidget(product: _products[i]),
+                      sliver: SliverGrid.builder(
+                        itemCount: _products.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: Dimens.md,
+                          crossAxisSpacing: Dimens.md,
+                          mainAxisExtent: kProductCardHeight,
+                        ),
+                        itemBuilder: (_, i) => ProductCardWidget(product: _products[i]),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
