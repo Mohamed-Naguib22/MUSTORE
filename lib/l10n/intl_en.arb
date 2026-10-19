@@ -2,6 +2,9 @@
   "@@locale": "en",
   "appTitle": "MUSTORE",
 
+  "commonRetry": "Retry",
+  "commonSomethingWentWrong": "Something went wrong. Please try again.",
+
   "failureNetwork": "No internet connection",
   "failureSessionExpired": "Your session has expired, please log in again",
   "failureNotFound": "The requested item was not found",

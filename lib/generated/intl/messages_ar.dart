@@ -108,6 +108,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoryLaptops": MessageLookupByLibrary.simpleMessage("لابتوب"),
         "categoryPhones": MessageLookupByLibrary.simpleMessage("هواتف"),
         "categorySports": MessageLookupByLibrary.simpleMessage("رياضة"),
+        "commonRetry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
+        "commonSomethingWentWrong": MessageLookupByLibrary.simpleMessage(
+            "حدث خطأ ما. يرجى المحاولة مرة أخرى."),
         "failureCache": MessageLookupByLibrary.simpleMessage(
             "تعذّر حفظ إعداداتك، يرجى المحاولة مرة أخرى"),
         "failureGeneric": MessageLookupByLibrary.simpleMessage(

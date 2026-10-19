@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
+import 'package:mustore/core/pagination/pagination_state.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
+import 'package:mustore/core/widgets/feedback/app_message_widget.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
+import 'package:mustore/features/catalog/domain/entities/product/product.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_state.dart';
 import 'package:mustore/features/catalog/presentation/widgets/category/category_list_widget.dart';
@@ -32,20 +35,32 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   static const _pageSize = 10;
 
+  late final ProductsCubit _productsCubit;
+
   @override
   void initState() {
     super.initState();
+    _productsCubit = context.read<ProductsCubit>();
+
     context.read<HomeCubit>().loadLocation();
-    context.read<ProductsCubit>()
+    _productsCubit
       ..fetchBestSeller(pageSize: _pageSize)
       ..fetchOnSale(pageSize: _pageSize)
       ..fetchRecommended(pageSize: _pageSize)
       ..fetchNewArrivals(pageSize: _pageSize);
   }
 
+  Future<void> _refresh() => Future.wait([
+    _productsCubit.fetchBestSeller(pageSize: _pageSize),
+    _productsCubit.fetchOnSale(pageSize: _pageSize),
+    _productsCubit.fetchRecommended(pageSize: _pageSize),
+    _productsCubit.fetchNewArrivals(pageSize: _pageSize),
+  ]);
+
   @override
   Widget build(BuildContext context) {
     final l10n = S.of(context);
+    final scheme = Theme.of(context).colorScheme;
 
     return BlocListener<HomeCubit, HomeState>(
       listenWhen: (p, c) => p.failure != c.failure && c.failure != null,
@@ -63,56 +78,112 @@ class _HomeScreenState extends State<HomeScreen> {
               const HomeHeaderWidget(),
               const HomeSearchFieldWidget(),
               Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: PromoCarouselWidget(banners: _banners(l10n)),
-                    ),
-                    SliverToBoxAdapter(
-                      child: HomeSectionHeaderWidget(title: l10n.homeCategories),
-                    ),
-                    SliverToBoxAdapter(
-                      child: CategoryListWidget(categories: _categories(l10n)),
-                    ),
-                    BlocBuilder<ProductsCubit, ProductsState>(
-                      buildWhen: (p, c) => p.bestSeller != c.bestSeller,
-                      builder: (context, state) => HomeProductsSection(
-                        title: l10n.homeBestSellers,
-                        section: state.bestSeller,
-                        onSeeAll: () {},
+                child: RefreshIndicator(
+                  color: scheme.primary,
+                  backgroundColor: scheme.surface,
+                  onRefresh: _refresh,
+                  child: CustomScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: PromoCarouselWidget(banners: _banners(l10n)),
                       ),
-                    ),
-                    BlocBuilder<ProductsCubit, ProductsState>(
-                      buildWhen: (p, c) => p.onSale != c.onSale,
-                      builder: (context, state) => HomeProductsSection(
-                        title: l10n.homeOnSale,
-                        section: state.onSale,
-                        onSeeAll: () {},
+                      SliverToBoxAdapter(
+                        child: HomeSectionHeaderWidget(
+                          title: l10n.homeCategories,
+                        ),
                       ),
-                    ),
-                    BlocBuilder<ProductsCubit, ProductsState>(
-                      buildWhen: (p, c) => p.recommended != c.recommended,
-                      builder: (context, state) => HomeProductsSection(
-                        title: l10n.homeRecommended,
-                        section: state.recommended,
-                        onSeeAll: () {},
+                      SliverToBoxAdapter(
+                        child: CategoryListWidget(
+                          categories: _categories(l10n),
+                        ),
                       ),
-                    ),
-                    BlocBuilder<ProductsCubit, ProductsState>(
-                      buildWhen: (p, c) => p.newArrivals != c.newArrivals,
-                      builder: (context, state) => HomeProductsSection(
-                        title: l10n.homeNewArrivals,
-                        section: state.newArrivals,
-                        onSeeAll: () {},
+                      BlocBuilder<ProductsCubit, ProductsState>(
+                        bloc: _productsCubit,
+                        buildWhen: (p, c) => p.bestSeller != c.bestSeller,
+                        builder: (context, state) => _section(
+                          title: l10n.homeBestSellers,
+                          section: state.bestSeller,
+                          onRetry: () => _productsCubit.fetchBestSeller(
+                            pageSize: _pageSize,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      BlocBuilder<ProductsCubit, ProductsState>(
+                        bloc: _productsCubit,
+                        buildWhen: (p, c) => p.onSale != c.onSale,
+                        builder: (context, state) => _section(
+                          title: l10n.homeOnSale,
+                          section: state.onSale,
+                          onRetry: () => _productsCubit.fetchOnSale(
+                            pageSize: _pageSize,
+                          ),
+                        ),
+                      ),
+                      BlocBuilder<ProductsCubit, ProductsState>(
+                        bloc: _productsCubit,
+                        buildWhen: (p, c) => p.recommended != c.recommended,
+                        builder: (context, state) => _section(
+                          title: l10n.homeRecommended,
+                          section: state.recommended,
+                          onRetry: () => _productsCubit.fetchRecommended(
+                            pageSize: _pageSize,
+                          ),
+                        ),
+                      ),
+                      BlocBuilder<ProductsCubit, ProductsState>(
+                        bloc: _productsCubit,
+                        buildWhen: (p, c) => p.newArrivals != c.newArrivals,
+                        builder: (context, state) => _section(
+                          title: l10n.homeNewArrivals,
+                          section: state.newArrivals,
+                          onRetry: () => _productsCubit.fetchNewArrivals(
+                            pageSize: _pageSize,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _section({
+    required String title,
+    required PaginationState<Product> section,
+    required VoidCallback onRetry,
+  }) {
+    final failed = section.status == PaginationStatus.failure &&
+        section.data.items.isEmpty;
+
+    if (failed) {
+      final message = section.failure?.localizedMessage(context) ?? '';
+
+      return SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(child: HomeSectionHeaderWidget(title: title)),
+          SliverToBoxAdapter(
+            child: AppMessageWidget(
+              message: message.isEmpty
+                  ? S.of(context).commonSomethingWentWrong
+                  : message,
+              actionLabel: S.of(context).commonRetry,
+              onAction: onRetry,
+            ),
+          ),
+        ],
+      );
+    }
+
+    return HomeProductsSection(
+      title: title,
+      section: section,
+      onSeeAll: () {},
     );
   }
 }

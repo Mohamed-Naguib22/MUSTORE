@@ -5,7 +5,6 @@ class FontsProvider {
   static const _latin = 'Plus Jakarta Sans';
   static const _arabic = 'Cairo';
 
-  /// Extra line height for Arabic (Cairo needs more vertical room).
   static const _arabicHeightBoost = 0.15;
 
   static TextStyle _style(
@@ -27,7 +26,6 @@ class FontsProvider {
         ),
       );
 
-  // Display / headline scale (UI-friendly, no 96px display sizes).
   static TextStyle getHeadline1TextStyle({required bool isArabic, Color? color}) =>
       _style(isArabic, 40, FontWeight.w700, letterSpacing: -0.8, height: 1.15, color: color);
 

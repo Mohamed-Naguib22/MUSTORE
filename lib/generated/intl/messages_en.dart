@@ -109,6 +109,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoryLaptops": MessageLookupByLibrary.simpleMessage("Laptops"),
         "categoryPhones": MessageLookupByLibrary.simpleMessage("Phones"),
         "categorySports": MessageLookupByLibrary.simpleMessage("Sports"),
+        "commonRetry": MessageLookupByLibrary.simpleMessage("Retry"),
+        "commonSomethingWentWrong": MessageLookupByLibrary.simpleMessage(
+            "Something went wrong. Please try again."),
         "failureCache": MessageLookupByLibrary.simpleMessage(
             "Failed to save your settings, please try again"),
         "failureGeneric": MessageLookupByLibrary.simpleMessage(

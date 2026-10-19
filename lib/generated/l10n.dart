@@ -60,6 +60,26 @@ class S {
     );
   }
 
+  /// `Retry`
+  String get commonRetry {
+    return Intl.message(
+      'Retry',
+      name: 'commonRetry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong. Please try again.`
+  String get commonSomethingWentWrong {
+    return Intl.message(
+      'Something went wrong. Please try again.',
+      name: 'commonSomethingWentWrong',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No internet connection`
   String get failureNetwork {
     return Intl.message(

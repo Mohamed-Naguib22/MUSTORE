@@ -2,6 +2,9 @@
   "@@locale": "ar",
   "appTitle": "متجر",
 
+  "commonRetry": "إعادة المحاولة",
+  "commonSomethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+
   "failureNetwork": "لا يوجد اتصال بالإنترنت",
   "failureSessionExpired": "انتهت جلستك، يرجى تسجيل الدخول مرة أخرى",
   "failureNotFound": "العنصر المطلوب غير موجود",
