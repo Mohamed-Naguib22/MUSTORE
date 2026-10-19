@@ -138,6 +138,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeCategories": MessageLookupByLibrary.simpleMessage("Categories"),
         "homeDeliverTo": MessageLookupByLibrary.simpleMessage("Deliver to"),
         "homeNewArrivals": MessageLookupByLibrary.simpleMessage("New arrivals"),
+        "homeOnSale": MessageLookupByLibrary.simpleMessage("On sale"),
+        "homeRecommended":
+            MessageLookupByLibrary.simpleMessage("Recommended for you"),
         "homeSearchHint": MessageLookupByLibrary.simpleMessage(
             "Search products, categories..."),
         "homeSeeAll": MessageLookupByLibrary.simpleMessage("See all"),

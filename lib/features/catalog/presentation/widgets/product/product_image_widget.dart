@@ -19,13 +19,15 @@ class ProductImageWidget extends StatelessWidget {
       ),
     );
 
-    if (url == null) return placeholder;
+    final imageUrl = url;
+    if (imageUrl == null || imageUrl.isEmpty) return placeholder;
 
     return Image.network(
-      url!,
+      imageUrl,
       fit: BoxFit.cover,
       errorBuilder: (_, __, ___) => placeholder,
-      loadingBuilder: (_, child, progress) => progress == null ? child : placeholder,
+      loadingBuilder: (_, child, progress) =>
+      progress == null ? child : placeholder,
     );
   }
 }

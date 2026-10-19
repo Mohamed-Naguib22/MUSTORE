@@ -73,9 +73,9 @@ class ProductsCubit extends Cubit<ProductsState>
   );
 
   Future<void> fetchBestSeller({bool loadMore = false}) => _fetch(
-    current: state.onSale,
+    current: state.bestSeller,
     useCase: _getBestSeller,
-    update: (s) => state.copyWith(onSale: s),
+    update: (s) => state.copyWith(bestSeller: s),
     loadMore: loadMore,
   );
 

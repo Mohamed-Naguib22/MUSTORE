@@ -136,7 +136,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeBestSellers":
             MessageLookupByLibrary.simpleMessage("الأكثر مبيعاً"),
         "homeCategories": MessageLookupByLibrary.simpleMessage("الفئات"),
+        "homeDeliverTo": MessageLookupByLibrary.simpleMessage("توصيل الي"),
         "homeNewArrivals": MessageLookupByLibrary.simpleMessage("وصل حديثاً"),
+        "homeOnSale": MessageLookupByLibrary.simpleMessage("عروض وتخفيضات"),
+        "homeRecommended": MessageLookupByLibrary.simpleMessage("موصى به لك"),
         "homeSearchHint":
             MessageLookupByLibrary.simpleMessage("ابحث عن المنتجات والفئات..."),
         "homeSeeAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),

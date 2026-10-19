@@ -9,17 +9,20 @@ class ProductsState extends Equatable {
     PaginationState<Product>? newArrivals,
     PaginationState<Product>? recommended,
     PaginationState<Product>? onSale,
+    PaginationState<Product>? bestSeller,
   })  : recentlyViewed = recentlyViewed ?? PaginationState<Product>(),
         previouslyOrdered = previouslyOrdered ?? PaginationState<Product>(),
         newArrivals = newArrivals ?? PaginationState<Product>(),
         recommended = recommended ?? PaginationState<Product>(),
-        onSale = onSale ?? PaginationState<Product>();
+        onSale = onSale ?? PaginationState<Product>(),
+        bestSeller = bestSeller ?? PaginationState<Product>();
 
   final PaginationState<Product> recentlyViewed;
   final PaginationState<Product> previouslyOrdered;
   final PaginationState<Product> newArrivals;
   final PaginationState<Product> recommended;
   final PaginationState<Product> onSale;
+  final PaginationState<Product> bestSeller;
 
   ProductsState copyWith({
     PaginationState<Product>? recentlyViewed,
@@ -27,6 +30,7 @@ class ProductsState extends Equatable {
     PaginationState<Product>? newArrivals,
     PaginationState<Product>? recommended,
     PaginationState<Product>? onSale,
+    PaginationState<Product>? bestSeller,
   }) =>
       ProductsState(
         recentlyViewed: recentlyViewed ?? this.recentlyViewed,
@@ -34,9 +38,16 @@ class ProductsState extends Equatable {
         newArrivals: newArrivals ?? this.newArrivals,
         recommended: recommended ?? this.recommended,
         onSale: onSale ?? this.onSale,
+        bestSeller: bestSeller ?? this.bestSeller,
       );
 
   @override
-  List<Object?> get props =>
-      [recentlyViewed, previouslyOrdered, newArrivals, recommended, onSale];
+  List<Object?> get props => [
+    recentlyViewed,
+    previouslyOrdered,
+    newArrivals,
+    recommended,
+    onSale,
+    bestSeller,
+  ];
 }

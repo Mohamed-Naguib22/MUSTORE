@@ -11,6 +11,7 @@ import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/access_level.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
+import 'package:mustore/features/catalog/presentation/controllers/product/product_cubit.dart';
 import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 
 class AppRouter {
@@ -70,8 +71,11 @@ class AppRouter {
     final child = page.builder();
 
     return switch (page) {
-      AppPage.home => BlocProvider(
-        create: (_) => sl<HomeCubit>(),
+      AppPage.home => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => sl<HomeCubit>()),
+          BlocProvider(create: (_) => sl<ProductsCubit>()),
+        ],
         child: child,
       ),
       _ => child,

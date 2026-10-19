@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
-import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
+import 'package:mustore/features/catalog/presentation/controllers/product/product_cubit.dart';
 import 'package:mustore/features/catalog/presentation/widgets/category/category_list_widget.dart';
-import 'package:mustore/features/catalog/presentation/widgets/product/product_card_widget.dart';
-import 'package:mustore/features/catalog/presentation/widgets/product/products_row_widget.dart';
 import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 import 'package:mustore/features/home/presentation/widgets/banner_card_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/home_header_widget.dart';
+import 'package:mustore/features/home/presentation/widgets/home_products_section.dart';
 import 'package:mustore/features/home/presentation/widgets/home_search_field_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/home_section_header_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/promo_carousel_widget.dart';
@@ -20,25 +19,6 @@ class HomeCategory {
 
   final String name;
   final IconData icon;
-}
-
-class HomeProduct {
-  const HomeProduct({
-    required this.name,
-    required this.price,
-    required this.rating,
-    this.discountPercent,
-    this.imageUrl,
-  });
-
-  final String name;
-  final double price;
-  final double rating;
-  final int? discountPercent;
-  final String? imageUrl;
-
-  double get finalPrice =>
-      discountPercent == null ? price : price * (100 - discountPercent!) / 100;
 }
 
 class HomeScreen extends StatefulWidget {
@@ -53,6 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     context.read<HomeCubit>().loadLocation();
+    context.read<ProductsCubit>()
+      ..fetchBestSeller()
+      ..fetchOnSale()
+      ..fetchRecommended()
+      ..fetchNewArrivals();
   }
 
   @override
@@ -77,33 +62,35 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: CustomScrollView(
                   slivers: [
-                    SliverToBoxAdapter(child: PromoCarouselWidget(banners: _banners(l10n))),
-                    SliverToBoxAdapter(child: HomeSectionHeaderWidget(title: l10n.homeCategories)),
-                    SliverToBoxAdapter(child: CategoryListWidget(categories: _categories(l10n))),
                     SliverToBoxAdapter(
-                      child: HomeSectionHeaderWidget(title: l10n.homeBestSellers, onSeeAll: () {}),
+                      child: PromoCarouselWidget(banners: _banners(l10n)),
                     ),
-                    const SliverToBoxAdapter(child: ProductsRowWidget(products: _products)),
                     SliverToBoxAdapter(
-                      child: HomeSectionHeaderWidget(title: l10n.homeNewArrivals, onSeeAll: () {}),
+                      child: HomeSectionHeaderWidget(title: l10n.homeCategories),
                     ),
-                    SliverPadding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                        Dimens.lg,
-                        0,
-                        Dimens.lg,
-                        Dimens.xl,
-                      ),
-                      sliver: SliverGrid.builder(
-                        itemCount: _products.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: Dimens.md,
-                          crossAxisSpacing: Dimens.md,
-                          mainAxisExtent: kProductCardHeight,
-                        ),
-                        itemBuilder: (_, i) => ProductCardWidget(product: _products[i]),
-                      ),
+                    SliverToBoxAdapter(
+                      child: CategoryListWidget(categories: _categories(l10n)),
+                    ),
+                    HomeProductsSection(
+                      title: l10n.homeBestSellers,
+                      select: (s) => s.bestSeller,
+                      onSeeAll: () {},
+                    ),
+                    HomeProductsSection(
+                      title: l10n.homeOnSale,
+                      select: (s) => s.onSale,
+                      onSeeAll: () {},
+                    ),
+                    HomeProductsSection(
+                      title: l10n.homeRecommended,
+                      select: (s) => s.recommended,
+                      onSeeAll: () {},
+                    ),
+                    HomeProductsSection(
+                      title: l10n.homeNewArrivals,
+                      select: (s) => s.newArrivals,
+                      layout: ProductsLayout.grid,
+                      onSeeAll: () {},
                     ),
                   ],
                 ),
@@ -145,13 +132,4 @@ List<HomeCategory> _categories(S l10n) => [
   HomeCategory(l10n.categoryBeauty, Icons.brush_rounded),
   HomeCategory(l10n.categorySports, Icons.sports_soccer_rounded),
   HomeCategory(l10n.categoryBooks, Icons.menu_book_rounded),
-];
-
-const _products = [
-  HomeProduct(name: 'Wireless Headphones', price: 1200, rating: 4.7, discountPercent: 20),
-  HomeProduct(name: 'Smart Watch Series 5', price: 3400, rating: 4.5),
-  HomeProduct(name: 'Running Shoes', price: 1800, rating: 4.8, discountPercent: 35),
-  HomeProduct(name: 'Leather Backpack', price: 950, rating: 4.3),
-  HomeProduct(name: 'Mechanical Keyboard', price: 2100, rating: 4.9, discountPercent: 10),
-  HomeProduct(name: 'Desk Lamp', price: 420, rating: 4.2),
 ];

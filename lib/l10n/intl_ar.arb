@@ -104,7 +104,11 @@
   "homeSeeAll": "عرض الكل",
   "homeCategories": "الفئات",
   "homeBestSellers": "الأكثر مبيعاً",
+  "homeOnSale": "عروض وتخفيضات",
+  "homeRecommended": "موصى به لك",
   "homeNewArrivals": "وصل حديثاً",
+  "homeDeliverTo": "توصيل الي",
+
   "bannerSeasonSaleTitle": "تخفيضات الموسم",
   "bannerSeasonSaleSubtitle": "خصم يصل إلى 50٪ على منتجات مختارة",
   "bannerNewArrivalsTitle": "وصل حديثاً",

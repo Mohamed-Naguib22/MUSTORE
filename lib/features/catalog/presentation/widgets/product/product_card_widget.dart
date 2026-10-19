@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/cards/app_card.dart';
+import 'package:mustore/features/catalog/domain/entities/product/product.dart';
 import 'package:mustore/features/catalog/presentation/widgets/product/product_image_widget.dart';
-import 'package:mustore/features/home/presentation/screens/home_screen.dart';
 import 'package:mustore/generated/l10n.dart';
 
 const double kProductCardHeight = 270;
@@ -11,13 +11,20 @@ const double kProductCardHeight = 270;
 class ProductCardWidget extends StatelessWidget {
   const ProductCardWidget({super.key, required this.product});
 
-  final HomeProduct product;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
     final l10n = S.of(context);
+
+    final sale = product.sale;
+    final int? discountPercent = (sale == null || product.price <= 0)
+        ? null
+        : ((product.price - sale.priceAfterSale) / product.price * 100)
+        .round();
+    final finalPrice = sale?.priceAfterSale ?? product.price;
 
     return AppCard(
       padding: EdgeInsets.zero,
@@ -30,7 +37,7 @@ class ProductCardWidget extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 ProductImageWidget(url: product.imageUrl),
-                if (product.discountPercent != null)
+                if (discountPercent != null)
                   PositionedDirectional(
                     top: Dimens.sm,
                     start: Dimens.sm,
@@ -44,7 +51,7 @@ class ProductCardWidget extends StatelessWidget {
                         borderRadius: Dimens.borderSm,
                       ),
                       child: Text(
-                        '-${product.discountPercent}%',
+                        '-$discountPercent%',
                         style: text.labelSmall?.copyWith(
                           color: scheme.onSecondary,
                           fontWeight: FontWeight.w700,
@@ -62,7 +69,12 @@ class ProductCardWidget extends StatelessWidget {
                       backgroundColor: scheme.surface.withValues(alpha: 0.92),
                       foregroundColor: scheme.onSurface,
                     ),
-                    icon: const Icon(Icons.favorite_border_rounded, size: 18),
+                    icon: Icon(
+                      product.isAddedToWishlist
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_border_rounded,
+                      size: 18,
+                    ),
                   ),
                 ),
               ],
@@ -99,13 +111,13 @@ class ProductCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      l10n.priceEgp(product.finalPrice.round()),
+                      l10n.priceEgp(finalPrice.round()),
                       style: text.titleSmall?.copyWith(
                         color: scheme.primary,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    if (product.discountPercent != null) ...[
+                    if (discountPercent != null) ...[
                       Dimens.gapSm,
                       Text(
                         product.price.toStringAsFixed(0),

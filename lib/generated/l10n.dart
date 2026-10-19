@@ -990,6 +990,26 @@ class S {
     );
   }
 
+  /// `On sale`
+  String get homeOnSale {
+    return Intl.message(
+      'On sale',
+      name: 'homeOnSale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recommended for you`
+  String get homeRecommended {
+    return Intl.message(
+      'Recommended for you',
+      name: 'homeRecommended',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Deliver to`
   String get homeDeliverTo {
     return Intl.message(
