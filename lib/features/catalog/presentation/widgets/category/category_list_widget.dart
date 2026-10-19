@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/cards/app_card.dart';
+import 'package:mustore/core/widgets/media/app_network_image.dart';
 import 'package:mustore/features/catalog/domain/entities/category/category.dart';
 
 class CategoryListWidget extends StatelessWidget {
@@ -21,14 +22,6 @@ class CategoryListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-
-    final fallback = Center(
-      child: Icon(
-        Icons.category_rounded,
-        size: Dimens.iconMd,
-        color: scheme.onPrimaryContainer,
-      ),
-    );
 
     return SizedBox(
       height: _height,
@@ -52,20 +45,12 @@ class CategoryListWidget extends StatelessWidget {
                   height: _avatar,
                   padding: EdgeInsets.zero,
                   onTap: onTap == null ? null : () => onTap!(c),
-                  child: c.imageUrl.isEmpty
-                      ? fallback
-                      : Image.network(
-                    c.imageUrl,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
-                    frameBuilder: (_, child, frame, sync) =>
-                        AnimatedOpacity(
-                          opacity: sync || frame != null ? 1 : 0,
-                          duration: Dimens.normal,
-                          child: child,
-                        ),
-                    errorBuilder: (_, __, ___) => fallback,
+                  child: AppNetworkImage(
+                    url: c.imageUrl,
+                    fallbackIcon: Icons.category_rounded,
+                    iconSize: Dimens.iconMd,
+                    iconColor: scheme.onPrimaryContainer,
+                    backgroundColor: scheme.primaryContainer,
                   ),
                 ),
                 Dimens.gapSm,
