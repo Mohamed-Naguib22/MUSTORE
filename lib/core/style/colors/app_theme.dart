@@ -156,21 +156,26 @@ abstract final class AppTheme {
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
+        height: Dimens.xxxl + Dimens.xl,
         backgroundColor: scheme.surface,
         surfaceTintColor: AppColors.transparent,
+        shadowColor: AppColors.transparent,
         elevation: 0,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         indicatorColor: scheme.primaryContainer,
-        iconTheme: WidgetStateProperty.resolveWith(
-              (states) => IconThemeData(
-            color: states.contains(WidgetState.selected)
-                ? scheme.onPrimaryContainer
-                : scheme.onSurfaceVariant,
-          ),
-        ),
+        indicatorShape: const RoundedRectangleBorder(borderRadius: Dimens.borderPill),
+        overlayColor: WidgetStatePropertyAll(scheme.primary.withValues(alpha: 0.08)),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return IconThemeData(
+            size: Dimens.iconMd,
+            color: selected ? scheme.onPrimaryContainer : scheme.onSurfaceVariant,
+          );
+        }),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
           return textTheme.labelMedium?.copyWith(
-            color: selected ? scheme.onSurface : scheme.onSurfaceVariant,
+            color: selected ? scheme.primary : scheme.onSurfaceVariant,
             fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
           );
         }),
