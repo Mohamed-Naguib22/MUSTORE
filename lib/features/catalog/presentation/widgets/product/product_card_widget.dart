@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/cards/app_card.dart';
-import 'package:mustore/features/catalog/widgets/product/product_image_widget.dart';
+import 'package:mustore/features/catalog/presentation/widgets/product/product_image_widget.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
 import 'package:mustore/generated/l10n.dart';
 

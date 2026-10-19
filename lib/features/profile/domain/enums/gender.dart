@@ -8,6 +8,6 @@ extension GenderX on Gender {
 
   static Gender fromJson(String value) => Gender.values.firstWhere(
         (e) => e.value.toLowerCase() == value.toLowerCase(),
-    orElse: () => throw FormatException('Unknown Gender: $value'),
+    orElse: () => Gender.male,
   );
 }

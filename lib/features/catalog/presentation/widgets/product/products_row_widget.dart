@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
-import 'package:mustore/features/catalog/widgets/product/product_card_widget.dart';
+import 'package:mustore/features/catalog/presentation/widgets/product/product_card_widget.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
 
 class ProductsRowWidget extends StatelessWidget {

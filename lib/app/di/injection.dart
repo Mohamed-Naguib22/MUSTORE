@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:mustore/app/di/app_module.dart';
 import 'package:mustore/app/di/auth_module.dart';
+import 'package:mustore/app/di/catalog_module.dart';
 import 'package:mustore/app/di/core_module.dart';
 import 'package:mustore/app/di/settings_module.dart';
 
@@ -11,4 +12,5 @@ Future<void> configureDependencies() async {
   registerAuthModule(sl);
   registerAppModule(sl);
   registerSettingsModule(sl);
+  registerCatalogModule(sl);
 }
