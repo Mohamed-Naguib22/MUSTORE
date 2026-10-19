@@ -19,6 +19,13 @@ class AppTextButton extends StatefulWidget {
     this.compact = false,
     this.height = Dimens.buttonHeight,
     this.borderRadius = Dimens.borderMd,
+    this.textStyle,
+    this.iconSize,
+    this.iconGap,
+    this.padding,
+    this.tonal = false,
+    this.tightText = false,
+    this.iconOffset = 0,
   });
 
   final String label;
@@ -33,6 +40,13 @@ class AppTextButton extends StatefulWidget {
   final bool compact;
   final double height;
   final BorderRadius borderRadius;
+  final TextStyle? textStyle;
+  final double? iconSize;
+  final double? iconGap;
+  final EdgeInsetsGeometry? padding;
+  final bool tonal;
+  final bool tightText;
+  final double iconOffset;
 
   @override
   State<AppTextButton> createState() => _AppTextButtonState();
@@ -53,6 +67,13 @@ class _AppTextButtonState extends State<AppTextButton> {
     };
   }
 
+  Widget _icon(IconData data, double size, Color color) {
+    final icon = Icon(data, size: size, color: color);
+    if (widget.iconOffset == 0) return icon;
+
+    return Transform.translate(offset: Offset(0, widget.iconOffset), child: icon);
+  }
+
   @override
   Widget build(BuildContext context) {
     final notifier = widget.isEnabled;
@@ -71,24 +92,32 @@ class _AppTextButtonState extends State<AppTextButton> {
     final fg = _foreground(theme.colorScheme, interactive);
     final textStyle = (theme.textTheme.labelMedium?.copyWith(
       fontWeight: FontWeight.bold,
-    ) ?? const TextStyle()).copyWith(color: fg);
-    final iconSize = Dimens.iconMd - Dimens.xs;
+    ) ?? const TextStyle())
+        .merge(widget.textStyle)
+        .copyWith(color: fg);
+    final iconSize = widget.iconSize ?? Dimens.iconMd - Dimens.xs;
+    final gap = SizedBox(width: widget.iconGap ?? Dimens.sm);
+
+    final restingTint = widget.tonal && enabled
+        ? fg.withValues(alpha: 0.10)
+        : AppColors.transparent;
 
     final tint = enabled
         ? (_pressed
-        ? fg.withValues(alpha: 0.12)
+        ? fg.withValues(alpha: widget.tonal ? 0.20 : 0.12)
         : _hovered
-        ? fg.withValues(alpha: 0.06)
-        : AppColors.transparent)
-        : AppColors.transparent;
+        ? fg.withValues(alpha: widget.tonal ? 0.14 : 0.06)
+        : restingTint)
+        : restingTint;
 
     final content = Row(
       mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (widget.icon != null) ...[
-          Icon(widget.icon, size: iconSize, color: fg),
-          Dimens.gapSm,
+          _icon(widget.icon!, iconSize, fg),
+          gap,
         ],
         Flexible(
           child: Text(
@@ -96,11 +125,18 @@ class _AppTextButtonState extends State<AppTextButton> {
             style: textStyle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
+            textHeightBehavior: widget.tightText
+                ? const TextHeightBehavior(
+              applyHeightToFirstAscent: false,
+              applyHeightToLastDescent: false,
+              leadingDistribution: TextLeadingDistribution.even,
+            )
+                : null,
           ),
         ),
         if (widget.trailingIcon != null) ...[
-          Dimens.gapSm,
-          Icon(widget.trailingIcon, size: iconSize, color: fg),
+          gap,
+          _icon(widget.trailingIcon!, iconSize, fg),
         ],
       ],
     );
@@ -122,14 +158,16 @@ class _AppTextButtonState extends State<AppTextButton> {
       ],
     );
 
-    final padding = widget.compact
-        ? const EdgeInsetsDirectional.symmetric(
-      horizontal: Dimens.sm,
-      vertical: Dimens.xs,
-    )
-        : EdgeInsetsDirectional.symmetric(
-      horizontal: widget.height < Dimens.buttonHeight ? Dimens.md : Dimens.lg,
-    );
+    final EdgeInsetsGeometry padding = widget.padding ??
+        (widget.compact
+            ? const EdgeInsetsDirectional.symmetric(
+          horizontal: Dimens.sm,
+          vertical: Dimens.xs,
+        )
+            : EdgeInsetsDirectional.symmetric(
+          horizontal:
+          widget.height < Dimens.buttonHeight ? Dimens.md : Dimens.lg,
+        ));
 
     final button = Semantics(
       button: true,
@@ -157,7 +195,9 @@ class _AppTextButtonState extends State<AppTextButton> {
               highlightColor: AppColors.transparent,
               hoverColor: AppColors.transparent,
               child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: widget.compact ? 0 : widget.height),
+                constraints: BoxConstraints(
+                  minHeight: widget.compact ? 0 : widget.height,
+                ),
                 child: Padding(
                   padding: padding,
                   child: body,
@@ -169,6 +209,8 @@ class _AppTextButtonState extends State<AppTextButton> {
       ),
     );
 
-    return widget.expand ? SizedBox(width: double.infinity, child: button) : button;
+    return widget.expand
+        ? SizedBox(width: double.infinity, child: button)
+        : button;
   }
 }

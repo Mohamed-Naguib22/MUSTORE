@@ -47,7 +47,6 @@ class CategoryListWidget extends StatelessWidget {
                   onTap: onTap == null ? null : () => onTap!(c),
                   child: AppNetworkImage(
                     url: c.imageUrl,
-                    fallbackIcon: Icons.category_rounded,
                     iconSize: Dimens.iconMd,
                     iconColor: scheme.onPrimaryContainer,
                     backgroundColor: scheme.primaryContainer,
