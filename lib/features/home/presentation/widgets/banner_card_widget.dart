@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
-import 'package:mustore/core/widgets/cards/app_card.dart'; // adjust path if needed
+import 'package:mustore/core/widgets/cards/app_card.dart';
 import 'package:mustore/generated/l10n.dart';
 
 class HomeBanner {
@@ -39,38 +39,49 @@ class BannerCardWidget extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  banner.title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: text.titleLarge?.copyWith(
-                    color: AppColors.onBanner,
-                    fontWeight: FontWeight.w800,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: SizedBox(
+                    width: constraints.maxWidth,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          banner.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: text.titleLarge?.copyWith(
+                            color: AppColors.onBanner,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        Dimens.gapXs,
+                        Text(
+                          banner.subtitle,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: text.bodyMedium?.copyWith(
+                            color: AppColors.onBannerMuted,
+                          ),
+                        ),
+                        Dimens.gapLg,
+                        AppButton(
+                          label: l10n.homeShopNow,
+                          expand: false,
+                          height: _buttonHeight,
+                          backgroundColor: AppColors.onBanner,
+                          foregroundColor: banner.colors.first,
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Dimens.gapXs,
-                Text(
-                  banner.subtitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: text.bodyMedium?.copyWith(
-                    color: AppColors.onBannerMuted,
-                  ),
-                ),
-                Dimens.gapLg,
-                AppButton(
-                  label: l10n.homeShopNow,
-                  expand: false,
-                  height: _buttonHeight,
-                  backgroundColor: AppColors.onBanner,
-                  foregroundColor: banner.colors.first,
-                  onPressed: () {},
-                ),
-              ],
+                );
+              },
             ),
           ),
           Dimens.gapMd,
