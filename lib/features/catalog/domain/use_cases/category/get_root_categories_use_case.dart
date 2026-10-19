@@ -5,13 +5,13 @@ import 'package:mustore/features/catalog/domain/repositories/category_repository
 import 'package:mustore/features/catalog/domain/entities/category/category.dart';
 
 class GetRootCategoriesUseCase
-    implements UseCase<List<Category>, NoParams> {
+    implements UseCase<List<Category>, int> {
   const GetRootCategoriesUseCase(this._repository);
   final CategoryRepository _repository;
 
   @override
   Future<Either<Failure, List<Category>>> call(
-      NoParams params,
+      int take,
       ) =>
-      _repository.rootCategories();
+      _repository.rootCategories(take);
 }

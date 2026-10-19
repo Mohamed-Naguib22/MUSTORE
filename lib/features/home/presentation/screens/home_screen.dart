@@ -3,9 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/widgets/feedback/app_message_widget.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
+import 'package:mustore/core/widgets/loading/app_skeleton.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
+import 'package:mustore/features/catalog/domain/entities/category/category.dart';
+import 'package:mustore/features/catalog/presentation/controllers/category/category_cubit.dart';
+import 'package:mustore/features/catalog/presentation/controllers/category/category_state.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_state.dart';
 import 'package:mustore/features/catalog/presentation/widgets/category/category_list_widget.dart';
@@ -19,13 +24,6 @@ import 'package:mustore/features/home/presentation/widgets/home_section_widget.d
 import 'package:mustore/features/home/presentation/widgets/promo_carousel_widget.dart';
 import 'package:mustore/generated/l10n.dart';
 
-class HomeCategory {
-  const HomeCategory(this.name, this.icon);
-
-  final String name;
-  final IconData icon;
-}
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -35,8 +33,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   static const _pageSize = 10;
+  static const _categoriesTake = 7;
 
   late final ProductsCubit _productsCubit;
+  late final CategoryCubit _categoryCubit;
 
   bool get _signedIn =>
       context.read<AuthCubit>().state.authStatus == AuthStatus.authenticated;
@@ -45,8 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _productsCubit = context.read<ProductsCubit>();
+    _categoryCubit = context.read<CategoryCubit>();
 
     context.read<HomeCubit>().loadLocation();
+    _categoryCubit.fetchRootCategories(_categoriesTake);
     _productsCubit
       ..fetchBestSeller(pageSize: _pageSize)
       ..fetchOnSale(pageSize: _pageSize)
@@ -55,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _refresh() => Future.wait([
+    _categoryCubit.fetchRootCategories(_categoriesTake),
     _productsCubit.fetchBestSeller(pageSize: _pageSize),
     _productsCubit.fetchOnSale(pageSize: _pageSize),
     _productsCubit.fetchRecommended(pageSize: _pageSize),
@@ -64,6 +67,52 @@ class _HomeScreenState extends State<HomeScreen> {
       _productsCubit.fetchRecentlyViewed(pageSize: _pageSize),
     ],
   ]);
+
+  Widget _categoriesSection(S l10n, CategoryState state) {
+    final items = state.rootCategories;
+    final isLoading = items.isEmpty &&
+        (state.status.isInitial || state.status.isLoading);
+
+    final header = SliverToBoxAdapter(
+      child: HomeSectionHeaderWidget(title: l10n.homeCategories),
+    );
+
+    if (state.status.isFailure && items.isEmpty) {
+      final message = state.failure?.localizedMessage(context) ?? '';
+
+      return SliverMainAxisGroup(
+        slivers: [
+          header,
+          SliverToBoxAdapter(
+            child: AppMessageWidget(
+              message: message.isEmpty ? l10n.commonSomethingWentWrong : message,
+              actionLabel: l10n.commonRetry,
+              onAction: () => _categoryCubit.fetchRootCategories(_categoriesTake),
+            ),
+          ),
+        ],
+      );
+    }
+
+    if (items.isEmpty && !isLoading) {
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
+    }
+
+    return AppSliverSkeleton(
+      isLoading: isLoading,
+      sliver: SliverMainAxisGroup(
+        slivers: [
+          header,
+          SliverToBoxAdapter(
+            child: CategoryListWidget(
+              categories: isLoading ? Category.fakeList(_categoriesTake) : items,
+              onTap: (category) {},
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,15 +149,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       SliverToBoxAdapter(
                         child: PromoCarouselWidget(banners: _banners(l10n)),
                       ),
-                      SliverToBoxAdapter(
-                        child: HomeSectionHeaderWidget(
-                          title: l10n.homeCategories,
-                        ),
-                      ),
-                      SliverToBoxAdapter(
-                        child: CategoryListWidget(
-                          categories: _categories(l10n),
-                        ),
+                      BlocBuilder<CategoryCubit, CategoryState>(
+                        bloc: _categoryCubit,
+                        buildWhen: (p, c) =>
+                        p.status != c.status ||
+                            p.rootCategories != c.rootCategories,
+                        builder: (context, state) =>
+                            _categoriesSection(l10n, state),
                       ),
                       if (signedIn)
                         HomePersonalSectionWidget(
@@ -197,14 +244,4 @@ List<HomeBanner> _banners(S l10n) => [
     icon: Icons.local_shipping_rounded,
     colors: AppColors.bannerSuccess,
   ),
-];
-
-List<HomeCategory> _categories(S l10n) => [
-  HomeCategory(l10n.categoryFashion, Icons.checkroom_rounded),
-  HomeCategory(l10n.categoryPhones, Icons.smartphone_rounded),
-  HomeCategory(l10n.categoryLaptops, Icons.laptop_mac_rounded),
-  HomeCategory(l10n.categoryHome, Icons.chair_rounded),
-  HomeCategory(l10n.categoryBeauty, Icons.brush_rounded),
-  HomeCategory(l10n.categorySports, Icons.sports_soccer_rounded),
-  HomeCategory(l10n.categoryBooks, Icons.menu_book_rounded),
 ];

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mustore/core/use_case/use_case.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/utils/mixins/safe_emit_mixin.dart';
 import 'package:mustore/features/catalog/domain/use_cases/category/get_root_categories_use_case.dart';
@@ -15,12 +14,12 @@ class CategoryCubit extends Cubit<CategoryState>
 
   final GetRootCategoriesUseCase _getRootCategories;
 
-  Future<void> fetchRootCategories() async {
+  Future<void> fetchRootCategories(int take) async {
     if (state.status.isLoading) return;
 
     safeEmit(state.copyWith(status: RequestStatus.loading, clearFailure: true));
 
-    final result = await _getRootCategories(const NoParams());
+    final result = await _getRootCategories(take);
 
     safeFold(
       result,

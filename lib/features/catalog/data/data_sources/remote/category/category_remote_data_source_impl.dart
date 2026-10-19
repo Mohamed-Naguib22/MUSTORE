@@ -11,9 +11,12 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   final ApiClient _apiClient;
 
   @override
-  Future<List<CategoryModel>> rootCategories() async {
+  Future<List<CategoryModel>> rootCategories(int take) async {
     final response = await _apiClient.get(
       path: CategoryEndpoints.rootCategories,
+      query: {
+        'take': take,
+      }
     );
 
     return (response.data as List<dynamic>).toModels(CategoryModel.fromJson);

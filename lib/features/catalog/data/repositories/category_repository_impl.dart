@@ -18,6 +18,6 @@ class CategoryRepositoryImpl with NetworkMixin implements CategoryRepository {
   final CategoryRemoteDataSource _remote;
 
   @override
-  Future<Either<Failure, List<Category>>> rootCategories() =>
-      onlineOnly<List<Category>>(() => _remote.rootCategories());
+  Future<Either<Failure, List<Category>>> rootCategories(int take) =>
+      onlineOnly<List<Category>>(() => _remote.rootCategories(take));
 }
