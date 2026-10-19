@@ -17,44 +17,102 @@ class ProductCardWidget extends StatelessWidget {
   final Product product;
 
   static const double _wishlistSize = Dimens.xxl;
-  static const int _starCount = 5;
 
   static const EdgeInsetsDirectional _imagePadding =
   EdgeInsetsDirectional.all(Dimens.sm);
   static const EdgeInsetsDirectional _textPadding =
   EdgeInsetsDirectional.fromSTEB(
-    Dimens.sm,
+    Dimens.md,
     Dimens.xs,
-    Dimens.sm,
-    Dimens.sm,
+    Dimens.md,
+    Dimens.md,
+  );
+  static const EdgeInsetsDirectional _pillPadding =
+  EdgeInsetsDirectional.symmetric(
+    horizontal: Dimens.sm,
+    vertical: Dimens.xs,
   );
 
   String _price(S l10n, double value) => product.currency == CurrencyCode.egp
       ? l10n.priceEgp(value.round())
       : '${value.round()} ${product.currency.name.toUpperCase()}';
 
-  String _discountLabel(S l10n, ProductSale sale) => switch (sale.discountType) {
-    SaleDiscountType.percentage => '-${sale.discountValue.round()}%',
-    SaleDiscountType.fixedAmount => '-${_price(l10n, sale.discountValue)}',
-  };
+  String _discountLabel(ProductSale sale, double saved) {
+    final percent = switch (sale.discountType) {
+      SaleDiscountType.percentage => sale.discountValue,
+      SaleDiscountType.fixedAmount =>
+      product.price > 0 ? saved / product.price * 100 : 0.0,
+    };
+    return '-${percent.round()}%';
+  }
 
-  Widget _stars(ColorScheme scheme) => Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      for (var i = 0; i < _starCount; i++)
-        Icon(
-          product.rating >= i + 1
-              ? Icons.star_rounded
-              : product.rating >= i + 0.5
-              ? Icons.star_half_rounded
-              : Icons.star_outline_rounded,
-          size: Dimens.iconSm,
-          color: product.rating >= i + 0.5
-              ? AppColors.rating
-              : scheme.outline,
+  Widget _saleTag(ColorScheme scheme, TextTheme text, String label) =>
+      Container(
+        padding: _pillPadding,
+        decoration: BoxDecoration(
+          color: scheme.secondary,
+          borderRadius: Dimens.borderPill,
         ),
-    ],
+        child: Text(
+          label,
+          style: text.labelSmall?.copyWith(
+            color: scheme.onSecondary,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      );
+
+  Widget _wishlistButton(ColorScheme scheme) => Container(
+    width: _wishlistSize,
+    height: _wishlistSize,
+    decoration: BoxDecoration(
+      color: scheme.surface,
+      shape: BoxShape.circle,
+    ),
+    child: Icon(
+      product.isAddedToWishlist
+          ? Icons.favorite_rounded
+          : Icons.favorite_border_rounded,
+      size: Dimens.iconSm,
+      color: product.isAddedToWishlist
+          ? scheme.error
+          : scheme.onSurfaceVariant,
+    ),
   );
+
+  Widget _ratingChip(ColorScheme scheme, TextTheme text, int reviews) =>
+      Container(
+        padding: _pillPadding,
+        decoration: BoxDecoration(
+          color: scheme.surface,
+          borderRadius: Dimens.borderPill,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.star_rounded,
+              size: Dimens.iconSm,
+              color: AppColors.rating,
+            ),
+            Dimens.gapXxs,
+            Text(
+              product.rating.toStringAsFixed(1),
+              style: text.labelSmall?.copyWith(
+                color: scheme.onSurface,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Dimens.gapXs,
+            Text(
+              '($reviews)',
+              style: text.labelSmall?.copyWith(
+                color: scheme.onSurfaceVariant,
+              ),
+            ),
+          ],
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +122,7 @@ class ProductCardWidget extends StatelessWidget {
 
     final sale = product.sale;
     final finalPrice = sale?.priceAfterSale ?? product.price;
+    final saved = (product.price - finalPrice).clamp(0.0, double.infinity);
     final description = product.description?.trim() ?? '';
     final reviews = product.numberOfReviews.round();
 
@@ -77,56 +136,42 @@ class ProductCardWidget extends StatelessWidget {
             child: Padding(
               padding: _imagePadding,
               child: ClipRRect(
-                borderRadius: Dimens.borderSm,
+                borderRadius: Dimens.borderMd,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
+                    ColoredBox(color: scheme.surfaceContainer),
                     ProductImageWidget(url: product.imageUrl),
                     PositionedDirectional(
                       top: Dimens.sm,
                       start: Dimens.sm,
                       end: Dimens.sm,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (sale != null)
-                            Container(
-                              padding: const EdgeInsetsDirectional.symmetric(
-                                horizontal: Dimens.sm,
-                                vertical: Dimens.xs,
+                          Expanded(
+                            child: Align(
+                              alignment: AlignmentDirectional.centerStart,
+                              child: sale == null
+                                  ? const SizedBox.shrink()
+                                  : _saleTag(
+                                scheme,
+                                text,
+                                _discountLabel(sale, saved),
                               ),
-                              decoration: BoxDecoration(
-                                color: scheme.secondary,
-                                borderRadius: Dimens.borderSm,
-                              ),
-                              child: Text(
-                                _discountLabel(l10n, sale),
-                                style: text.labelSmall?.copyWith(
-                                  color: scheme.onSecondary,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          const Spacer(),
-                          Container(
-                            width: _wishlistSize,
-                            height: _wishlistSize,
-                            decoration: BoxDecoration(
-                              color: scheme.surface,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              product.isAddedToWishlist
-                                  ? Icons.favorite_rounded
-                                  : Icons.favorite_border_rounded,
-                              size: Dimens.iconSm,
-                              color: product.isAddedToWishlist
-                                  ? scheme.error
-                                  : scheme.onSurfaceVariant,
                             ),
                           ),
+                          Dimens.gapXs,
+                          _wishlistButton(scheme),
                         ],
                       ),
                     ),
+                    if (reviews > 0)
+                      PositionedDirectional(
+                        bottom: Dimens.sm,
+                        start: Dimens.sm,
+                        child: _ratingChip(scheme, text, reviews),
+                      ),
                   ],
                 ),
               ),
@@ -152,25 +197,6 @@ class ProductCardWidget extends StatelessWidget {
                     color: scheme.onSurfaceVariant,
                   ),
                 ),
-                Dimens.gapXs,
-                Visibility(
-                  visible: reviews > 0,
-                  maintainSize: true,
-                  maintainAnimation: true,
-                  maintainState: true,
-                  child: Row(
-                    children: [
-                      _stars(scheme),
-                      Dimens.gapXs,
-                      Text(
-                        '($reviews)',
-                        style: text.labelSmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 Dimens.gapSm,
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -182,18 +208,24 @@ class ProductCardWidget extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: text.titleSmall?.copyWith(
-                          color: scheme.onSurface,
+                          color: sale == null
+                              ? scheme.onSurface
+                              : scheme.primary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
                     if (sale != null) ...[
                       Dimens.gapSm,
-                      Text(
-                        product.price.toStringAsFixed(0),
-                        style: text.labelSmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                          decoration: TextDecoration.lineThrough,
+                      Flexible(
+                        child: Text(
+                          _price(l10n, product.price),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: text.labelSmall?.copyWith(
+                            color: scheme.onSurfaceVariant,
+                            decoration: TextDecoration.lineThrough,
+                          ),
                         ),
                       ),
                     ],
