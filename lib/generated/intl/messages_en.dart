@@ -111,6 +111,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoryLaptops": MessageLookupByLibrary.simpleMessage("Laptops"),
         "categoryPhones": MessageLookupByLibrary.simpleMessage("Phones"),
         "categorySports": MessageLookupByLibrary.simpleMessage("Sports"),
+        "failureCache": MessageLookupByLibrary.simpleMessage(
+            "Failed to save your settings, please try again"),
+        "failureGeneric": MessageLookupByLibrary.simpleMessage(
+            "Something went wrong, please try again"),
+        "failureNetwork":
+            MessageLookupByLibrary.simpleMessage("No internet connection"),
+        "failureNoData":
+            MessageLookupByLibrary.simpleMessage("No saved data available"),
+        "failureNotFound": MessageLookupByLibrary.simpleMessage(
+            "The requested item was not found"),
+        "failureServer": MessageLookupByLibrary.simpleMessage(
+            "Server error, please try again later"),
+        "failureSessionExpired": MessageLookupByLibrary.simpleMessage(
+            "Your session has expired, please log in again"),
         "fieldRequired": MessageLookupByLibrary.simpleMessage("Required"),
         "forgetPasswordButton":
             MessageLookupByLibrary.simpleMessage("Send code"),

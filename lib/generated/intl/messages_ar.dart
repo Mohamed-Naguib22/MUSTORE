@@ -110,6 +110,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoryLaptops": MessageLookupByLibrary.simpleMessage("لابتوب"),
         "categoryPhones": MessageLookupByLibrary.simpleMessage("هواتف"),
         "categorySports": MessageLookupByLibrary.simpleMessage("رياضة"),
+        "failureCache": MessageLookupByLibrary.simpleMessage(
+            "تعذّر حفظ إعداداتك، يرجى المحاولة مرة أخرى"),
+        "failureGeneric": MessageLookupByLibrary.simpleMessage(
+            "حدث خطأ ما، يرجى المحاولة مرة أخرى"),
+        "failureNetwork":
+            MessageLookupByLibrary.simpleMessage("لا يوجد اتصال بالإنترنت"),
+        "failureNoData":
+            MessageLookupByLibrary.simpleMessage("لا توجد بيانات محفوظة"),
+        "failureNotFound":
+            MessageLookupByLibrary.simpleMessage("العنصر المطلوب غير موجود"),
+        "failureServer": MessageLookupByLibrary.simpleMessage(
+            "خطأ في الخادم، يرجى المحاولة لاحقًا"),
+        "failureSessionExpired": MessageLookupByLibrary.simpleMessage(
+            "انتهت جلستك، يرجى تسجيل الدخول مرة أخرى"),
         "fieldRequired": MessageLookupByLibrary.simpleMessage("مطلوب"),
         "forgetPasswordButton":
             MessageLookupByLibrary.simpleMessage("إرسال الرمز"),

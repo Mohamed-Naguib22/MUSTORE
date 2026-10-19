@@ -1,6 +1,15 @@
 {
   "@@locale": "ar",
   "appTitle": "متجر",
+
+  "failureNetwork": "لا يوجد اتصال بالإنترنت",
+  "failureSessionExpired": "انتهت جلستك، يرجى تسجيل الدخول مرة أخرى",
+  "failureNotFound": "العنصر المطلوب غير موجود",
+  "failureServer": "خطأ في الخادم، يرجى المحاولة لاحقًا",
+  "failureGeneric": "حدث خطأ ما، يرجى المحاولة مرة أخرى",
+  "failureNoData": "لا توجد بيانات محفوظة",
+  "failureCache": "تعذّر حفظ إعداداتك، يرجى المحاولة مرة أخرى",
+
   "settings": "الإعدادات",
   "settingsTheme": "المظهر",
   "settingsLanguage": "اللغة",

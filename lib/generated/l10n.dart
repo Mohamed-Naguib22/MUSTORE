@@ -60,6 +60,76 @@ class S {
     );
   }
 
+  /// `No internet connection`
+  String get failureNetwork {
+    return Intl.message(
+      'No internet connection',
+      name: 'failureNetwork',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your session has expired, please log in again`
+  String get failureSessionExpired {
+    return Intl.message(
+      'Your session has expired, please log in again',
+      name: 'failureSessionExpired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The requested item was not found`
+  String get failureNotFound {
+    return Intl.message(
+      'The requested item was not found',
+      name: 'failureNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Server error, please try again later`
+  String get failureServer {
+    return Intl.message(
+      'Server error, please try again later',
+      name: 'failureServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong, please try again`
+  String get failureGeneric {
+    return Intl.message(
+      'Something went wrong, please try again',
+      name: 'failureGeneric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No saved data available`
+  String get failureNoData {
+    return Intl.message(
+      'No saved data available',
+      name: 'failureNoData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to save your settings, please try again`
+  String get failureCache {
+    return Intl.message(
+      'Failed to save your settings, please try again',
+      name: 'failureCache',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settings {
     return Intl.message(

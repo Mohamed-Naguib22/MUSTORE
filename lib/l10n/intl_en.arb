@@ -1,6 +1,15 @@
 {
   "@@locale": "en",
   "appTitle": "MUSTORE",
+
+  "failureNetwork": "No internet connection",
+  "failureSessionExpired": "Your session has expired, please log in again",
+  "failureNotFound": "The requested item was not found",
+  "failureServer": "Server error, please try again later",
+  "failureGeneric": "Something went wrong, please try again",
+  "failureNoData": "No saved data available",
+  "failureCache": "Failed to save your settings, please try again",
+
   "settings": "Settings",
   "settingsTheme": "Theme",
   "settingsLanguage": "Language",
