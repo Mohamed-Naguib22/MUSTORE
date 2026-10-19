@@ -69,7 +69,9 @@ class _AppTextButtonState extends State<AppTextButton> {
 
     final theme = Theme.of(context);
     final fg = _foreground(theme.colorScheme, interactive);
-    final textStyle = (theme.textTheme.labelLarge ?? const TextStyle()).copyWith(color: fg);
+    final textStyle = (theme.textTheme.labelMedium?.copyWith(
+      fontWeight: FontWeight.bold,
+    ) ?? const TextStyle()).copyWith(color: fg);
     final iconSize = Dimens.iconMd - Dimens.xs;
 
     final tint = enabled

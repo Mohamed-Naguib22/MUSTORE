@@ -41,30 +41,8 @@ class AppCard extends StatefulWidget {
 
 class _AppCardState extends State<AppCard> {
   bool _pressed = false;
-  bool _hovered = false;
 
   bool get _interactive => widget.onTap != null || widget.onLongPress != null;
-
-  List<BoxShadow> _shadows(ColorScheme s) {
-    if (widget.variant != AppCardVariant.elevated) return const [];
-    final (blur, dy, alpha) = _pressed
-        ? (8.0, 2.0, 0.07)
-        : _hovered
-        ? (28.0, 12.0, 0.14)
-        : (18.0, 6.0, 0.10);
-    return [
-      BoxShadow(
-        color: s.shadow.withValues(alpha: 0.06),
-        blurRadius: 3,
-        offset: const Offset(0, 1),
-      ),
-      BoxShadow(
-        color: s.shadow.withValues(alpha: alpha),
-        blurRadius: blur,
-        offset: Offset(0, dy),
-      ),
-    ];
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +68,6 @@ class _AppCardState extends State<AppCard> {
         onTap: widget.onTap,
         onLongPress: widget.onLongPress,
         onHighlightChanged: (v) => setState(() => _pressed = v),
-        onHover: (v) => setState(() => _hovered = v),
         splashColor: s.primary.withValues(alpha: 0.08),
         highlightColor: AppColors.transparent,
         hoverColor: s.primary.withValues(alpha: 0.04),
@@ -107,7 +84,6 @@ class _AppCardState extends State<AppCard> {
         color: fill,
         borderRadius: widget.borderRadius,
         border: Border.all(color: s.outline.withValues(alpha: borderAlpha)),
-        boxShadow: _shadows(s),
       ),
       child: ClipRRect(
         borderRadius: widget.borderRadius,

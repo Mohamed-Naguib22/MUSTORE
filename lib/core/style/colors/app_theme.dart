@@ -125,7 +125,7 @@ abstract final class AppTheme {
       textTheme: textTheme,
       iconTheme: IconThemeData(color: scheme.onSurface, size: Dimens.iconMd),
       dividerTheme: DividerThemeData(
-        color: scheme.outline,
+        color: scheme.outlineVariant,
         thickness: 1,
         space: 1,
       ),
@@ -134,12 +134,24 @@ abstract final class AppTheme {
         backgroundColor: background,
         foregroundColor: scheme.onSurface,
         surfaceTintColor: AppColors.transparent,
+        elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
+      ),
+      cardTheme: CardThemeData(
+        color: scheme.surface,
+        surfaceTintColor: AppColors.transparent,
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: Dimens.borderLg,
+          side: BorderSide(color: scheme.outlineVariant),
+        ),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: scheme.surface,
         surfaceTintColor: AppColors.transparent,
+        elevation: 0,
         indicatorColor: scheme.primaryContainer,
         iconTheme: WidgetStateProperty.resolveWith(
               (states) => IconThemeData(
@@ -182,6 +194,7 @@ abstract final class AppTheme {
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
+        elevation: 0,
         backgroundColor: scheme.inverseSurface,
         contentTextStyle: textTheme.bodyMedium?.copyWith(
           color: scheme.onInverseSurface,
@@ -191,6 +204,7 @@ abstract final class AppTheme {
       dialogTheme: DialogThemeData(
         backgroundColor: scheme.surface,
         surfaceTintColor: AppColors.transparent,
+        elevation: 0,
         titleTextStyle: textTheme.titleLarge,
         contentTextStyle: textTheme.bodyMedium,
         shape: const RoundedRectangleBorder(borderRadius: Dimens.borderXl),
@@ -198,6 +212,8 @@ abstract final class AppTheme {
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: scheme.surface,
         surfaceTintColor: AppColors.transparent,
+        elevation: 0,
+        modalElevation: 0,
         showDragHandle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -211,6 +227,7 @@ abstract final class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
+          elevation: 0,
           textStyle: textTheme.labelLarge,
           shape: buttonShape,
           minimumSize: buttonSize,

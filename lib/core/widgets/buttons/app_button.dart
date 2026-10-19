@@ -42,48 +42,27 @@ class AppButton extends StatefulWidget {
 
 class _AppButtonState extends State<AppButton> {
   bool _pressed = false;
-  bool _hovered = false;
 
-  ({Color bg, Color fg, bool elevated}) _colors(ColorScheme s, bool interactive) {
+  ({Color bg, Color fg}) _colors(ColorScheme s, bool interactive) {
     if (!interactive) {
       return (
       bg: s.onSurface.withValues(alpha: 0.12),
       fg: s.onSurface.withValues(alpha: 0.38),
-      elevated: false,
       );
     }
     final base = switch (widget.variant) {
-      AppButtonVariant.primary => (bg: s.primary, fg: s.onPrimary, elevated: true),
-      AppButtonVariant.secondary => (bg: s.secondary, fg: s.onSecondary, elevated: true),
-      AppButtonVariant.danger => (bg: s.error, fg: s.onError, elevated: true),
+      AppButtonVariant.primary => (bg: s.primary, fg: s.onPrimary),
+      AppButtonVariant.secondary => (bg: s.secondary, fg: s.onSecondary),
+      AppButtonVariant.danger => (bg: s.error, fg: s.onError),
       AppButtonVariant.tonal => (
       bg: s.primary.withValues(alpha: 0.12),
       fg: s.primary,
-      elevated: false,
       ),
     };
     return (
     bg: widget.backgroundColor ?? base.bg,
     fg: widget.foregroundColor ?? base.fg,
-    elevated: base.elevated,
     );
-  }
-
-  List<BoxShadow> _shadows(Color bg, bool elevated, Color shadowColor) {
-    if (!elevated) return const [];
-    final (blur, dy, alpha) = _pressed
-        ? (2.0, 1.0, 0.12)
-        : _hovered
-        ? (10.0, 4.0, 0.22)
-        : (6.0, 2.0, 0.18);
-    final custom = widget.backgroundColor != null;
-    return [
-      BoxShadow(
-        color: (custom ? shadowColor : bg).withValues(alpha: custom ? alpha * 0.4 : alpha),
-        blurRadius: blur,
-        offset: Offset(0, dy),
-      ),
-    ];
   }
 
   @override
@@ -161,7 +140,6 @@ class _AppButtonState extends State<AppButton> {
           decoration: BoxDecoration(
             color: c.bg,
             borderRadius: widget.borderRadius,
-            boxShadow: _shadows(c.bg, c.elevated, theme.colorScheme.shadow),
           ),
           child: Material(
             type: MaterialType.transparency,
@@ -169,7 +147,6 @@ class _AppButtonState extends State<AppButton> {
               borderRadius: widget.borderRadius,
               onTap: enabled ? widget.onPressed : null,
               onHighlightChanged: (v) => setState(() => _pressed = v),
-              onHover: (v) => setState(() => _hovered = v),
               splashColor: c.fg.withValues(alpha: 0.12),
               highlightColor: AppColors.transparent,
               hoverColor: c.fg.withValues(alpha: 0.06),

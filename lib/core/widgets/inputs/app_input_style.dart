@@ -68,7 +68,7 @@ abstract final class AppInputStyle {
   static TextStyle? textStyle(BuildContext context, {bool enabled = true}) {
     final theme = Theme.of(context);
     final s = theme.colorScheme;
-    return theme.textTheme.bodyLarge?.copyWith(
+    return theme.textTheme.bodyMedium?.copyWith(
       color: enabled ? s.onSurface : s.onSurface.withValues(alpha: 0.38),
     );
   }
@@ -92,7 +92,7 @@ abstract final class AppInputStyle {
           padding: const EdgeInsetsDirectional.only(start: Dimens.xs),
           child: Text(
             label,
-            style: theme.textTheme.labelLarge?.copyWith(
+            style: theme.textTheme.titleSmall?.copyWith(
               color: enabled ? s.onSurface : s.onSurface.withValues(alpha: 0.38),
             ),
           ),

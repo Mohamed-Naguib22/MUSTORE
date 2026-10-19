@@ -38,10 +38,10 @@ class ExternalLoginWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Expanded(child: Divider()),
+              Expanded(child: Divider(color: theme.colorScheme.outlineVariant)),
               Padding(
                 padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: Dimens.md,
+                  horizontal: Dimens.lg,
                 ),
                 child: Text(
                   l10n.authOr,
@@ -50,7 +50,7 @@ class ExternalLoginWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const Expanded(child: Divider()),
+              Expanded(child: Divider(color: theme.colorScheme.outlineVariant)),
             ],
           ),
           Dimens.gapLg,
@@ -66,6 +66,7 @@ class _GoogleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final isLoading = context.select(
           (AuthCubit c) =>
       c.state.action == AuthAction.externalLogin &&
@@ -75,7 +76,8 @@ class _GoogleButton extends StatelessWidget {
     return AppButton(
       label: S.of(context).authContinueWithGoogle,
       variant: AppButtonVariant.tonal,
-      foregroundColor: Theme.of(context).colorScheme.onSurface,
+      backgroundColor: scheme.surfaceContainerHighest,
+      foregroundColor: scheme.onSurface,
       isLoading: isLoading,
       leading: const AppAsset(
         AppAssets.google,

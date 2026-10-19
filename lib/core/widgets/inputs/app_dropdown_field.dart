@@ -54,7 +54,7 @@ class AppDropdownField<T> extends StatelessWidget {
           ? null
           : Text(
         hint!,
-        style: theme.textTheme.bodyLarge?.copyWith(
+        style: theme.textTheme.bodyMedium?.copyWith(
           color: s.onSurfaceVariant.withValues(alpha: 0.7),
         ),
       ),
