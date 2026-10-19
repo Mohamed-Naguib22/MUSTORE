@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
+import 'package:mustore/core/services/localization/language_codes.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
@@ -44,7 +45,7 @@ class SettingsScreen extends StatelessWidget {
           final cubit = context.read<SettingsCubit>();
           final isDark = Theme.of(context).brightness == Brightness.dark;
           final isArabic =
-              Localizations.localeOf(context).languageCode == 'ar';
+              Localizations.localeOf(context).languageCode == LanguageCodes.ar;
 
           return ListView(
             padding: Dimens.screen,
@@ -61,16 +62,12 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
               Dimens.gapXl,
-              _Section(
-                title: l10n.settingsLanguage,
-                children: [
-                  _SwitchTile(
-                    title: 'العربية',
-                    value: isArabic,
-                    onChanged: (v) =>
-                        cubit.changeLocale(Locale(v ? 'ar' : 'en')),
-                  ),
-                ],
+              _SwitchTile(
+                title: LanguageCodes.arabicLabel,
+                value: isArabic,
+                onChanged: (v) => cubit.changeLocale(
+                  v ? LanguageCodes.arabic : LanguageCodes.english,
+                ),
               ),
               const _LogoutSection(),
             ],
