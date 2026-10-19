@@ -14,7 +14,7 @@ abstract final class AppTheme {
       primaryContainer: AppColors.lightPrimaryContainer,
       onPrimaryContainer: AppColors.lightOnPrimaryContainer,
       secondary: AppColors.secondary,
-      onSecondary: AppColors.white,
+      onSecondary: AppColors.onSecondary,
       secondaryContainer: AppColors.lightSecondaryContainer,
       onSecondaryContainer: AppColors.lightOnSecondaryContainer,
       tertiary: AppColors.success,
@@ -101,8 +101,8 @@ abstract final class AppTheme {
       displayMedium: FontsProvider.getHeadline2TextStyle(isArabic: a, color: c),
       displaySmall: FontsProvider.getHeadline3TextStyle(isArabic: a, color: c),
       headlineLarge: FontsProvider.getHeadline4TextStyle(isArabic: a, color: c),
-      headlineMedium: FontsProvider.getHeadline4TextStyle(isArabic: a, color: c),
-      headlineSmall: FontsProvider.getHeadline5TextStyle(isArabic: a, color: c),
+      headlineMedium: FontsProvider.getHeadline5TextStyle(isArabic: a, color: c),
+      headlineSmall: FontsProvider.getHeadline6TextStyle(isArabic: a, color: c),
       titleLarge: FontsProvider.getHeadline6TextStyle(isArabic: a, color: c),
       titleMedium: FontsProvider.getSubtitle1TextStyle(isArabic: a, color: c),
       titleSmall: FontsProvider.getSubtitle2TextStyle(isArabic: a, color: c),
@@ -116,6 +116,7 @@ abstract final class AppTheme {
 
     const buttonShape = RoundedRectangleBorder(borderRadius: Dimens.borderMd);
     const buttonSize = Size(0, Dimens.buttonHeight);
+    const inputBorderRadius = Dimens.borderMd;
 
     return ThemeData(
       useMaterial3: true,
@@ -123,6 +124,11 @@ abstract final class AppTheme {
       scaffoldBackgroundColor: background,
       colorScheme: scheme,
       textTheme: textTheme,
+
+      splashFactory: InkRipple.splashFactory,
+      splashColor: scheme.primary.withValues(alpha: 0.08),
+      highlightColor: AppColors.transparent,
+
       iconTheme: IconThemeData(color: scheme.onSurface, size: Dimens.iconMd),
       dividerTheme: DividerThemeData(
         color: scheme.outlineVariant,
@@ -143,6 +149,7 @@ abstract final class AppTheme {
         surfaceTintColor: AppColors.transparent,
         elevation: 0,
         margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: Dimens.borderLg,
           side: BorderSide(color: scheme.outlineVariant),
@@ -160,15 +167,13 @@ abstract final class AppTheme {
                 : scheme.onSurfaceVariant,
           ),
         ),
-        labelTextStyle: WidgetStateProperty.resolveWith(
-              (states) {
-            final selected = states.contains(WidgetState.selected);
-            return textTheme.labelMedium?.copyWith(
-              color: selected ? scheme.onSurface : scheme.onSurfaceVariant,
-              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-            );
-          },
-        ),
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return textTheme.labelMedium?.copyWith(
+            color: selected ? scheme.onSurface : scheme.onSurfaceVariant,
+            fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+          );
+        }),
       ),
       listTileTheme: ListTileThemeData(
         contentPadding: Dimens.listTile,
@@ -225,6 +230,85 @@ abstract final class AppTheme {
         color: scheme.primary,
         linearTrackColor: scheme.surfaceContainerHighest,
       ),
+
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: scheme.surfaceContainerHighest,
+        contentPadding: const EdgeInsetsDirectional.symmetric(
+          horizontal: Dimens.lg,
+          vertical: Dimens.md,
+        ),
+        hintStyle: textTheme.bodyMedium?.copyWith(
+          color: scheme.onSurfaceVariant,
+        ),
+        labelStyle: textTheme.bodyMedium?.copyWith(
+          color: scheme.onSurfaceVariant,
+        ),
+        prefixIconColor: scheme.onSurfaceVariant,
+        suffixIconColor: scheme.onSurfaceVariant,
+        border: const OutlineInputBorder(
+          borderRadius: inputBorderRadius,
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: inputBorderRadius,
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: inputBorderRadius,
+          borderSide: BorderSide(color: scheme.primary, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: inputBorderRadius,
+          borderSide: BorderSide(color: scheme.error),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: inputBorderRadius,
+          borderSide: BorderSide(color: scheme.error, width: 1.5),
+        ),
+      ),
+
+      chipTheme: ChipThemeData(
+        elevation: 0,
+        pressElevation: 0,
+        showCheckmark: false,
+        backgroundColor: scheme.surface,
+        selectedColor: scheme.primaryContainer,
+        side: BorderSide(color: scheme.outlineVariant),
+        shape: const RoundedRectangleBorder(borderRadius: Dimens.borderPill),
+        labelStyle: textTheme.labelMedium,
+      ),
+
+      tabBarTheme: TabBarThemeData(
+        dividerColor: scheme.outlineVariant,
+        indicatorSize: TabBarIndicatorSize.label,
+        indicatorColor: scheme.primary,
+        labelColor: scheme.primary,
+        unselectedLabelColor: scheme.onSurfaceVariant,
+        labelStyle: textTheme.labelLarge,
+        unselectedLabelStyle: textTheme.labelLarge,
+      ),
+
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        elevation: 0,
+        focusElevation: 0,
+        hoverElevation: 0,
+        highlightElevation: 0,
+        backgroundColor: scheme.primary,
+        foregroundColor: scheme.onPrimary,
+        shape: const RoundedRectangleBorder(borderRadius: Dimens.borderLg),
+      ),
+
+      popupMenuTheme: PopupMenuThemeData(
+        color: scheme.surface,
+        surfaceTintColor: AppColors.transparent,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: Dimens.borderMd,
+          side: BorderSide(color: scheme.outlineVariant),
+        ),
+      ),
+
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           elevation: 0,

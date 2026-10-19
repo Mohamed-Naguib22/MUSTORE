@@ -57,17 +57,22 @@ abstract final class AppColors {
 
   static const darkOnAccent = Color(0xFF0E1018);
 
+  static const onSecondary = Color(0xFF14172A);
+
   static const primaryLight = Color(0xFF6C86FF);
 
   static const onBanner = white;
   static const onBannerMuted = Color(0xB3FFFFFF);
   static const bannerIcon = Color(0x3DFFFFFF);
 
+  static const onBannerSecondary = onSecondary;
+
   static const List<Color> bannerPrimary = [primary, primaryLight];
   static const List<Color> bannerSecondary = [secondary, secondaryDark];
-  static const List<Color> bannerSuccess = [success, successDark];
+  static const List<Color> bannerSuccess = [success, successBright];
 
-  static const success = Color(0xFF1FA971);
+  static const success = Color(0xFF117A53);
+  static const successBright = Color(0xFF1FA971);
   static const successDark = Color(0xFF4CC9A0);
   static const warning = Color(0xFFF5B301);
   static const error = Color(0xFFE5484D);

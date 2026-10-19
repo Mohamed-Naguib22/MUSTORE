@@ -38,18 +38,19 @@ class CustomAppbarWidget extends StatelessWidget implements PreferredSizeWidget 
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
+    final borderSide = BorderSide(
+      color: showDivider ? scheme.outlineVariant : AppColors.transparent,
+    );
 
-    final ShapeBorder? shape = borderRadius != null
-        ? RoundedRectangleBorder(borderRadius: borderRadius!)
-        : showDivider
-        ? Border(bottom: BorderSide(color: scheme.outline))
-        : null;
+    final ShapeBorder shape = borderRadius != null
+        ? RoundedRectangleBorder(borderRadius: borderRadius!, side: borderSide)
+        : Border(bottom: borderSide);
 
     return AppBar(
       elevation: elevation,
       scrolledUnderElevation: 0,
       surfaceTintColor: AppColors.transparent,
-      backgroundColor: backgroundColor ?? scheme.surface,
+      backgroundColor: backgroundColor ?? theme.scaffoldBackgroundColor,
       foregroundColor: scheme.onSurface,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
