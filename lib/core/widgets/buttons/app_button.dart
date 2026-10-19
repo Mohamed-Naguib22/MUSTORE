@@ -11,6 +11,7 @@ class AppButton extends StatefulWidget {
     required this.onPressed,
     this.icon,
     this.leading,
+    this.trailing,
     this.trailingIcon,
     this.variant = AppButtonVariant.primary,
     this.isLoading = false,
@@ -26,6 +27,7 @@ class AppButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final IconData? icon;
   final Widget? leading;
+  final Widget? trailing;
   final IconData? trailingIcon;
   final AppButtonVariant variant;
   final bool isLoading;
@@ -81,7 +83,8 @@ class _AppButtonState extends State<AppButton> {
 
     final theme = Theme.of(context);
     final c = _colors(theme.colorScheme, interactive);
-    final textStyle = (theme.textTheme.labelLarge ?? const TextStyle()).copyWith(color: c.fg);
+    final textStyle =
+    (theme.textTheme.labelLarge ?? const TextStyle()).copyWith(color: c.fg);
 
     final content = Row(
       mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
@@ -102,9 +105,13 @@ class _AppButtonState extends State<AppButton> {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        if (widget.trailingIcon != null) ...[
+        if (widget.trailing != null) ...[
           Dimens.gapSm,
-          Icon(widget.trailingIcon, size: Dimens.iconMd - Dimens.xs, color: c.fg),
+          widget.trailing!,
+        ] else if (widget.trailingIcon != null) ...[
+          Dimens.gapSm,
+          Icon(widget.trailingIcon,
+              size: Dimens.iconMd - Dimens.xs, color: c.fg),
         ],
       ],
     );
@@ -154,7 +161,9 @@ class _AppButtonState extends State<AppButton> {
                 constraints: BoxConstraints(minHeight: widget.height),
                 child: Padding(
                   padding: EdgeInsetsDirectional.symmetric(
-                    horizontal: widget.height < Dimens.buttonHeight ? Dimens.lg : Dimens.xl,
+                    horizontal: widget.height < Dimens.buttonHeight
+                        ? Dimens.lg
+                        : Dimens.xl,
                   ),
                   child: body,
                 ),
@@ -165,6 +174,8 @@ class _AppButtonState extends State<AppButton> {
       ),
     );
 
-    return widget.expand ? SizedBox(width: double.infinity, child: button) : button;
+    return widget.expand
+        ? SizedBox(width: double.infinity, child: button)
+        : button;
   }
 }

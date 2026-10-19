@@ -67,10 +67,17 @@ class _GoogleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
     final isLoading = context.select(
           (AuthCubit c) =>
       c.state.action == AuthAction.externalLogin &&
           c.state.status == RequestStatus.loading,
+    );
+
+    const logo = AppAsset(
+      AppAssets.google,
+      width: Dimens.iconMd - Dimens.xs,
+      height: Dimens.iconMd - Dimens.xs,
     );
 
     return AppButton(
@@ -79,12 +86,10 @@ class _GoogleButton extends StatelessWidget {
       backgroundColor: scheme.surfaceContainerHighest,
       foregroundColor: scheme.onSurface,
       isLoading: isLoading,
-      leading: const AppAsset(
-        AppAssets.google,
-        width: Dimens.iconMd - Dimens.xs,
-        height: Dimens.iconMd - Dimens.xs,
-      ),
-      onPressed: () => context.read<AuthCubit>().externalLogin(LoginProvider.google),
+      leading: isRtl ? null : logo,
+      trailing: isRtl ? logo : null,
+      onPressed: () =>
+          context.read<AuthCubit>().externalLogin(LoginProvider.google),
     );
   }
 }
