@@ -1030,6 +1030,26 @@ class S {
     );
   }
 
+  /// `Previously Ordered`
+  String get homePreviouslyOrdered {
+    return Intl.message(
+      'Previously Ordered',
+      name: 'homePreviouslyOrdered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recently Viewed`
+  String get homeRecentlyViewed {
+    return Intl.message(
+      'Recently Viewed',
+      name: 'homeRecentlyViewed',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Deliver to`
   String get homeDeliverTo {
     return Intl.message(

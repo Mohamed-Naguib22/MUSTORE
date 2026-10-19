@@ -142,6 +142,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeDeliverTo": MessageLookupByLibrary.simpleMessage("توصيل الي"),
         "homeNewArrivals": MessageLookupByLibrary.simpleMessage("وصل حديثاً"),
         "homeOnSale": MessageLookupByLibrary.simpleMessage("عروض وتخفيضات"),
+        "homePreviouslyOrdered":
+            MessageLookupByLibrary.simpleMessage("الطلبات السابقة"),
+        "homeRecentlyViewed":
+            MessageLookupByLibrary.simpleMessage("شوهدت مؤخرًا"),
         "homeRecommended": MessageLookupByLibrary.simpleMessage("موصى به لك"),
         "homeSearchHint":
             MessageLookupByLibrary.simpleMessage("ابحث عن المنتجات والفئات..."),

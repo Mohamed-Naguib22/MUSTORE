@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
-import 'package:mustore/core/pagination/pagination_state.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
-import 'package:mustore/core/widgets/feedback/app_message_widget.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
-import 'package:mustore/features/catalog/domain/entities/product/product.dart';
+import 'package:mustore/features/auth/domain/enums/auth_status.dart';
+import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_state.dart';
 import 'package:mustore/features/catalog/presentation/widgets/category/category_list_widget.dart';
 import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 import 'package:mustore/features/home/presentation/widgets/banner_card_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/home_header_widget.dart';
-import 'package:mustore/features/home/presentation/widgets/home_products_section.dart';
+import 'package:mustore/features/home/presentation/widgets/home_personal_section_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/home_search_field_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/home_section_header_widget.dart';
+import 'package:mustore/features/home/presentation/widgets/home_section_widget.dart';
 import 'package:mustore/features/home/presentation/widgets/promo_carousel_widget.dart';
 import 'package:mustore/generated/l10n.dart';
 
@@ -38,6 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late final ProductsCubit _productsCubit;
 
+  bool get _signedIn =>
+      context.read<AuthCubit>().state.authStatus == AuthStatus.authenticated;
+
   @override
   void initState() {
     super.initState();
@@ -56,12 +59,20 @@ class _HomeScreenState extends State<HomeScreen> {
     _productsCubit.fetchOnSale(pageSize: _pageSize),
     _productsCubit.fetchRecommended(pageSize: _pageSize),
     _productsCubit.fetchNewArrivals(pageSize: _pageSize),
+    if (_signedIn) ...[
+      _productsCubit.fetchPreviouslyOrdered(pageSize: _pageSize),
+      _productsCubit.fetchRecentlyViewed(pageSize: _pageSize),
+    ],
   ]);
 
   @override
   Widget build(BuildContext context) {
     final l10n = S.of(context);
     final scheme = Theme.of(context).colorScheme;
+
+    final signedIn = context.select(
+          (AuthCubit c) => c.state.authStatus == AuthStatus.authenticated,
+    );
 
     return BlocListener<HomeCubit, HomeState>(
       listenWhen: (p, c) => p.failure != c.failure && c.failure != null,
@@ -99,10 +110,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           categories: _categories(l10n),
                         ),
                       ),
+                      if (signedIn)
+                        HomePersonalSectionWidget(
+                          cubit: _productsCubit,
+                          pageSize: _pageSize,
+                        ),
                       BlocBuilder<ProductsCubit, ProductsState>(
                         bloc: _productsCubit,
                         buildWhen: (p, c) => p.bestSeller != c.bestSeller,
-                        builder: (context, state) => _section(
+                        builder: (context, state) => HomeSectionWidget(
+                          onSeeAll: () {},
                           title: l10n.homeBestSellers,
                           section: state.bestSeller,
                           onRetry: () => _productsCubit.fetchBestSeller(
@@ -113,7 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       BlocBuilder<ProductsCubit, ProductsState>(
                         bloc: _productsCubit,
                         buildWhen: (p, c) => p.onSale != c.onSale,
-                        builder: (context, state) => _section(
+                        builder: (context, state) => HomeSectionWidget(
+                          onSeeAll: () {},
                           title: l10n.homeOnSale,
                           section: state.onSale,
                           onRetry: () => _productsCubit.fetchOnSale(
@@ -124,7 +142,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       BlocBuilder<ProductsCubit, ProductsState>(
                         bloc: _productsCubit,
                         buildWhen: (p, c) => p.recommended != c.recommended,
-                        builder: (context, state) => _section(
+                        builder: (context, state) => HomeSectionWidget(
+                          onSeeAll: () {},
                           title: l10n.homeRecommended,
                           section: state.recommended,
                           onRetry: () => _productsCubit.fetchRecommended(
@@ -135,7 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       BlocBuilder<ProductsCubit, ProductsState>(
                         bloc: _productsCubit,
                         buildWhen: (p, c) => p.newArrivals != c.newArrivals,
-                        builder: (context, state) => _section(
+                        builder: (context, state) => HomeSectionWidget(
+                          onSeeAll: () {},
                           title: l10n.homeNewArrivals,
                           section: state.newArrivals,
                           onRetry: () => _productsCubit.fetchNewArrivals(
@@ -144,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const SliverToBoxAdapter(
-                        child: SizedBox(height: Dimens.xxxl),
+                        child: SizedBox(height: Dimens.xxl),
                       ),
                     ],
                   ),
@@ -154,40 +174,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _section({
-    required String title,
-    required PaginationState<Product> section,
-    required VoidCallback onRetry,
-  }) {
-    final failed = section.status == PaginationStatus.failure &&
-        section.data.items.isEmpty;
-
-    if (failed) {
-      final message = section.failure?.localizedMessage(context) ?? '';
-
-      return SliverMainAxisGroup(
-        slivers: [
-          SliverToBoxAdapter(child: HomeSectionHeaderWidget(title: title)),
-          SliverToBoxAdapter(
-            child: AppMessageWidget(
-              message: message.isEmpty
-                  ? S.of(context).commonSomethingWentWrong
-                  : message,
-              actionLabel: S.of(context).commonRetry,
-              onAction: onRetry,
-            ),
-          ),
-        ],
-      );
-    }
-
-    return HomeProductsSection(
-      title: title,
-      section: section,
-      onSeeAll: () {},
     );
   }
 }
