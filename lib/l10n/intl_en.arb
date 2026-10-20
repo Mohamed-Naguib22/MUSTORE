@@ -114,6 +114,14 @@
   "homeRecentlyViewed": "Recently Viewed",
   "homeDeliverTo": "Deliver to",
 
+  "accountTitle": "Account",
+  "accountEditProfile": "Edit profile",
+  "accountContact": "Contact",
+  "accountAddresses": "Addresses",
+  "accountPhoneNumbers": "Phone numbers",
+  "accountPreferences": "Preferences",
+  "accountSecurity": "Account security",
+
   "bannerSeasonSaleTitle": "Season Sale",
   "bannerSeasonSaleSubtitle": "Up to 50% off selected items",
   "bannerNewArrivalsTitle": "New Arrivals",

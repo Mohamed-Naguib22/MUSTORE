@@ -114,6 +114,14 @@
   "homeNewArrivals": "وصل حديثاً",
   "homeDeliverTo": "توصيل الي",
 
+  "accountTitle": "الحساب",
+  "accountEditProfile": "تعديل الملف الشخصي",
+  "accountContact": "معلومات التواصل",
+  "accountAddresses": "العناوين",
+  "accountPhoneNumbers": "أرقام الهاتف",
+  "accountPreferences": "التفضيلات",
+  "accountSecurity": "أمان الحساب",
+
   "bannerSeasonSaleTitle": "تخفيضات الموسم",
   "bannerSeasonSaleSubtitle": "خصم يصل إلى 50٪ على منتجات مختارة",
   "bannerNewArrivalsTitle": "وصل حديثاً",

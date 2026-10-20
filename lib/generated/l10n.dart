@@ -1060,6 +1060,76 @@ class S {
     );
   }
 
+  /// `Account`
+  String get accountTitle {
+    return Intl.message(
+      'Account',
+      name: 'accountTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit profile`
+  String get accountEditProfile {
+    return Intl.message(
+      'Edit profile',
+      name: 'accountEditProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact`
+  String get accountContact {
+    return Intl.message(
+      'Contact',
+      name: 'accountContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Addresses`
+  String get accountAddresses {
+    return Intl.message(
+      'Addresses',
+      name: 'accountAddresses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone numbers`
+  String get accountPhoneNumbers {
+    return Intl.message(
+      'Phone numbers',
+      name: 'accountPhoneNumbers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preferences`
+  String get accountPreferences {
+    return Intl.message(
+      'Preferences',
+      name: 'accountPreferences',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account security`
+  String get accountSecurity {
+    return Intl.message(
+      'Account security',
+      name: 'accountSecurity',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Season Sale`
   String get bannerSeasonSaleTitle {
     return Intl.message(
