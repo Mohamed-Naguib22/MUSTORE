@@ -144,7 +144,6 @@ class _AppDropdownFieldState<T> extends State<AppDropdownField<T>> {
     return AppInputStyle.labeled(
       context,
       label: widget.label,
-      enabled: widget.enabled,
       field: field,
     );
   }

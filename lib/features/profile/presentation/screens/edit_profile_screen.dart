@@ -6,6 +6,7 @@ import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/validators/app_validators.dart';
+import 'package:mustore/core/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/feedback/app_message_widget.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
@@ -40,13 +41,15 @@ class EditProfileScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _onPictureTap(BuildContext context, UserProfile profile) async {
+  Future<void> _onPictureTap(BuildContext context, UserProfile profile,) async {
     final cubit = context.read<ProfileCubit>();
 
-    final action = await showModalBottomSheet<_PictureAction>(
-      context: context,
-      builder: (_) => _PictureSheet(canRemove: !profile.isDefaultPicture),
+    final action = await AppBottomSheet.show<_PictureAction>(
+      context,
+      padding: EdgeInsets.zero,
+      child: _PictureSheet(canRemove: !profile.isDefaultPicture),
     );
+
     if (action == null || !context.mounted) return;
 
     if (action == _PictureAction.remove) {
@@ -125,9 +128,11 @@ class EditProfileScreen extends StatelessWidget {
           }
 
           return AppListView(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: Dimens.lg,
-              vertical: Dimens.xl,
+            padding: const EdgeInsetsDirectional.fromSTEB(
+              Dimens.lg,
+              Dimens.xxl,
+              Dimens.lg,
+              Dimens.xl,
             ),
             children: [
               AppSkeleton(
@@ -145,7 +150,7 @@ class EditProfileScreen extends StatelessWidget {
                     isPictureBusy: state.pictureStatus == RequestStatus.loading,
                     onPictureTap: profile == null
                         ? null
-                        : () => _onPictureTap(context, profile),
+                        : () => _onPictureTap(context, profile,),
                     onSave: context.read<ProfileCubit>().updateProfile,
                   ),
                 ),
@@ -310,69 +315,82 @@ class _PictureEditor extends StatelessWidget {
   final bool isBusy;
   final VoidCallback? onTap;
 
-  static const double _size = Dimens.iconXl;
+  static const double _size = Dimens.iconXl + Dimens.lg;
+  static const double _badge = Dimens.xl + Dimens.xs;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final background = Theme.of(context).scaffoldBackgroundColor;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final enabled = onTap != null && !isBusy;
 
-    return GestureDetector(
-      onTap: isBusy ? null : onTap,
-      child: SizedBox(
-        width: _size,
-        height: _size,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned.fill(
-              child: ClipOval(
-                child: AppNetworkImage(
-                  url: url,
-                  width: _size,
-                  height: _size,
-                  fallbackIcon: Icons.person_rounded,
-                ),
-              ),
-            ),
-            if (isBusy)
-              Positioned.fill(
-                child: ClipOval(
-                  child: ColoredBox(
-                    color: scheme.scrim.withValues(alpha: 0.4),
-                    child: const Center(
-                      child: SizedBox(
-                        width: Dimens.iconMd - Dimens.xs,
-                        height: Dimens.iconMd - Dimens.xs,
-                        child: CircularProgressIndicator(
-                          strokeWidth: Dimens.xxs,
-                          color: AppColors.white,
+    return SizedBox(
+      width: _size,
+      height: _size,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(
+            child: ClipOval(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  AppNetworkImage(
+                    url: url,
+                    width: _size,
+                    height: _size,
+                    fallbackIcon: Icons.person_rounded,
+                  ),
+                  if (isBusy)
+                    ColoredBox(
+                      color: scheme.scrim.withValues(alpha: 0.4),
+                      child: const Center(
+                        child: SizedBox(
+                          width: Dimens.iconMd,
+                          height: Dimens.iconMd,
+                          child: CircularProgressIndicator(
+                            strokeWidth: Dimens.xxs,
+                            color: AppColors.white,
+                          ),
                         ),
                       ),
                     ),
+                  Material(
+                    type: MaterialType.transparency,
+                    child: InkWell(onTap: enabled ? onTap : null),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          PositionedDirectional(
+            end: 0,
+            bottom: 0,
+            child: IgnorePointer(
+              child: Container(
+                width: _badge,
+                height: _badge,
+                decoration: BoxDecoration(
+                  color: enabled
+                      ? scheme.primary
+                      : scheme.surfaceContainerHighest,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: theme.scaffoldBackgroundColor,
+                    width: Dimens.xxs,
                   ),
                 ),
-              ),
-            PositionedDirectional(
-              end: -Dimens.xxs,
-              bottom: -Dimens.xxs,
-              child: Container(
-                width: Dimens.xl,
-                height: Dimens.xl,
-                decoration: BoxDecoration(
-                  color: scheme.primary,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: background, width: Dimens.xxs),
-                ),
                 child: Icon(
-                  Icons.camera_alt_rounded,
+                  Icons.edit_rounded,
                   size: Dimens.iconSm - Dimens.xxs,
-                  color: scheme.onPrimary,
+                  color: enabled
+                      ? scheme.onPrimary
+                      : scheme.onSurfaceVariant,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -387,32 +405,26 @@ class _PictureSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = S.of(context);
 
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsetsDirectional.only(
-          start: Dimens.sm,
-          end: Dimens.sm,
-          bottom: Dimens.sm,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: Dimens.sm),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppListTile(
+            icon: Icons.photo_library_outlined,
+            title: l10n.profileChooseGallery,
+            showChevron: false,
+            onTap: () => Navigator.of(context).pop(_PictureAction.gallery),
+          ),
+          if (canRemove)
             AppListTile(
-              icon: Icons.photo_library_outlined,
-              title: l10n.profileChooseGallery,
+              icon: Icons.delete_outline_rounded,
+              title: l10n.profileRemovePhoto,
+              isDestructive: true,
               showChevron: false,
-              onTap: () => Navigator.of(context).pop(_PictureAction.gallery),
+              onTap: () => Navigator.of(context).pop(_PictureAction.remove),
             ),
-            if (canRemove)
-              AppListTile(
-                icon: Icons.delete_outline_rounded,
-                title: l10n.profileRemovePhoto,
-                isDestructive: true,
-                showChevron: false,
-                onTap: () => Navigator.of(context).pop(_PictureAction.remove),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }

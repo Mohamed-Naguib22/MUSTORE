@@ -127,7 +127,6 @@ class _AppTextFieldState extends State<AppTextField> {
     return AppInputStyle.labeled(
       context,
       label: widget.label,
-      enabled: widget.enabled,
       field: field,
     );
   }

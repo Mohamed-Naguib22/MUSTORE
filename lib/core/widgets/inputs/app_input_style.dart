@@ -76,13 +76,11 @@ abstract final class AppInputStyle {
   static Widget labeled(
       BuildContext context, {
         required String? label,
-        required bool enabled,
         required Widget field,
       }) {
     if (label == null) return field;
 
     final theme = Theme.of(context);
-    final s = theme.colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +91,7 @@ abstract final class AppInputStyle {
           child: Text(
             label,
             style: theme.textTheme.titleSmall?.copyWith(
-              color: enabled ? s.onSurface : s.onSurface.withValues(alpha: 0.38),
+              color: theme.colorScheme.onSurface,
             ),
           ),
         ),
