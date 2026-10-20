@@ -28,7 +28,7 @@ class AppIconButton extends StatelessWidget {
     final enabled = onPressed != null;
 
     final (bg, fg) = switch (variant) {
-      AppIconButtonVariant.tonal => (s.primaryContainer, s.onPrimaryContainer),
+      AppIconButtonVariant.tonal => (s.surfaceContainerHighest, s.onSurfaceVariant),
       AppIconButtonVariant.plain => (AppColors.transparent, s.onSurfaceVariant),
       AppIconButtonVariant.danger => (s.errorContainer, s.onErrorContainer),
     };

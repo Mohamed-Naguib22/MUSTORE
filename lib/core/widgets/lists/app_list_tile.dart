@@ -120,7 +120,9 @@ class _IconBadge extends StatelessWidget {
       width: Dimens.badge,
       height: Dimens.badge,
       decoration: BoxDecoration(
-        color: isDestructive ? scheme.errorContainer : scheme.primaryContainer,
+        color: isDestructive
+            ? scheme.errorContainer.withValues(alpha: 0.6)
+            : scheme.surfaceContainerHighest,
         borderRadius: Dimens.borderMd,
       ),
       child: Icon(
