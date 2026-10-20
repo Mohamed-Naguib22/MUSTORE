@@ -79,6 +79,7 @@ class PictureEditorWidget extends StatelessWidget {
                   onPressed: enabled ? onTap : null,
                   size: _badge,
                   iconSize: Dimens.iconSm,
+                  variant: AppIconButtonVariant.primary,
                 ),
               ),
             ),
