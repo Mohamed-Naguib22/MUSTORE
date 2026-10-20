@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mustore/app/app_page.dart';
 import 'package:mustore/features/auth/domain/entities/auth_session.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
@@ -16,7 +18,7 @@ class ProfileSectionWidget extends StatelessWidget {
       builder: (context, session) => ProfileCardWidget(
         session: session,
         editTooltip: S.of(context).accountEditProfile,
-        onEdit: () {},
+        onEdit: () => context.pushNamed(AppPage.editProfile.name),
       ),
     );
   }

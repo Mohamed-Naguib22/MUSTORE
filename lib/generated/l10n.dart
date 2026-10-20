@@ -270,16 +270,6 @@ class S {
     );
   }
 
-  /// `Edit profile`
-  String get pageEditProfile {
-    return Intl.message(
-      'Edit profile',
-      name: 'pageEditProfile',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Checkout`
   String get pageCheckout {
     return Intl.message(
@@ -1135,6 +1125,146 @@ class S {
     return Intl.message(
       'Account security',
       name: 'accountSecurity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your Profile`
+  String get pageEditProfile {
+    return Intl.message(
+      'Your Profile',
+      name: 'pageEditProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First name`
+  String get profileFirstName {
+    return Intl.message(
+      'First name',
+      name: 'profileFirstName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last name`
+  String get profileLastName {
+    return Intl.message(
+      'Last name',
+      name: 'profileLastName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get profileEmail {
+    return Intl.message(
+      'Email',
+      name: 'profileEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your email can't be changed`
+  String get profileEmailReadOnly {
+    return Intl.message(
+      'Your email can\'t be changed',
+      name: 'profileEmailReadOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gender`
+  String get profileGender {
+    return Intl.message(
+      'Gender',
+      name: 'profileGender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save changes`
+  String get profileSave {
+    return Intl.message(
+      'Save changes',
+      name: 'profileSave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This field is required`
+  String get profileFieldRequired {
+    return Intl.message(
+      'This field is required',
+      name: 'profileFieldRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile updated`
+  String get profileUpdated {
+    return Intl.message(
+      'Profile updated',
+      name: 'profileUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile picture updated`
+  String get profilePictureUpdated {
+    return Intl.message(
+      'Profile picture updated',
+      name: 'profilePictureUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose from gallery`
+  String get profileChooseGallery {
+    return Intl.message(
+      'Choose from gallery',
+      name: 'profileChooseGallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take a photo`
+  String get profileTakePhoto {
+    return Intl.message(
+      'Take a photo',
+      name: 'profileTakePhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove photo`
+  String get profileRemovePhoto {
+    return Intl.message(
+      'Remove photo',
+      name: 'profileRemovePhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't open the image picker`
+  String get profilePickFailed {
+    return Intl.message(
+      'Couldn\'t open the image picker',
+      name: 'profilePickFailed',
       desc: '',
       args: [],
     );

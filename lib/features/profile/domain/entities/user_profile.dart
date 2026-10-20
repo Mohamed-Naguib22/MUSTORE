@@ -7,16 +7,29 @@ class UserProfile extends Equatable {
     required this.lastName,
     required this.email,
     required this.gender,
-    this.profilePictureUrl,
+    required this.profilePictureUrl,
   });
+
+  const UserProfile.fake()
+      : firstName = 'Mohamed',
+        lastName = 'Naguib',
+        email = 'placeholder@mustore.com',
+        profilePictureUrl = '',
+        gender = Gender.male;
+
+  static const String defaultPictureFileName = 'Default_Picture.png';
 
   final String firstName;
   final String lastName;
   final String email;
-  final String? profilePictureUrl;
+  final String profilePictureUrl;
   final Gender gender;
 
   String get fullName => '$firstName $lastName';
+
+  bool get isDefaultPicture =>
+      profilePictureUrl.isEmpty ||
+          profilePictureUrl.toLowerCase().contains(defaultPictureFileName.toLowerCase());
 
   @override
   List<Object?> get props => [

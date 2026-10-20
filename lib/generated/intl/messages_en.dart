@@ -179,8 +179,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "navCategories": MessageLookupByLibrary.simpleMessage("Categories"),
         "navHome": MessageLookupByLibrary.simpleMessage("Home"),
         "pageCheckout": MessageLookupByLibrary.simpleMessage("Checkout"),
-        "pageEditProfile": MessageLookupByLibrary.simpleMessage("Edit profile"),
+        "pageEditProfile": MessageLookupByLibrary.simpleMessage("Your Profile"),
         "priceEgp": m1,
+        "profileChooseGallery":
+            MessageLookupByLibrary.simpleMessage("Choose from gallery"),
+        "profileEmail": MessageLookupByLibrary.simpleMessage("Email"),
+        "profileEmailReadOnly": MessageLookupByLibrary.simpleMessage(
+            "Your email can\'t be changed"),
+        "profileFieldRequired":
+            MessageLookupByLibrary.simpleMessage("This field is required"),
+        "profileFirstName": MessageLookupByLibrary.simpleMessage("First name"),
+        "profileGender": MessageLookupByLibrary.simpleMessage("Gender"),
+        "profileLastName": MessageLookupByLibrary.simpleMessage("Last name"),
+        "profilePickFailed": MessageLookupByLibrary.simpleMessage(
+            "Couldn\'t open the image picker"),
+        "profilePictureUpdated":
+            MessageLookupByLibrary.simpleMessage("Profile picture updated"),
+        "profileRemovePhoto":
+            MessageLookupByLibrary.simpleMessage("Remove photo"),
+        "profileSave": MessageLookupByLibrary.simpleMessage("Save changes"),
+        "profileTakePhoto":
+            MessageLookupByLibrary.simpleMessage("Take a photo"),
+        "profileUpdated":
+            MessageLookupByLibrary.simpleMessage("Profile updated"),
         "registerButton":
             MessageLookupByLibrary.simpleMessage("Create account"),
         "registerSubtitle": m2,

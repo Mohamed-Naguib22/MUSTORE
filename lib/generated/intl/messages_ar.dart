@@ -180,6 +180,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "pageEditProfile":
             MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
         "priceEgp": m1,
+        "profileChooseGallery":
+            MessageLookupByLibrary.simpleMessage("اختيار من المعرض"),
+        "profileEmail":
+            MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+        "profileEmailReadOnly": MessageLookupByLibrary.simpleMessage(
+            "لا يمكن تغيير البريد الإلكتروني"),
+        "profileFieldRequired":
+            MessageLookupByLibrary.simpleMessage("هذا الحقل مطلوب"),
+        "profileFirstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
+        "profileGender": MessageLookupByLibrary.simpleMessage("النوع"),
+        "profileLastName": MessageLookupByLibrary.simpleMessage("اسم العائلة"),
+        "profilePickFailed":
+            MessageLookupByLibrary.simpleMessage("تعذر فتح منتقي الصور"),
+        "profilePictureUpdated":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الصورة الشخصية"),
+        "profileRemovePhoto":
+            MessageLookupByLibrary.simpleMessage("حذف الصورة"),
+        "profileSave": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
+        "profileTakePhoto": MessageLookupByLibrary.simpleMessage("التقاط صورة"),
+        "profileUpdated":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الملف الشخصي"),
         "registerButton": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "registerSubtitle": m2,
         "registerSuccess": MessageLookupByLibrary.simpleMessage(

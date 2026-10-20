@@ -1,4 +1,3 @@
-// core/widgets/lists/app_list_tile.dart
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
@@ -21,22 +20,11 @@ class AppListTile extends StatelessWidget {
 
   final String title;
   final String? subtitle;
-
-  /// Shortcut: rendered inside a tinted rounded badge.
   final IconData? icon;
-
-  /// Fully custom leading widget (e.g. an avatar). Overrides [icon].
   final Widget? leading;
-
-  /// Overrides the default chevron.
   final Widget? trailing;
-
   final VoidCallback? onTap;
-
-  /// Uses the error colors (delete account, log out, ...).
   final bool isDestructive;
-
-  /// Shows a chevron when [onTap] is set and no [trailing] is given.
   final bool showChevron;
 
   @override
@@ -70,7 +58,6 @@ class AppListTile extends StatelessWidget {
         child: Padding(
           padding: Dimens.listTile,
           child: ConstrainedBox(
-            // Every row gets the same height, with or without subtitle or switch.
             constraints: const BoxConstraints(minHeight: Dimens.badge),
             child: Row(
               children: [

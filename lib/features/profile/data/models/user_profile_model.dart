@@ -7,7 +7,7 @@ class UserProfileModel extends UserProfile {
     required super.lastName,
     required super.email,
     required super.gender,
-    super.profilePictureUrl,
+    required super.profilePictureUrl,
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
@@ -15,7 +15,7 @@ class UserProfileModel extends UserProfile {
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,
-      profilePictureUrl: json['profilePictureUrl'] as String?,
+      profilePictureUrl: json['profilePictureUrl'] as String,
       gender: Gender.fromJson(json['gender'] as String),
     );
   }

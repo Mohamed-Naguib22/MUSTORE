@@ -2,7 +2,8 @@ import 'package:permission_handler/permission_handler.dart';
 
 enum AppPermission {
   notification(Permission.notification),
-  location(Permission.locationWhenInUse);
+  location(Permission.locationWhenInUse),
+  storage(Permission.storage);
 
   const AppPermission(this.permission);
 

@@ -61,13 +61,13 @@ enum AppPage {
       isTab: true,
       appBar: AppBarMode.none),
 
+  editProfile('/account/edit-profile', AccessLevel.authenticated, EditProfileScreen.new,
+      parent: account, fullScreen: true),
+
   settings('/settings', AccessLevel.public, SettingsScreen.new,
       icon: Icons.settings_outlined,
       selectedIcon: Icons.settings_rounded,
       isTab: true),
-
-  editProfile('/account/edit', AccessLevel.authenticated, EditProfileScreen.new,
-      parent: account),
 
   checkout('/cart/checkout', AccessLevel.public, CheckoutScreen.new,
       parent: cart, fullScreen: true);
@@ -101,8 +101,8 @@ enum AppPage {
     cart => l10n.navCart,
     categories => l10n.navCategories,
     account => l10n.navAccount,
-    settings => l10n.settings,
     editProfile => l10n.pageEditProfile,
+    settings => l10n.settings,
     checkout => l10n.pageCheckout,
   };
 
