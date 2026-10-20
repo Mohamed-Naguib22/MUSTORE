@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/services/localization/language_codes.dart';
+import 'package:mustore/core/widgets/inputs/app_segmented_switch.dart';
 import 'package:mustore/core/widgets/inputs/app_switch.dart';
 import 'package:mustore/core/widgets/lists/app_list_tile.dart';
 import 'package:mustore/features/settings/presentation/controllers/settings_cubit.dart';
@@ -28,22 +29,6 @@ class PreferencesSectionWidget extends StatelessWidget {
           title: l10n.accountPreferences,
           children: [
             AppListTile(
-              leading: LanguageFlagBadgeWidget(isArabic: isArabic),
-              title: isArabic
-                  ? LanguageCodes.arabicLabel
-                  : LanguageCodes.englishLabel,
-              subtitle: l10n.settingsLanguage,
-              onTap: () => cubit.changeLocale(
-                isArabic ? LanguageCodes.english : LanguageCodes.arabic,
-              ),
-              trailing: AppSwitch(
-                value: isArabic,
-                onChanged: (v) => cubit.changeLocale(
-                  v ? LanguageCodes.arabic : LanguageCodes.english,
-                ),
-              ),
-            ),
-            AppListTile(
               icon: isDark
                   ? Icons.dark_mode_rounded
                   : Icons.light_mode_rounded,
@@ -57,6 +42,25 @@ class PreferencesSectionWidget extends StatelessWidget {
                 onChanged: (v) => cubit.changeTheme(
                   v ? ThemeMode.dark : ThemeMode.light,
                 ),
+              ),
+            ),
+            AppListTile(
+              leading: LanguageFlagBadgeWidget(isArabic: isArabic),
+              title: l10n.settingsLanguage,
+              showChevron: false,
+              trailing: AppSegmentedSwitch<Locale>(
+                value: isArabic ? LanguageCodes.arabic : LanguageCodes.english,
+                segments: const [
+                  AppSegment(
+                    value: LanguageCodes.english,
+                    label: LanguageCodes.englishLabel,
+                  ),
+                  AppSegment(
+                    value: LanguageCodes.arabic,
+                    label: LanguageCodes.arabicLabel,
+                  ),
+                ],
+                onChanged: cubit.changeLocale,
               ),
             ),
           ],
