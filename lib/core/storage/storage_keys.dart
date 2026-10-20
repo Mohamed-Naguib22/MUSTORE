@@ -1,5 +1,5 @@
 abstract final class StorageKeys {
-  static const authTokens = 'auth_tokens';
+  static const authSession = 'auth_session';
 
   static const settingsTheme = 'settings.theme';
   static const settingsLocale = 'settings.locale';

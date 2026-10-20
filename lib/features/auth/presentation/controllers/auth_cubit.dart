@@ -8,7 +8,7 @@ import 'package:mustore/core/services/encryption/otp_encryption_service.dart';
 import 'package:mustore/core/services/encryption/password_encryption_service.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/utils/mixins/safe_emit_mixin.dart';
-import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
+import 'package:mustore/features/auth/data/data_sources/local/session_storage.dart';
 import 'package:mustore/features/auth/domain/entities/auth_session.dart';
 import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/domain/enums/login_provider.dart';
@@ -38,7 +38,7 @@ import 'package:mustore/features/profile/domain/enums/gender.dart';
 
 class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
 
-  final TokenStorage _tokens;
+  final SessionStorage _sessions;
   final PasswordEncryptionService _passwordEncryption;
   final OtpEncryptionService _otpEncryptionService;
   final ExternalAuthService _externalAuth;
@@ -56,7 +56,7 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
     required ForgetPasswordUseCase forgetPassword,
     required ResetPasswordUseCase resetPassword,
     required ChangePasswordUseCase changePassword,
-    required TokenStorage tokenStorage,
+    required SessionStorage sessionStorage,
     required SessionEvents sessionEvents,
     required PasswordEncryptionService passwordEncryption,
     required OtpEncryptionService otpEncryptionService,
@@ -74,7 +74,7 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
         _passwordEncryption = passwordEncryption,
         _otpEncryptionService = otpEncryptionService,
         _externalAuth = externalAuthService,
-        _tokens = tokenStorage,
+        _sessions = sessionStorage,
         super(const AuthState()) {
     _expiredSub = safeSubscribe(sessionEvents.stream, (event) {
       if (event == SessionEvent.expired) {
@@ -98,6 +98,14 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
   final ForgetPasswordUseCase _forgetPassword;
   final ResetPasswordUseCase _resetPassword;
   final ChangePasswordUseCase _changePassword;
+
+  Future<AuthSession?> loadSession() async {
+    if (state.session != null) return state.session;
+
+    final session = await _sessions.read();
+    if (session != null) safeEmit(state.copyWith(session: session));
+    return session;
+  }
 
   Future<void> login({required String email, required String password}) =>
       _runSession(
@@ -179,11 +187,13 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
       );
 
   Future<void> refreshToken() async {
-    final tokens = await _tokens.read();
-    if (tokens == null) return;
+    final session = await _sessions.read();
+    if (session == null) return;
     await _runSession(
       AuthAction.refreshToken,
-          () => _refreshToken(RefreshTokenParams(refreshToken: tokens.refreshToken)),
+          () => _refreshToken(
+        RefreshTokenParams(refreshToken: session.refreshToken),
+      ),
     );
   }
 
@@ -221,10 +231,10 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
       action: AuthAction.revokeSession,
     ));
 
-    final tokens = await _tokens.read();
-    if (tokens != null) {
+    final session = await _sessions.read();
+    if (session != null) {
       await _revokeSession(
-        RevokeSessionParams(refreshToken: tokens.refreshToken),
+        RevokeSessionParams(refreshToken: session.refreshToken),
       );
     }
 
@@ -237,32 +247,39 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
   }
 
   Future<void> restoreSession() async {
-    final tokens = await _tokens.read();
+    final session = await _sessions.read();
+    final now = DateTime.now();
 
-    if (tokens == null || tokens.isRefreshTokenExpired) {
-      await _tokens.clear();
+    if (session == null || !session.refreshTokenExpirationDate.isAfter(now)) {
+      await _sessions.clear();
       return safeEmit(state.copyWith(authStatus: AuthStatus.unauthenticated));
     }
 
-    if (tokens.accessTokenExpirationDate.isAfter(DateTime.now())) {
-      return safeEmit(state.copyWith(authStatus: AuthStatus.authenticated));
+    if (session.accessTokenExpirationDate.isAfter(now)) {
+      return safeEmit(state.copyWith(
+        session: session,
+        authStatus: AuthStatus.authenticated,
+      ));
     }
 
     final result = await _refreshToken(
-      RefreshTokenParams(refreshToken: tokens.refreshToken),
+      RefreshTokenParams(refreshToken: session.refreshToken),
     );
 
     await result.fold(
           (failure) async {
         if (failure.isUnauthorized) {
-          await _tokens.clear();
+          await _sessions.clear();
           safeEmit(state.copyWith(authStatus: AuthStatus.unauthenticated));
         } else {
-          safeEmit(state.copyWith(authStatus: AuthStatus.authenticated));
+          safeEmit(state.copyWith(
+            session: session,
+            authStatus: AuthStatus.authenticated,
+          ));
         }
       },
-          (session) async => safeEmit(state.copyWith(
-        session: session,
+          (fresh) async => safeEmit(state.copyWith(
+        session: fresh,
         authStatus: AuthStatus.authenticated,
       )),
     );

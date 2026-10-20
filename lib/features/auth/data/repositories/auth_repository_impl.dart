@@ -2,10 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:mustore/core/error/failure.dart';
 import 'package:mustore/core/network/connectivity/network_connection.dart';
 import 'package:mustore/core/utils/mixins/network_mixin.dart';
-import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
+import 'package:mustore/features/auth/data/data_sources/local/session_storage.dart';
 import 'package:mustore/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
 import 'package:mustore/features/auth/domain/entities/auth_session.dart';
-import 'package:mustore/features/auth/domain/entities/auth_tokens.dart';
 import 'package:mustore/features/auth/domain/params/change_password_params.dart';
 import 'package:mustore/features/auth/domain/params/external_login_params.dart';
 import 'package:mustore/features/auth/domain/params/forget_password_params.dart';
@@ -22,15 +21,15 @@ class AuthRepositoryImpl with NetworkMixin implements AuthRepository {
   const AuthRepositoryImpl({
     required this.networkConnection,
     required AuthRemoteDataSource remoteDataSource,
-    required TokenStorage tokenStorage,
+    required SessionStorage sessionStorage,
   })  : _remote = remoteDataSource,
-        _tokens = tokenStorage;
+        _sessions = sessionStorage;
 
   @override
   final NetworkConnection networkConnection;
 
   final AuthRemoteDataSource _remote;
-  final TokenStorage _tokens;
+  final SessionStorage _sessions;
 
   Future<Either<Failure, AuthSession>> _persist(
       Future<Either<Failure, AuthSession>> call,
@@ -38,12 +37,7 @@ class AuthRepositoryImpl with NetworkMixin implements AuthRepository {
     final result = await call;
     await result.fold<Future<void>>(
           (_) async {},
-          (s) => _tokens.save(AuthTokens(
-        accessToken: s.accessToken,
-        refreshToken: s.refreshToken,
-        accessTokenExpirationDate: s.accessTokenExpirationDate,
-        refreshTokenExpirationDate: s.refreshTokenExpirationDate,
-      )),
+          (s) => _sessions.save(s),
     );
     return result;
   }
@@ -79,7 +73,7 @@ class AuthRepositoryImpl with NetworkMixin implements AuthRepository {
       RevokeSessionParams params) async {
     final result =
     await onlineOnly<Unit>(() => _remote.revokeSession(params));
-    await _tokens.clear();
+    await _sessions.clear();
     return result;
   }
 

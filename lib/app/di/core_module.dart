@@ -65,7 +65,7 @@ Future<void> registerCoreModule(GetIt sl) async {
         () => DioApiClient(interceptors: [
       AcceptLanguageInterceptor(sl<LanguageProvider>()),
       AuthInterceptor(
-        tokenStorage: sl(),
+        sessionStorage: sl(),
         sessionEvents: sl(),
         refreshPath: AuthEndpoints.refreshToken,
         revokePath: AuthEndpoints.revokeSession,

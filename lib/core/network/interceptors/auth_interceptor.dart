@@ -2,20 +2,20 @@ import 'package:dio/dio.dart';
 import 'package:mustore/core/config/api_config.dart';
 import 'package:mustore/core/network/api/api_guard.dart';
 import 'package:mustore/core/network/http/http_header_keys.dart';
-import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
-import 'package:mustore/features/auth/domain/entities/auth_tokens.dart';
+import 'package:mustore/features/auth/data/data_sources/local/session_storage.dart';
+import 'package:mustore/features/auth/data/models/auth_session_model.dart';
 import 'package:mustore/features/auth/domain/events/session_event.dart';
 import 'package:mustore/features/auth/domain/params/refresh_token_params.dart';
 import 'package:mustore/features/auth/domain/params/revoke_session_params.dart';
 
 class AuthInterceptor extends QueuedInterceptor {
   AuthInterceptor({
-    required TokenStorage tokenStorage,
+    required SessionStorage sessionStorage,
     required SessionEvents sessionEvents,
     required Set<String> publicPaths,
     required String refreshPath,
     required String revokePath,
-  })  : _tokens = tokenStorage,
+  })  : _sessions = sessionStorage,
         _events = sessionEvents,
         _publicPaths = publicPaths,
         _refreshPath = refreshPath,
@@ -27,7 +27,7 @@ class AuthInterceptor extends QueuedInterceptor {
           receiveTimeout: ApiConfig.receiveTimeout,
         ));
 
-  final TokenStorage _tokens;
+  final SessionStorage _sessions;
   final SessionEvents _events;
   final Set<String> _publicPaths;
   final String _refreshPath;
@@ -46,10 +46,10 @@ class AuthInterceptor extends QueuedInterceptor {
       RequestInterceptorHandler handler,
       ) async {
     if (_isProtected(options)) {
-      final tokens = await _tokens.read();
-      if (tokens != null) {
+      final session = await _sessions.read();
+      if (session != null) {
         options.headers[HeaderKeys.authorization] =
-            _bearer(tokens.accessToken);
+            _bearer(session.accessToken);
       }
     }
     handler.next(options);
@@ -65,31 +65,31 @@ class AuthInterceptor extends QueuedInterceptor {
       return handler.next(err);
     }
 
-    final tokens = await _tokens.read();
-    if (tokens == null) {
+    final session = await _sessions.read();
+    if (session == null) {
       _events.add(SessionEvent.expired);
       return handler.next(err);
     }
 
-    if (req.headers[HeaderKeys.authorization] != _bearer(tokens.accessToken)) {
-      return _retry(req, tokens.accessToken, handler);
+    if (req.headers[HeaderKeys.authorization] != _bearer(session.accessToken)) {
+      return _retry(req, session.accessToken, handler);
     }
 
-    final refreshed = await guardApiCall<AuthTokens>(() async {
+    final refreshed = await guardApiCall<AuthSessionModel>(() async {
       final response = await _dio.post(
         _refreshPath,
-        data: RefreshTokenParams(refreshToken: tokens.refreshToken).toJson(),
+        data: RefreshTokenParams(refreshToken: session.refreshToken).toJson(),
       );
       final fresh =
-      AuthTokens.fromJson(response.data as Map<String, dynamic>);
-      await _tokens.save(fresh);
+      AuthSessionModel.fromJson(response.data as Map<String, dynamic>);
+      await _sessions.save(fresh);
       return fresh;
     });
 
     await refreshed.fold<Future<void>>(
           (failure) async {
         if (failure.isUnauthorized) {
-          await _expire(tokens.refreshToken);
+          await _expire(session.refreshToken);
           return handler.next(err);
         }
         handler.next(failure.toDioException(req));
@@ -128,7 +128,7 @@ class AuthInterceptor extends QueuedInterceptor {
         data: RevokeSessionParams(refreshToken: refreshToken).toJson(),
       ),
     );
-    await _tokens.clear();
+    await _sessions.clear();
     _events.add(SessionEvent.expired);
   }
 }

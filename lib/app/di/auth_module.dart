@@ -18,21 +18,21 @@ import 'package:mustore/features/auth/domain/use_cases/reset_password_use_case.d
 import 'package:mustore/features/auth/domain/use_cases/revoke_session_use_case.dart';
 import 'package:mustore/features/auth/domain/use_cases/verify_email_use_case.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
-import 'package:mustore/features/auth/data/data_sources/local/token_storage.dart';
-import 'package:mustore/features/auth/data/data_sources/local/token_storage_impl.dart';
+import 'package:mustore/features/auth/data/data_sources/local/session_storage.dart';
+import 'package:mustore/features/auth/data/data_sources/local/session_storage_impl.dart';
 
 void registerAuthModule(GetIt sl) {
   sl.registerLazySingleton<AuthRemoteDataSource>(
         () => AuthRemoteDataSourceImpl(apiClient: sl<ApiClient>()),
   );
 
-  sl.registerLazySingleton<TokenStorage>(() => TokenStorageImpl(sl()));
+  sl.registerLazySingleton<SessionStorage>(() => SessionStorageImpl(sl()));
 
   sl.registerLazySingleton<AuthRepository>(
         () => AuthRepositoryImpl(
       networkConnection: sl(),
       remoteDataSource: sl(),
-      tokenStorage: sl(),
+      sessionStorage: sl(),
     ),
   );
 
@@ -58,7 +58,7 @@ void registerAuthModule(GetIt sl) {
     forgetPassword: sl(),
     resetPassword: sl(),
     changePassword: sl(),
-    tokenStorage: sl(),
+    sessionStorage: sl(),
     sessionEvents: sl(),
     passwordEncryption: sl<PasswordEncryptionService>(),
     otpEncryptionService: sl<OtpEncryptionService>(),

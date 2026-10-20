@@ -17,6 +17,21 @@ class AuthSessionModel extends AuthSession {
     required super.refreshTokenExpirationDate,
   });
 
+  factory AuthSessionModel.fromEntity(AuthSession s) => AuthSessionModel(
+    firstName: s.firstName,
+    lastName: s.lastName,
+    phoneNumber: s.phoneNumber,
+    email: s.email,
+    loginProvider: s.loginProvider,
+    profilePictureUrl: s.profilePictureUrl,
+    isValidated: s.isValidated,
+    roles: s.roles,
+    accessToken: s.accessToken,
+    accessTokenExpirationDate: s.accessTokenExpirationDate,
+    refreshToken: s.refreshToken,
+    refreshTokenExpirationDate: s.refreshTokenExpirationDate,
+  );
+
   factory AuthSessionModel.fromJson(Map<String, dynamic> json) =>
       AuthSessionModel(
         firstName: json['firstName'] as String,
@@ -34,4 +49,20 @@ class AuthSessionModel extends AuthSession {
         refreshTokenExpirationDate:
         DateTime.parse(json['refreshTokenExpirationDate'] as String),
       );
+
+  Map<String, dynamic> toJson() => {
+    'firstName': firstName,
+    'lastName': lastName,
+    'phoneNumber': phoneNumber,
+    'email': email,
+    'loginProvider': loginProvider.value,
+    'profilePictureUrl': profilePictureUrl,
+    'isValidated': isValidated,
+    'roles': roles,
+    'accessToken': accessToken,
+    'accessTokenExpirationDate': accessTokenExpirationDate.toIso8601String(),
+    'refreshToken': refreshToken,
+    'refreshTokenExpirationDate':
+    refreshTokenExpirationDate.toIso8601String(),
+  };
 }
