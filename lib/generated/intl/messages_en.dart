@@ -184,8 +184,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "profileChooseGallery":
             MessageLookupByLibrary.simpleMessage("Choose from gallery"),
         "profileEmail": MessageLookupByLibrary.simpleMessage("Email"),
-        "profileEmailReadOnly": MessageLookupByLibrary.simpleMessage(
-            "Your email can\'t be changed"),
         "profileFieldRequired":
             MessageLookupByLibrary.simpleMessage("This field is required"),
         "profileFirstName": MessageLookupByLibrary.simpleMessage("First name"),

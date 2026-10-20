@@ -184,8 +184,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اختيار من المعرض"),
         "profileEmail":
             MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
-        "profileEmailReadOnly": MessageLookupByLibrary.simpleMessage(
-            "لا يمكن تغيير البريد الإلكتروني"),
         "profileFieldRequired":
             MessageLookupByLibrary.simpleMessage("هذا الحقل مطلوب"),
         "profileFirstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),

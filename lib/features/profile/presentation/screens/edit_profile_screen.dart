@@ -25,36 +25,29 @@ import 'package:mustore/generated/l10n.dart';
 
 enum _PictureAction { gallery, remove }
 
-class EditProfileScreen extends StatefulWidget {
+class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
 
-  @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
-}
-
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  int _pictureVersion = 0;
-
-  String _bust(String url) {
-    if (_pictureVersion == 0 || url.isEmpty) return url;
-    return '$url${url.contains('?') ? '&' : '?'}v=$_pictureVersion';
+  static String _bust(String url, int version) {
+    if (version == 0 || url.isEmpty) return url;
+    return '$url${url.contains('?') ? '&' : '?'}v=$version';
   }
 
-  void _toastFailure(BuildContext context, ProfileState state) {
+  static void _toastFailure(BuildContext context, ProfileState state) {
     final failure = state.failure;
     if (failure != null) {
       AppToast.error(context, failure.localizedMessage(context));
     }
   }
 
-  Future<void> _onPictureTap(UserProfile profile) async {
+  Future<void> _onPictureTap(BuildContext context, UserProfile profile) async {
+    final cubit = context.read<ProfileCubit>();
+
     final action = await showModalBottomSheet<_PictureAction>(
       context: context,
       builder: (_) => _PictureSheet(canRemove: !profile.isDefaultPicture),
     );
-    if (action == null || !mounted) return;
-
-    final cubit = context.read<ProfileCubit>();
+    if (action == null || !context.mounted) return;
 
     if (action == _PictureAction.remove) {
       await cubit.deleteProfilePicture();
@@ -102,7 +95,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           listener: (context, state) {
             switch (state.pictureStatus) {
               case RequestStatus.success:
-                setState(() => _pictureVersion++);
                 AppToast.success(context, l10n.profilePictureUpdated);
               case RequestStatus.failure:
                 _toastFailure(context, state);
@@ -145,11 +137,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: _ProfileForm(
                     key: ValueKey(loading),
                     profile: profile ?? const UserProfile.fake(),
-                    pictureUrl: _bust(profile?.profilePictureUrl ?? ''),
+                    pictureUrl: _bust(
+                      profile?.profilePictureUrl ?? '',
+                      state.pictureVersion,
+                    ),
                     isSaving: state.updateStatus == RequestStatus.loading,
                     isPictureBusy: state.pictureStatus == RequestStatus.loading,
-                    onPictureTap:
-                    profile == null ? null : () => _onPictureTap(profile),
+                    onPictureTap: profile == null
+                        ? null
+                        : () => _onPictureTap(context, profile),
                     onSave: context.read<ProfileCubit>().updateProfile,
                   ),
                 ),
@@ -189,29 +185,21 @@ class _ProfileFormState extends State<_ProfileForm> {
   late final _first = TextEditingController(text: widget.profile.firstName);
   late final _last = TextEditingController(text: widget.profile.lastName);
   late final _email = TextEditingController(text: widget.profile.email);
-  late Gender _gender = widget.profile.gender;
-
-  @override
-  void initState() {
-    super.initState();
-    _first.addListener(_refresh);
-    _last.addListener(_refresh);
-  }
+  late final _gender = ValueNotifier<Gender>(widget.profile.gender);
 
   @override
   void dispose() {
     _first.dispose();
     _last.dispose();
     _email.dispose();
+    _gender.dispose();
     super.dispose();
   }
-
-  void _refresh() => setState(() {});
 
   bool get _dirty =>
       _first.text.trim() != widget.profile.firstName ||
           _last.text.trim() != widget.profile.lastName ||
-          _gender != widget.profile.gender;
+          _gender.value != widget.profile.gender;
 
   String _genderLabel(Gender g, S l10n) => switch (g) {
     Gender.male => l10n.genderMale,
@@ -230,7 +218,7 @@ class _ProfileFormState extends State<_ProfileForm> {
       UpdateProfileParams(
         firstName: first != p.firstName ? first : null,
         lastName: last != p.lastName ? last : null,
-        gender: _gender != p.gender ? _gender : null,
+        gender: _gender.value != p.gender ? _gender.value : null,
       ),
     );
   }
@@ -253,6 +241,20 @@ class _ProfileFormState extends State<_ProfileForm> {
         ),
         Dimens.gapXl,
         AppTextField(
+          controller: _email,
+          label: l10n.profileEmail,
+          prefixIcon: Icons.mail_outline_rounded,
+          suffixIcon: Icon(
+            Icons.lock_outline_rounded,
+            size: Dimens.iconMd - Dimens.xs,
+            color: scheme.onSurfaceVariant,
+          ),
+          textDirection: TextDirection.ltr,
+          readOnly: true,
+          enabled: false,
+        ),
+        Dimens.gapLg,
+        AppTextField(
           controller: _first,
           label: l10n.profileFirstName,
           prefixIcon: Icons.person_outline_rounded,
@@ -273,34 +275,24 @@ class _ProfileFormState extends State<_ProfileForm> {
         AppDropdownField<Gender>(
           label: l10n.profileGender,
           prefixIcon: Icons.wc_rounded,
-          initialValue: _gender,
+          initialValue: _gender.value,
           items: [
             for (final g in Gender.values)
               DropdownMenuItem(value: g, child: Text(_genderLabel(g, l10n))),
           ],
-          onChanged: (g) => setState(() => _gender = g ?? _gender),
-        ),
-        Dimens.gapLg,
-        AppTextField(
-          controller: _email,
-          label: l10n.profileEmail,
-          prefixIcon: Icons.mail_outline_rounded,
-          suffixIcon: Icon(
-            Icons.lock_outline_rounded,
-            size: Dimens.iconMd - Dimens.xs,
-            color: scheme.onSurfaceVariant,
-          ),
-          helperText: l10n.profileEmailReadOnly,
-          textDirection: TextDirection.ltr,
-          readOnly: true,
-          enabled: false,
+          onChanged: (g) {
+            if (g != null) _gender.value = g;
+          },
         ),
         Dimens.gapXl,
-        AppButton(
-          label: l10n.profileSave,
-          icon: Icons.check_rounded,
-          isLoading: widget.isSaving,
-          onPressed: _dirty ? _save : null,
+        ListenableBuilder(
+          listenable: Listenable.merge([_first, _last, _gender]),
+          builder: (context, _) => AppButton(
+            label: l10n.profileSave,
+            icon: Icons.check_rounded,
+            isLoading: widget.isSaving,
+            onPressed: _dirty ? _save : null,
+          ),
         ),
       ],
     );

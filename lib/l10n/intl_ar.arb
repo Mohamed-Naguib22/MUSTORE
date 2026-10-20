@@ -125,7 +125,6 @@
   "profileFirstName": "الاسم الأول",
   "profileLastName": "اسم العائلة",
   "profileEmail": "البريد الإلكتروني",
-  "profileEmailReadOnly": "لا يمكن تغيير البريد الإلكتروني",
   "profileGender": "النوع",
   "profileSave": "حفظ التغييرات",
   "profileFieldRequired": "هذا الحقل مطلوب",

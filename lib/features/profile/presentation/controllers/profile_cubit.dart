@@ -105,6 +105,7 @@ class ProfileCubit extends Cubit<ProfileState>
       ),
       onRight: (_) => state.copyWith(
         pictureStatus: RequestStatus.success,
+        pictureVersion: state.pictureVersion + 1,
         clearFailure: true,
       ),
     );
@@ -134,6 +135,7 @@ class ProfileCubit extends Cubit<ProfileState>
       ),
       onRight: (_) => state.copyWith(
         pictureStatus: RequestStatus.success,
+        pictureVersion: state.pictureVersion + 1,
         clearFailure: true,
       ),
     );

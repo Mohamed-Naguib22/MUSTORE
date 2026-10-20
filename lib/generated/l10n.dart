@@ -1170,16 +1170,6 @@ class S {
     );
   }
 
-  /// `Your email can't be changed`
-  String get profileEmailReadOnly {
-    return Intl.message(
-      'Your email can\'t be changed',
-      name: 'profileEmailReadOnly',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Gender`
   String get profileGender {
     return Intl.message(

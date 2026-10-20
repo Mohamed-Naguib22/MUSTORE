@@ -126,7 +126,6 @@
   "profileFirstName": "First name",
   "profileLastName": "Last name",
   "profileEmail": "Email",
-  "profileEmailReadOnly": "Your email can't be changed",
   "profileGender": "Gender",
   "profileSave": "Save changes",
   "profileFieldRequired": "This field is required",

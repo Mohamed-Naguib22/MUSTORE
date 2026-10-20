@@ -9,6 +9,7 @@ class ProfileState extends Equatable {
     this.updateStatus = RequestStatus.initial,
     this.pictureStatus = RequestStatus.initial,
     this.deleteAccountStatus = RequestStatus.initial,
+    this.pictureVersion = 0,
     this.profile,
     this.failure,
   });
@@ -17,6 +18,7 @@ class ProfileState extends Equatable {
   final RequestStatus updateStatus;
   final RequestStatus pictureStatus;
   final RequestStatus deleteAccountStatus;
+  final int pictureVersion;
   final UserProfile? profile;
   final Failure? failure;
 
@@ -25,6 +27,7 @@ class ProfileState extends Equatable {
     RequestStatus? updateStatus,
     RequestStatus? pictureStatus,
     RequestStatus? deleteAccountStatus,
+    int? pictureVersion,
     UserProfile? profile,
     Failure? failure,
     bool clearProfile = false,
@@ -35,6 +38,7 @@ class ProfileState extends Equatable {
         updateStatus: updateStatus ?? this.updateStatus,
         pictureStatus: pictureStatus ?? this.pictureStatus,
         deleteAccountStatus: deleteAccountStatus ?? this.deleteAccountStatus,
+        pictureVersion: pictureVersion ?? this.pictureVersion,
         profile: clearProfile ? null : (profile ?? this.profile),
         failure: clearFailure ? null : (failure ?? this.failure),
       );
@@ -45,6 +49,7 @@ class ProfileState extends Equatable {
     updateStatus,
     pictureStatus,
     deleteAccountStatus,
+    pictureVersion,
     profile,
     failure,
   ];
