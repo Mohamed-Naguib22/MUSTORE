@@ -78,7 +78,8 @@ class HomeHeaderWidget extends StatelessWidget {
                                   buildWhen: (p, c) => p.location != c.location,
                                   builder: (context, state) {
                                     return Text(
-                                      state.location,
+                                      state.location ??
+                                          l10n.homeLocationFallback,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: text.titleSmall,

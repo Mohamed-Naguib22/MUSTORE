@@ -112,6 +112,7 @@
   "homePreviouslyOrdered": "الطلبات السابقة",
   "homeRecentlyViewed": "شوهدت مؤخرًا",
   "homeNewArrivals": "وصل حديثاً",
+  "homeLocationFallback": "القاهرة، مصر",
   "homeDeliverTo": "توصيل الي",
 
   "accountTitle": "الحساب",

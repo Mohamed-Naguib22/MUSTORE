@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dartz/dartz.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -14,7 +16,8 @@ class LocationServiceImpl implements LocationService {
   final Geocoding _geocoding;
 
   @override
-  Future<Either<Failure, String>> currentLocationName() async {
+  Future<Either<Failure, String>> currentLocationName({Locale? locale}) async {
+
     try {
       if (!await PermissionHelper.isGranted(AppPermission.location)) {
         if (PermissionHelper.isRequesting(AppPermission.location)) {
@@ -36,10 +39,13 @@ class LocationServiceImpl implements LocationService {
           accuracy: LocationAccuracy.low,
         ),
       );
+
       final marks = await _geocoding.placemarkFromCoordinates(
         pos.latitude,
         pos.longitude,
+        locale: locale,
       );
+
       if (marks.isEmpty) throw const NoDataFoundException();
 
       final p = marks.first;

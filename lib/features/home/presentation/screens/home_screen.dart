@@ -41,19 +41,30 @@ class _HomeScreenState extends State<HomeScreen> {
   bool get _signedIn =>
       context.read<AuthCubit>().state.authStatus == AuthStatus.authenticated;
 
+  Locale? _locale;
+
   @override
   void initState() {
     super.initState();
     _productsCubit = context.read<ProductsCubit>();
     _categoryCubit = context.read<CategoryCubit>();
 
-    context.read<HomeCubit>().loadLocation();
     _categoryCubit.fetchRootCategories(_categoriesTake);
     _productsCubit
       ..fetchBestSeller(pageSize: _pageSize)
       ..fetchOnSale(pageSize: _pageSize)
       ..fetchRecommended(pageSize: _pageSize)
       ..fetchNewArrivals(pageSize: _pageSize);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final locale = Localizations.localeOf(context);
+    if (locale == _locale) return;
+    _locale = locale;
+
+    context.read<HomeCubit>().loadLocation(locale: locale);
   }
 
   Future<void> _refresh() => Future.wait([

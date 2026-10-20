@@ -3,8 +3,7 @@ import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 
 void registerHomeModule(GetIt sl) {
 
-
-  sl.registerLazySingleton(() => HomeCubit(
+  sl.registerFactory(() => HomeCubit(
     locationService: sl(),
   ));
 }

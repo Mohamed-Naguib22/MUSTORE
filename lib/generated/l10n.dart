@@ -1050,6 +1050,16 @@ class S {
     );
   }
 
+  /// `Cairo, Egypt`
+  String get homeLocationFallback {
+    return Intl.message(
+      'Cairo, Egypt',
+      name: 'homeLocationFallback',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Deliver to`
   String get homeDeliverTo {
     return Intl.message(

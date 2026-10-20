@@ -150,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الأكثر مبيعاً"),
         "homeCategories": MessageLookupByLibrary.simpleMessage("الفئات"),
         "homeDeliverTo": MessageLookupByLibrary.simpleMessage("توصيل الي"),
+        "homeLocationFallback":
+            MessageLookupByLibrary.simpleMessage("القاهرة، مصر"),
         "homeNewArrivals": MessageLookupByLibrary.simpleMessage("وصل حديثاً"),
         "homeOnSale": MessageLookupByLibrary.simpleMessage("عروض وتخفيضات"),
         "homePreviouslyOrdered":

@@ -112,6 +112,7 @@
   "homeRecommended": "Recommended for you",
   "homePreviouslyOrdered": "Previously Ordered",
   "homeRecentlyViewed": "Recently Viewed",
+  "homeLocationFallback": "Cairo, Egypt",
   "homeDeliverTo": "Deliver to",
 
   "accountTitle": "Account",

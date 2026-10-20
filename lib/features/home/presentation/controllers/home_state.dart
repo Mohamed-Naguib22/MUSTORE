@@ -3,12 +3,12 @@ part of 'home_cubit.dart';
 class HomeState extends Equatable {
   const HomeState({
     this.locationStatus = RequestStatus.initial,
-    this.location = 'Cairo, Egypt',
+    this.location,
     this.failure,
   });
 
   final RequestStatus locationStatus;
-  final String location;
+  final String? location;
   final Failure? failure;
 
   HomeState copyWith({
