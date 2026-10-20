@@ -36,7 +36,7 @@ class ProductModel extends Product {
       rating: (json['rating'] as num).toDouble(),
       numberOfReviews: (json['numberOfReviews'] as num).toDouble(),
       isAddedToWishlist: json['isAddedToWishlist'] as bool,
-      currency: CurrencyCodeX.fromJson(json['currency'] as String?),
+      currency: CurrencyCode.fromJson(json['currency'] as String?),
       // imageUrl: json['imageUrl'] as String,
       imageUrl: _fallbackProductImages[
       (json['id'] as String).hashCode.abs() %

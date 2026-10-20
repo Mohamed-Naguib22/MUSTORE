@@ -23,7 +23,7 @@ class AuthSessionModel extends AuthSession {
         lastName: json['lastName'] as String,
         phoneNumber: json['phoneNumber'] as String?,
         email: json['email'] as String,
-        loginProvider: LoginProviderX.fromJson(json['loginProvider'] as String),
+        loginProvider: LoginProvider.fromJson(json['loginProvider'] as String),
         profilePictureUrl: json['profilePictureUrl'] as String,
         isValidated: json['isValidated'] as bool,
         roles: (json['roles'] as List).cast<String>(),

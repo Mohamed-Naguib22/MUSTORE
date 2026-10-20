@@ -1,13 +1,14 @@
-enum Gender { male, female, }
+enum Gender {
+  male('Male'),
+  female('Female');
 
-extension GenderX on Gender {
-  String get value => switch (this) {
-    Gender.male => 'Male',
-    Gender.female => 'Female',
-  };
+  const Gender(this.value);
+  final String value;
 
   static Gender fromJson(String value) => Gender.values.firstWhere(
         (e) => e.value.toLowerCase() == value.toLowerCase(),
-    orElse: () => Gender.male,
+    orElse: () => throw FormatException('Unknown gender: $value'),
   );
+
+  String toJson() => value;
 }

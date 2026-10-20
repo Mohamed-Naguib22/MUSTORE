@@ -1,12 +1,11 @@
-enum LoginProvider { internal, google, microsoft, outlook }
+enum LoginProvider {
+  internal('Internal'),
+  google('Google'),
+  microsoft('Microsoft'),
+  outlook('Outlook');
 
-extension LoginProviderX on LoginProvider {
-  String get value => switch (this) {
-    LoginProvider.internal => 'Internal',
-    LoginProvider.google => 'Google',
-    LoginProvider.microsoft => 'Microsoft',
-    LoginProvider.outlook => 'Outlook',
-  };
+  const LoginProvider(this.value);
+  final String value;
 
   static LoginProvider fromJson(String value) =>
       LoginProvider.values.firstWhere(

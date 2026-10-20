@@ -11,7 +11,7 @@ class ProductSaleModel extends ProductSale {
   factory ProductSaleModel.fromJson(Map<String, dynamic> json) {
     return ProductSaleModel(
       priceAfterSale: (json['priceAfterSale'] as num).toDouble(),
-      discountType: SaleDiscountTypeX.fromJson(json['discountType'] as String?),
+      discountType: SaleDiscountType.fromJson(json['discountType'] as String?),
       discountValue: (json['discountValue'] as num).toDouble(),
     );
   }

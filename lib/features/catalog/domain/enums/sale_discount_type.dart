@@ -1,11 +1,15 @@
-enum SaleDiscountType { percentage, fixedAmount }
+enum SaleDiscountType {
+  percentage('Percentage'),
+  fixedAmount('FixedAmount');
 
-extension SaleDiscountTypeX on SaleDiscountType {
+  const SaleDiscountType(this.value);
+  final String value;
 
   static SaleDiscountType fromJson(String? value) {
+    if (value == null) return SaleDiscountType.percentage;
     return SaleDiscountType.values.firstWhere(
-          (e) => e.name.toLowerCase() == value?.toLowerCase(),
-      orElse: () => SaleDiscountType.percentage,
+          (e) => e.value.toLowerCase() == value.toLowerCase(),
+      orElse: () => throw FormatException('Unknown SaleDiscountType: $value'),
     );
   }
 }

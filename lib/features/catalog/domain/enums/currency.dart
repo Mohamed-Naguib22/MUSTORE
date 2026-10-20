@@ -1,11 +1,15 @@
-enum CurrencyCode { egp, usd, eur }
+enum CurrencyCode {
+  egp('EGP'),
+  usd('USD');
 
-extension CurrencyCodeX on CurrencyCode {
+  const CurrencyCode(this.value);
+  final String value;
 
   static CurrencyCode fromJson(String? value) {
+    if (value == null) return CurrencyCode.egp;
     return CurrencyCode.values.firstWhere(
-          (e) => e.name.toLowerCase() == value?.toLowerCase(),
-      orElse: () => CurrencyCode.egp,
+          (e) => e.value.toLowerCase() == value.toLowerCase(),
+      orElse: () => throw FormatException('Unknown CurrencyCode: $value'),
     );
   }
 }
