@@ -5,12 +5,15 @@ import 'package:mustore/core/services/media/file_picker_helper.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
+import 'package:mustore/core/validators/app_validators.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/feedback/app_message_widget.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
 import 'package:mustore/core/widgets/inputs/app_dropdown_field.dart';
+import 'package:mustore/core/widgets/inputs/app_form.dart';
 import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/core/widgets/lists/app_list_tile.dart';
+import 'package:mustore/core/widgets/lists/app_list_view.dart';
 import 'package:mustore/core/widgets/loading/app_skeleton.dart';
 import 'package:mustore/core/widgets/media/app_network_image.dart';
 import 'package:mustore/features/profile/domain/entities/user_profile.dart';
@@ -117,8 +120,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           final loading = profile == null && !failed;
 
           if (failed) {
-            return ListView(
-              padding: Dimens.screen,
+            return AppListView(
               children: [
                 AppMessageWidget(
                   message: state.failure?.localizedMessage(context) ?? '',
@@ -130,13 +132,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             );
           }
 
-          return ListView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            padding: const EdgeInsetsDirectional.only(
-              start: Dimens.lg,
-              end: Dimens.lg,
-              top: Dimens.xl,
-              bottom: Dimens.xl,
+          return AppListView(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: Dimens.lg,
+              vertical: Dimens.xl,
             ),
             children: [
               AppSkeleton(
@@ -214,9 +213,6 @@ class _ProfileFormState extends State<_ProfileForm> {
           _last.text.trim() != widget.profile.lastName ||
           _gender != widget.profile.gender;
 
-  String? _required(String? v) =>
-      (v == null || v.trim().isEmpty) ? S.of(context).profileFieldRequired : null;
-
   String _genderLabel(Gender g, S l10n) => switch (g) {
     Gender.male => l10n.genderMale,
     Gender.female => l10n.genderFemale,
@@ -243,72 +239,70 @@ class _ProfileFormState extends State<_ProfileForm> {
   Widget build(BuildContext context) {
     final l10n = S.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final required = AppValidators.required(l10n.profileFieldRequired);
 
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Center(
-            child: _PictureEditor(
-              url: widget.pictureUrl,
-              isBusy: widget.isPictureBusy,
-              onTap: widget.onPictureTap,
-            ),
+    return AppForm(
+      formKey: _formKey,
+      children: [
+        Center(
+          child: _PictureEditor(
+            url: widget.pictureUrl,
+            isBusy: widget.isPictureBusy,
+            onTap: widget.onPictureTap,
           ),
-          Dimens.gapXl,
-          AppTextField(
-            controller: _first,
-            label: l10n.profileFirstName,
-            prefixIcon: Icons.person_outline_rounded,
-            textInputAction: TextInputAction.next,
-            validator: _required,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+        ),
+        Dimens.gapXl,
+        AppTextField(
+          controller: _first,
+          label: l10n.profileFirstName,
+          prefixIcon: Icons.person_outline_rounded,
+          textInputAction: TextInputAction.next,
+          validator: required,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+        ),
+        Dimens.gapLg,
+        AppTextField(
+          controller: _last,
+          label: l10n.profileLastName,
+          prefixIcon: Icons.person_outline_rounded,
+          textInputAction: TextInputAction.done,
+          validator: required,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+        ),
+        Dimens.gapLg,
+        AppDropdownField<Gender>(
+          label: l10n.profileGender,
+          prefixIcon: Icons.wc_rounded,
+          initialValue: _gender,
+          items: [
+            for (final g in Gender.values)
+              DropdownMenuItem(value: g, child: Text(_genderLabel(g, l10n))),
+          ],
+          onChanged: (g) => setState(() => _gender = g ?? _gender),
+        ),
+        Dimens.gapLg,
+        AppTextField(
+          controller: _email,
+          label: l10n.profileEmail,
+          prefixIcon: Icons.mail_outline_rounded,
+          suffixIcon: Icon(
+            Icons.lock_outline_rounded,
+            size: Dimens.iconMd - Dimens.xs,
+            color: scheme.onSurfaceVariant,
           ),
-          Dimens.gapLg,
-          AppTextField(
-            controller: _last,
-            label: l10n.profileLastName,
-            prefixIcon: Icons.person_outline_rounded,
-            textInputAction: TextInputAction.done,
-            validator: _required,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-          ),
-          Dimens.gapLg,
-          AppDropdownField<Gender>(
-            label: l10n.profileGender,
-            prefixIcon: Icons.wc_rounded,
-            initialValue: _gender,
-            items: [
-              for (final g in Gender.values)
-                DropdownMenuItem(value: g, child: Text(_genderLabel(g, l10n))),
-            ],
-            onChanged: (g) => setState(() => _gender = g ?? _gender),
-          ),
-          Dimens.gapLg,
-          AppTextField(
-            controller: _email,
-            label: l10n.profileEmail,
-            prefixIcon: Icons.mail_outline_rounded,
-            suffixIcon: Icon(
-              Icons.lock_outline_rounded,
-              size: Dimens.iconMd - Dimens.xs,
-              color: scheme.onSurfaceVariant,
-            ),
-            helperText: l10n.profileEmailReadOnly,
-            textDirection: TextDirection.ltr,
-            readOnly: true,
-            enabled: false,
-          ),
-          Dimens.gapXl,
-          AppButton(
-            label: l10n.profileSave,
-            icon: Icons.check_rounded,
-            isLoading: widget.isSaving,
-            onPressed: _dirty ? _save : null,
-          ),
-        ],
-      ),
+          helperText: l10n.profileEmailReadOnly,
+          textDirection: TextDirection.ltr,
+          readOnly: true,
+          enabled: false,
+        ),
+        Dimens.gapXl,
+        AppButton(
+          label: l10n.profileSave,
+          icon: Icons.check_rounded,
+          isLoading: widget.isSaving,
+          onPressed: _dirty ? _save : null,
+        ),
+      ],
     );
   }
 }
