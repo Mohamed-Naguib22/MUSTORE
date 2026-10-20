@@ -3,7 +3,7 @@ import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/buttons/app_icon_button.dart';
 import 'package:mustore/core/widgets/cards/app_card.dart';
 import 'package:mustore/features/auth/domain/entities/auth_session.dart';
-import 'package:mustore/features/profile/presentation/widgets/account_avatar_widget.dart';
+import 'package:mustore/features/profile/presentation/widgets/account/account_avatar_widget.dart';
 
 class ProfileCardWidget extends StatelessWidget {
   const ProfileCardWidget({

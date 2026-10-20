@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/widgets/lists/app_list_tile.dart';
-import 'package:mustore/features/profile/presentation/widgets/sign_out_tile_widget.dart';
+import 'package:mustore/features/profile/presentation/widgets/account/sign_out_tile_widget.dart';
 import 'package:mustore/generated/l10n.dart';
 import 'account_section_widget.dart';
 

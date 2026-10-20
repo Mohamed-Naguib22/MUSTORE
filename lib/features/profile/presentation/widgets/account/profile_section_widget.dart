@@ -5,7 +5,7 @@ import 'package:mustore/app/app_page.dart';
 import 'package:mustore/features/auth/domain/entities/auth_session.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
-import 'package:mustore/features/profile/presentation/widgets/profile_card_widget.dart';
+import 'package:mustore/features/profile/presentation/widgets/account/profile_card_widget.dart';
 import 'package:mustore/generated/l10n.dart';
 
 class ProfileSectionWidget extends StatelessWidget {
