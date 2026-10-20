@@ -45,6 +45,11 @@ abstract final class Dimens {
   static const double iconLg = 40;
   static const double iconXl = 72;
 
+  static const double badge = 36;
+  static const double iconBadge = 18;
+
+  static const double appBarHeight = 52;
+
   static const double illustration = 220;
 
   static const double buttonHeight = 48;

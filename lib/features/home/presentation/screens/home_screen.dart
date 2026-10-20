@@ -131,94 +131,90 @@ class _HomeScreenState extends State<HomeScreen> {
 
         AppToast.error(context, message);
       },
-      child: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              const HomeHeaderWidget(),
-              const HomeSearchFieldWidget(),
-              Expanded(
-                child: RefreshIndicator(
-                  color: scheme.primary,
-                  backgroundColor: scheme.surface,
-                  onRefresh: _refresh,
-                  child: CustomScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: PromoCarouselWidget(banners: _banners(l10n)),
-                      ),
-                      BlocBuilder<CategoryCubit, CategoryState>(
-                        bloc: _categoryCubit,
-                        buildWhen: (p, c) =>
-                        p.status != c.status ||
-                            p.rootCategories != c.rootCategories,
-                        builder: (context, state) =>
-                            _categoriesSection(l10n, state),
-                      ),
-                      if (signedIn)
-                        HomePersonalSectionWidget(
-                          cubit: _productsCubit,
-                          pageSize: _pageSize,
-                        ),
-                      BlocBuilder<ProductsCubit, ProductsState>(
-                        bloc: _productsCubit,
-                        buildWhen: (p, c) => p.bestSeller != c.bestSeller,
-                        builder: (context, state) => HomeSectionWidget(
-                          onSeeAll: () {},
-                          title: l10n.homeBestSellers,
-                          section: state.bestSeller,
-                          onRetry: () => _productsCubit.fetchBestSeller(
-                            pageSize: _pageSize,
-                          ),
-                        ),
-                      ),
-                      BlocBuilder<ProductsCubit, ProductsState>(
-                        bloc: _productsCubit,
-                        buildWhen: (p, c) => p.onSale != c.onSale,
-                        builder: (context, state) => HomeSectionWidget(
-                          onSeeAll: () {},
-                          title: l10n.homeOnSale,
-                          section: state.onSale,
-                          onRetry: () => _productsCubit.fetchOnSale(
-                            pageSize: _pageSize,
-                          ),
-                        ),
-                      ),
-                      BlocBuilder<ProductsCubit, ProductsState>(
-                        bloc: _productsCubit,
-                        buildWhen: (p, c) => p.recommended != c.recommended,
-                        builder: (context, state) => HomeSectionWidget(
-                          onSeeAll: () {},
-                          title: l10n.homeRecommended,
-                          section: state.recommended,
-                          onRetry: () => _productsCubit.fetchRecommended(
-                            pageSize: _pageSize,
-                          ),
-                        ),
-                      ),
-                      BlocBuilder<ProductsCubit, ProductsState>(
-                        bloc: _productsCubit,
-                        buildWhen: (p, c) => p.newArrivals != c.newArrivals,
-                        builder: (context, state) => HomeSectionWidget(
-                          onSeeAll: () {},
-                          title: l10n.homeNewArrivals,
-                          section: state.newArrivals,
-                          onRetry: () => _productsCubit.fetchNewArrivals(
-                            pageSize: _pageSize,
-                          ),
-                        ),
-                      ),
-                      const SliverToBoxAdapter(
-                        child: SizedBox(height: Dimens.xxl),
-                      ),
-                    ],
+      child: Column(
+        children: [
+          const HomeHeaderWidget(),
+          const HomeSearchFieldWidget(),
+          Expanded(
+            child: RefreshIndicator(
+              color: scheme.primary,
+              backgroundColor: scheme.surface,
+              onRefresh: _refresh,
+              child: CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: PromoCarouselWidget(banners: _banners(l10n)),
                   ),
-                ),
+                  BlocBuilder<CategoryCubit, CategoryState>(
+                    bloc: _categoryCubit,
+                    buildWhen: (p, c) =>
+                    p.status != c.status ||
+                        p.rootCategories != c.rootCategories,
+                    builder: (context, state) =>
+                        _categoriesSection(l10n, state),
+                  ),
+                  if (signedIn)
+                    HomePersonalSectionWidget(
+                      cubit: _productsCubit,
+                      pageSize: _pageSize,
+                    ),
+                  BlocBuilder<ProductsCubit, ProductsState>(
+                    bloc: _productsCubit,
+                    buildWhen: (p, c) => p.bestSeller != c.bestSeller,
+                    builder: (context, state) => HomeSectionWidget(
+                      onSeeAll: () {},
+                      title: l10n.homeBestSellers,
+                      section: state.bestSeller,
+                      onRetry: () => _productsCubit.fetchBestSeller(
+                        pageSize: _pageSize,
+                      ),
+                    ),
+                  ),
+                  BlocBuilder<ProductsCubit, ProductsState>(
+                    bloc: _productsCubit,
+                    buildWhen: (p, c) => p.onSale != c.onSale,
+                    builder: (context, state) => HomeSectionWidget(
+                      onSeeAll: () {},
+                      title: l10n.homeOnSale,
+                      section: state.onSale,
+                      onRetry: () => _productsCubit.fetchOnSale(
+                        pageSize: _pageSize,
+                      ),
+                    ),
+                  ),
+                  BlocBuilder<ProductsCubit, ProductsState>(
+                    bloc: _productsCubit,
+                    buildWhen: (p, c) => p.recommended != c.recommended,
+                    builder: (context, state) => HomeSectionWidget(
+                      onSeeAll: () {},
+                      title: l10n.homeRecommended,
+                      section: state.recommended,
+                      onRetry: () => _productsCubit.fetchRecommended(
+                        pageSize: _pageSize,
+                      ),
+                    ),
+                  ),
+                  BlocBuilder<ProductsCubit, ProductsState>(
+                    bloc: _productsCubit,
+                    buildWhen: (p, c) => p.newArrivals != c.newArrivals,
+                    builder: (context, state) => HomeSectionWidget(
+                      onSeeAll: () {},
+                      title: l10n.homeNewArrivals,
+                      section: state.newArrivals,
+                      onRetry: () => _productsCubit.fetchNewArrivals(
+                        pageSize: _pageSize,
+                      ),
+                    ),
+                  ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: Dimens.xxl),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -79,7 +79,11 @@ class AppRouter {
           key: state.pageKey,
           transitionDuration: Dimens.normal,
           reverseTransitionDuration: Dimens.normal,
-          child: AppPageScaffold(page: page, child: _providers(page)),
+          child: AppPageScaffold(
+            page: page,
+            safeArea: page != AppPage.splash,
+            child: _providers(page),
+          ),
           transitionsBuilder: (context, animation, secondary, child) =>
               _transition(page, context, animation, secondary, child),
         ),

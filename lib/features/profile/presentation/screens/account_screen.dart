@@ -311,7 +311,6 @@ class _Avatar extends StatelessWidget {
     );
   }
 }
-
 class _Section extends StatelessWidget {
   const _Section({
     required this.title,
@@ -326,6 +325,8 @@ class _Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isArabic = Localizations.localeOf(context).languageCode ==
+        LanguageCodes.ar;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -337,9 +338,11 @@ class _Section extends StatelessWidget {
             bottom: Dimens.sm,
           ),
           child: Text(
-            title,
-            style: theme.textTheme.titleSmall?.copyWith(
+            isArabic ? title : title.toUpperCase(),
+            style: theme.textTheme.labelMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+              letterSpacing: isArabic ? 0 : 0.8,
             ),
           ),
         ),

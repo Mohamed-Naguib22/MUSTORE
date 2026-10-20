@@ -11,8 +11,8 @@ class AppIconButton extends StatelessWidget {
     required this.onPressed,
     this.tooltip,
     this.variant = AppIconButtonVariant.tonal,
-    this.size = Dimens.xxl + Dimens.sm,
-    this.iconSize = Dimens.iconMd - Dimens.xs,
+    this.size = Dimens.badge,
+    this.iconSize = Dimens.iconBadge,
   });
 
   final IconData icon;

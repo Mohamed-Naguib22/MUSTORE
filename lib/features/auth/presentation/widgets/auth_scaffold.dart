@@ -20,56 +20,52 @@ class AuthScaffold extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: Dimens.xl,
-              vertical: Dimens.xxl,
-            ),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 440),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: Dimens.xl,
+          vertical: Dimens.xxl,
+        ),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 440),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: Dimens.iconLg,
-                        height: Dimens.iconLg,
-                        decoration: BoxDecoration(
-                          color: scheme.primaryContainer,
-                          borderRadius: Dimens.borderMd,
-                        ),
-                        child: Icon(
-                          icon,
-                          size: Dimens.iconMd,
-                          color: scheme.onPrimaryContainer,
-                        ),
-                      ),
-                      Dimens.gapMd,
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: text.headlineSmall?.copyWith(height: 1.25),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Dimens.gapMd,
-                  Text(
-                    subtitle,
-                    style: text.bodyMedium?.copyWith(
-                      color: scheme.onSurfaceVariant,
-                      height: 1.5,
+                  Container(
+                    width: Dimens.iconLg,
+                    height: Dimens.iconLg,
+                    decoration: BoxDecoration(
+                      color: scheme.primaryContainer,
+                      borderRadius: Dimens.borderMd,
+                    ),
+                    child: Icon(
+                      icon,
+                      size: Dimens.iconMd,
+                      color: scheme.onPrimaryContainer,
                     ),
                   ),
-                  Dimens.gapXxl,
-                  child,
+                  Dimens.gapMd,
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: text.headlineSmall?.copyWith(height: 1.25),
+                    ),
+                  ),
                 ],
               ),
-            ),
+              Dimens.gapMd,
+              Text(
+                subtitle,
+                style: text.bodyMedium?.copyWith(
+                  color: scheme.onSurfaceVariant,
+                  height: 1.5,
+                ),
+              ),
+              Dimens.gapXxl,
+              child,
+            ],
           ),
         ),
       ),

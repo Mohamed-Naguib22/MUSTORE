@@ -4,14 +4,24 @@ import 'package:mustore/generated/l10n.dart';
 import 'app_page.dart';
 
 class AppPageScaffold extends StatelessWidget {
-  const AppPageScaffold({super.key, required this.page, required this.child});
+  const AppPageScaffold({
+    super.key,
+    required this.page,
+    required this.child,
+    this.safeArea = true,
+  });
 
   final AppPage page;
   final Widget child;
+  final bool safeArea;
 
   @override
   Widget build(BuildContext context) {
-    if (page.appBar == AppBarMode.none) return child;
+    if (page.appBar == AppBarMode.none) {
+      return Scaffold(
+        body: safeArea ? SafeArea(child: child) : child,
+      );
+    }
 
     return Scaffold(
       appBar: CustomAppbarWidget(title: page.titleOf(S.of(context))),

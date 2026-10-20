@@ -58,7 +58,8 @@ enum AppPage {
   account('/account', AccessLevel.authenticated, AccountScreen.new,
       icon: Icons.person_outline_rounded,
       selectedIcon: Icons.person_rounded,
-      isTab: true),
+      isTab: true,
+      appBar: AppBarMode.none),
 
   settings('/settings', AccessLevel.public, SettingsScreen.new,
       icon: Icons.settings_outlined,
