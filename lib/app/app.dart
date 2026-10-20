@@ -34,6 +34,7 @@ class App extends StatelessWidget {
             final isArabic = locale.languageCode == LanguageCodes.ar;
 
             return MaterialApp.router(
+              key: ValueKey(settings.locale),
               onGenerateTitle: (context) => S.of(context).appTitle,
               debugShowCheckedModeBanner: false,
               theme: AppTheme.light(isArabic: isArabic),
