@@ -41,13 +41,20 @@ class AppDropdownField<T> extends StatefulWidget {
 
 class _AppDropdownFieldState<T> extends State<AppDropdownField<T>> {
   final _menu = MenuController();
-  bool _open = false;
+  final ValueNotifier<bool> _open = ValueNotifier<bool>(false);
 
   void _setOpen(bool value) {
-    if (mounted && _open != value) setState(() => _open = value);
+    if (!mounted) return;
+    _open.value = value;
   }
 
   void _toggle() => _menu.isOpen ? _menu.close() : _menu.open();
+
+  @override
+  void dispose() {
+    _open.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,25 +120,30 @@ class _AppDropdownFieldState<T> extends State<AppDropdownField<T>> {
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: widget.enabled ? _toggle : null,
-                  child: InputDecorator(
-                    isEmpty: current == null,
-                    isFocused: _open,
-                    baseStyle: AppInputStyle.textStyle(context, enabled: widget.enabled),
-                    decoration: AppInputStyle.decoration(
-                      context,
-                      hint: widget.hint,
-                      prefixIcon: widget.prefixIcon,
-                      helperText: widget.helperText,
-                      errorText: state.errorText ?? widget.errorText,
-                      enabled: widget.enabled,
-                      borderRadius: widget.borderRadius,
-                      suffixIcon: AnimatedRotation(
-                        turns: _open ? 0.5 : 0,
-                        duration: const Duration(milliseconds: 180),
-                        child: const Icon(Icons.keyboard_arrow_down_rounded),
-                      ),
-                    ),
-                    child: current?.child,
+                  child: ValueListenableBuilder<bool>(
+                    valueListenable: _open,
+                    builder: (context, isOpen, _) {
+                      return InputDecorator(
+                        isEmpty: current == null,
+                        isFocused: isOpen,
+                        baseStyle: AppInputStyle.textStyle(context, enabled: widget.enabled),
+                        decoration: AppInputStyle.decoration(
+                          context,
+                          hint: widget.hint,
+                          prefixIcon: widget.prefixIcon,
+                          helperText: widget.helperText,
+                          errorText: state.errorText ?? widget.errorText,
+                          enabled: widget.enabled,
+                          borderRadius: widget.borderRadius,
+                          suffixIcon: AnimatedRotation(
+                            turns: isOpen ? 0.5 : 0,
+                            duration: const Duration(milliseconds: 180),
+                            child: const Icon(Icons.keyboard_arrow_down_rounded),
+                          ),
+                        ),
+                        child: current?.child,
+                      );
+                    },
                   ),
                 ),
               ),

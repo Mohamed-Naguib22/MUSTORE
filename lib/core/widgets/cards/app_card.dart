@@ -42,9 +42,15 @@ class AppCard extends StatefulWidget {
 }
 
 class _AppCardState extends State<AppCard> {
-  bool _pressed = false;
+  final ValueNotifier<bool> _pressed = ValueNotifier<bool>(false);
 
   bool get _interactive => widget.onTap != null || widget.onLongPress != null;
+
+  @override
+  void dispose() {
+    _pressed.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +77,7 @@ class _AppCardState extends State<AppCard> {
       content = InkWell(
         onTap: widget.onTap,
         onLongPress: widget.onLongPress,
-        onHighlightChanged: (v) => setState(() => _pressed = v),
+        onHighlightChanged: (v) => _pressed.value = v,
         splashColor: s.primary.withValues(alpha: 0.08),
         highlightColor: AppColors.transparent,
         hoverColor: s.primary.withValues(alpha: 0.04),
@@ -96,11 +102,17 @@ class _AppCardState extends State<AppCard> {
     );
 
     final scaled = _interactive
-        ? AnimatedScale(
-      scale: _pressed ? 0.98 : 1,
-      duration: Dimens.fast,
-      curve: Curves.easeOut,
+        ? ValueListenableBuilder<bool>(
+      valueListenable: _pressed,
       child: card,
+      builder: (context, pressed, child) {
+        return AnimatedScale(
+          scale: pressed ? 0.98 : 1,
+          duration: Dimens.fast,
+          curve: Curves.easeOut,
+          child: child,
+        );
+      },
     )
         : card;
 

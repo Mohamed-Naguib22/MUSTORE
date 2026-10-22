@@ -53,8 +53,17 @@ class AppTextButton extends StatefulWidget {
 }
 
 class _AppTextButtonState extends State<AppTextButton> {
-  bool _pressed = false;
-  bool _hovered = false;
+  final ValueNotifier<bool> _pressed = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> _hovered = ValueNotifier<bool>(false);
+
+  late final Listenable _interaction = Listenable.merge([_pressed, _hovered]);
+
+  @override
+  void dispose() {
+    _pressed.dispose();
+    _hovered.dispose();
+    super.dispose();
+  }
 
   Color _foreground(ColorScheme s, bool interactive) {
     if (!interactive) return s.onSurface.withValues(alpha: 0.38);
@@ -103,14 +112,6 @@ class _AppTextButtonState extends State<AppTextButton> {
     final restingTint = widget.tonal && enabled
         ? fg.withValues(alpha: 0.10)
         : AppColors.transparent;
-
-    final tint = enabled
-        ? (_pressed
-        ? fg.withValues(alpha: widget.tonal ? 0.20 : 0.12)
-        : _hovered
-        ? fg.withValues(alpha: widget.tonal ? 0.14 : 0.06)
-        : restingTint)
-        : restingTint;
 
     final content = Row(
       mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
@@ -171,43 +172,62 @@ class _AppTextButtonState extends State<AppTextButton> {
           widget.height < Dimens.buttonHeight ? Dimens.md : Dimens.lg,
         ));
 
+    final inkWell = Material(
+      type: MaterialType.transparency,
+      child: InkWell(
+        borderRadius: widget.borderRadius,
+        onTap: enabled ? widget.onPressed : null,
+        onHighlightChanged: (v) => _pressed.value = v,
+        onHover: (v) => _hovered.value = v,
+        splashColor: fg.withValues(alpha: 0.12),
+        highlightColor: AppColors.transparent,
+        hoverColor: AppColors.transparent,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: widget.compact ? 0 : widget.height,
+          ),
+          child: Padding(
+            padding: padding,
+            child: body,
+          ),
+        ),
+      ),
+    );
+
     final button = Semantics(
       button: true,
       enabled: enabled,
       label: widget.label,
-      child: AnimatedScale(
-        scale: _pressed && enabled ? 0.97 : 1,
-        duration: Dimens.fast,
-        curve: Curves.easeOut,
-        child: AnimatedContainer(
-          duration: Dimens.fast,
-          curve: Curves.easeOut,
-          decoration: BoxDecoration(
-            color: tint,
-            borderRadius: widget.borderRadius,
-          ),
-          child: Material(
-            type: MaterialType.transparency,
-            child: InkWell(
-              borderRadius: widget.borderRadius,
-              onTap: enabled ? widget.onPressed : null,
-              onHighlightChanged: (v) => setState(() => _pressed = v),
-              onHover: (v) => setState(() => _hovered = v),
-              splashColor: fg.withValues(alpha: 0.12),
-              highlightColor: AppColors.transparent,
-              hoverColor: AppColors.transparent,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: widget.compact ? 0 : widget.height,
-                ),
-                child: Padding(
-                  padding: padding,
-                  child: body,
-                ),
+      child: ListenableBuilder(
+        listenable: _interaction,
+        child: inkWell,
+        builder: (context, child) {
+          final pressed = _pressed.value;
+          final hovered = _hovered.value;
+
+          final tint = enabled
+              ? (pressed
+              ? fg.withValues(alpha: widget.tonal ? 0.20 : 0.12)
+              : hovered
+              ? fg.withValues(alpha: widget.tonal ? 0.14 : 0.06)
+              : restingTint)
+              : restingTint;
+
+          return AnimatedScale(
+            scale: pressed && enabled ? 0.97 : 1,
+            duration: Dimens.fast,
+            curve: Curves.easeOut,
+            child: AnimatedContainer(
+              duration: Dimens.fast,
+              curve: Curves.easeOut,
+              decoration: BoxDecoration(
+                color: tint,
+                borderRadius: widget.borderRadius,
               ),
+              child: child,
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
 

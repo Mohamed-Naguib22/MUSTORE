@@ -45,7 +45,13 @@ class AppButton extends StatefulWidget {
 }
 
 class _AppButtonState extends State<AppButton> {
-  bool _pressed = false;
+  final ValueNotifier<bool> _pressed = ValueNotifier<bool>(false);
+
+  @override
+  void dispose() {
+    _pressed.dispose();
+    super.dispose();
+  }
 
   double get _iconSize =>
       widget.fontSize != null ? Dimens.iconSm : Dimens.iconMd - Dimens.xs;
@@ -159,50 +165,58 @@ class _AppButtonState extends State<AppButton> {
       ],
     );
 
+    final decorated = AnimatedContainer(
+      duration: Dimens.fast,
+      curve: Curves.easeOut,
+      decoration: BoxDecoration(
+        color: c.bg,
+        borderRadius: widget.borderRadius,
+      ),
+      foregroundDecoration: border == null
+          ? null
+          : BoxDecoration(
+        borderRadius: widget.borderRadius,
+        border: border,
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: widget.borderRadius,
+          onTap: enabled ? widget.onPressed : null,
+          onHighlightChanged: (v) => _pressed.value = v,
+          splashColor: c.fg.withValues(alpha: 0.12),
+          highlightColor: AppColors.transparent,
+          hoverColor: c.fg.withValues(alpha: 0.06),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: widget.height),
+            child: Padding(
+              padding: EdgeInsetsDirectional.symmetric(
+                horizontal: widget.height < Dimens.buttonHeight
+                    ? Dimens.lg
+                    : Dimens.xl,
+              ),
+              child: body,
+            ),
+          ),
+        ),
+      ),
+    );
+
     final button = Semantics(
       button: true,
       enabled: enabled,
       label: widget.label,
-      child: AnimatedScale(
-        scale: _pressed && enabled ? 0.97 : 1,
-        duration: Dimens.fast,
-        curve: Curves.easeOut,
-        child: AnimatedContainer(
-          duration: Dimens.fast,
-          curve: Curves.easeOut,
-          decoration: BoxDecoration(
-            color: c.bg,
-            borderRadius: widget.borderRadius,
-          ),
-          foregroundDecoration: border == null
-              ? null
-              : BoxDecoration(
-            borderRadius: widget.borderRadius,
-            border: border,
-          ),
-          child: Material(
-            type: MaterialType.transparency,
-            child: InkWell(
-              borderRadius: widget.borderRadius,
-              onTap: enabled ? widget.onPressed : null,
-              onHighlightChanged: (v) => setState(() => _pressed = v),
-              splashColor: c.fg.withValues(alpha: 0.12),
-              highlightColor: AppColors.transparent,
-              hoverColor: c.fg.withValues(alpha: 0.06),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: widget.height),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(
-                    horizontal: widget.height < Dimens.buttonHeight
-                        ? Dimens.lg
-                        : Dimens.xl,
-                  ),
-                  child: body,
-                ),
-              ),
-            ),
-          ),
-        ),
+      child: ValueListenableBuilder<bool>(
+        valueListenable: _pressed,
+        child: decorated,
+        builder: (context, pressed, child) {
+          return AnimatedScale(
+            scale: pressed && enabled ? 0.97 : 1,
+            duration: Dimens.fast,
+            curve: Curves.easeOut,
+            child: child,
+          );
+        },
       ),
     );
 

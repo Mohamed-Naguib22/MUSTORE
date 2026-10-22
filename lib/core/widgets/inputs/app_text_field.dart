@@ -70,62 +70,74 @@ class AppTextField extends StatefulWidget {
 }
 
 class _AppTextFieldState extends State<AppTextField> {
-  late bool _obscured = widget.isPassword;
+  late final ValueNotifier<bool> _obscured =
+  ValueNotifier<bool>(widget.isPassword);
+
+  @override
+  void dispose() {
+    _obscured.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final s = Theme.of(context).colorScheme;
     final isMultiline = !widget.isPassword && widget.maxLines != 1;
 
-    final Widget? suffix = widget.isPassword
-        ? IconButton(
-      onPressed: widget.enabled
-          ? () => setState(() => _obscured = !_obscured)
-          : null,
-      icon: Icon(
-        _obscured
-            ? Icons.visibility_off_outlined
-            : Icons.visibility_outlined,
-        size: Dimens.iconMd - Dimens.xs,
-      ),
-    )
-        : widget.suffixIcon;
+    final field = ValueListenableBuilder<bool>(
+      valueListenable: _obscured,
+      builder: (context, obscured, _) {
+        final Widget? suffix = widget.isPassword
+            ? IconButton(
+          onPressed: widget.enabled
+              ? () => _obscured.value = !_obscured.value
+              : null,
+          icon: Icon(
+            obscured
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
+            size: Dimens.iconMd - Dimens.xs,
+          ),
+        )
+            : widget.suffixIcon;
 
-    final field = TextFormField(
-      controller: widget.controller,
-      focusNode: widget.focusNode,
-      enabled: widget.enabled,
-      readOnly: widget.readOnly,
-      autofocus: widget.autofocus,
-      obscureText: _obscured,
-      keyboardType: widget.keyboardType,
-      textInputAction: widget.textInputAction,
-      textDirection: widget.textDirection,
-      textAlign: widget.textAlign,
-      inputFormatters: widget.inputFormatters,
-      autofillHints: widget.autofillHints,
-      maxLines: widget.isPassword ? 1 : widget.maxLines,
-      minLines: widget.isPassword ? null : widget.minLines,
-      maxLength: widget.maxLength,
-      validator: widget.validator,
-      autovalidateMode: widget.autovalidateMode,
-      onChanged: widget.onChanged,
-      onFieldSubmitted: widget.onSubmitted,
-      onTap: widget.onTap,
-      cursorColor: s.primary,
-      style: AppInputStyle.textStyle(context, enabled: widget.enabled),
-      decoration: AppInputStyle.decoration(
-        context,
-        hint: widget.hint,
-        prefixIcon: widget.prefixIcon,
-        suffixIcon: suffix,
-        helperText: widget.helperText,
-        errorText: widget.errorText,
-        enabled: widget.enabled,
-        multiline: isMultiline,
-        showCounter: widget.showCounter,
-        borderRadius: widget.borderRadius,
-      ),
+        return TextFormField(
+          controller: widget.controller,
+          focusNode: widget.focusNode,
+          enabled: widget.enabled,
+          readOnly: widget.readOnly,
+          autofocus: widget.autofocus,
+          obscureText: obscured,
+          keyboardType: widget.keyboardType,
+          textInputAction: widget.textInputAction,
+          textDirection: widget.textDirection,
+          textAlign: widget.textAlign,
+          inputFormatters: widget.inputFormatters,
+          autofillHints: widget.autofillHints,
+          maxLines: widget.isPassword ? 1 : widget.maxLines,
+          minLines: widget.isPassword ? null : widget.minLines,
+          maxLength: widget.maxLength,
+          validator: widget.validator,
+          autovalidateMode: widget.autovalidateMode,
+          onChanged: widget.onChanged,
+          onFieldSubmitted: widget.onSubmitted,
+          onTap: widget.onTap,
+          cursorColor: s.primary,
+          style: AppInputStyle.textStyle(context, enabled: widget.enabled),
+          decoration: AppInputStyle.decoration(
+            context,
+            hint: widget.hint,
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: suffix,
+            helperText: widget.helperText,
+            errorText: widget.errorText,
+            enabled: widget.enabled,
+            multiline: isMultiline,
+            showCounter: widget.showCounter,
+            borderRadius: widget.borderRadius,
+          ),
+        );
+      },
     );
 
     final Widget input = isMultiline && widget.prefixIcon != null
