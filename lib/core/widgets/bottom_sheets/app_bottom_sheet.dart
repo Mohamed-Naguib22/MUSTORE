@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
+import 'package:mustore/core/widgets/icons/icon_badge.dart';
 
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({
     super.key,
     required this.child,
     this.title,
+    this.leading,
+    this.icon,
     this.footer,
     this.showHandle = true,
     this.showCloseButton = false,
@@ -17,6 +20,8 @@ class AppBottomSheet extends StatelessWidget {
 
   final Widget child;
   final String? title;
+  final Widget? leading;
+  final IconData? icon;
   final Widget? footer;
   final bool showHandle;
   final bool showCloseButton;
@@ -24,10 +29,16 @@ class AppBottomSheet extends StatelessWidget {
   final double maxHeightFactor;
   final EdgeInsetsGeometry padding;
 
+  static const BorderRadius _sheetRadius = BorderRadius.vertical(
+    top: Radius.circular(Dimens.radiusXl),
+  );
+
   static Future<T?> show<T>(
       BuildContext context, {
         required Widget child,
         String? title,
+        Widget? leading,
+        IconData? icon,
         Widget? footer,
         bool showHandle = true,
         bool showCloseButton = false,
@@ -50,6 +61,8 @@ class AppBottomSheet extends StatelessWidget {
       elevation: 0,
       builder: (_) => AppBottomSheet(
         title: title,
+        leading: leading,
+        icon: icon,
         footer: footer,
         showHandle: showHandle,
         showCloseButton: showCloseButton,
@@ -68,7 +81,11 @@ class AppBottomSheet extends StatelessWidget {
     final screenHeight = MediaQuery.sizeOf(context).height;
     final keyboard = MediaQuery.viewInsetsOf(context).bottom;
 
-    final hasHeader = title != null || showCloseButton;
+    final leadingWidget =
+        leading ?? (icon != null ? IconBadge(icon: icon!) : null);
+
+    final hasHeader =
+        title != null || showCloseButton || leadingWidget != null;
 
     final body = scrollable
         ? SingleChildScrollView(padding: padding, child: child)
@@ -80,87 +97,103 @@ class AppBottomSheet extends StatelessWidget {
       padding: EdgeInsets.only(bottom: keyboard),
       child: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: screenHeight * maxHeightFactor),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: s.surface,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl)),
-            boxShadow: [
-              BoxShadow(
-                color: s.shadow.withValues(alpha: 0.12),
-                blurRadius: 24,
-                offset: const Offset(0, -4),
-              ),
-            ],
+        child: Material(
+          color: s.surface,
+          elevation: 0,
+          shadowColor: AppColors.transparent,
+          surfaceTintColor: AppColors.transparent,
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: _sheetRadius,
+            side: BorderSide(color: s.outlineVariant),
           ),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl)),
-            child: SafeArea(
-              top: false,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (showHandle)
-                    Center(
-                      child: Container(
-                        width: Dimens.xxxl - Dimens.sm,
-                        height: Dimens.xs,
-                        margin: const EdgeInsetsDirectional.only(top: Dimens.md, bottom: Dimens.sm),
-                        decoration: BoxDecoration(
-                          color: s.outline.withValues(alpha: 0.6),
-                          borderRadius: Dimens.borderPill,
-                        ),
+          child: SafeArea(
+            top: false,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (showHandle)
+                  Center(
+                    child: Container(
+                      width: Dimens.xxxl - Dimens.sm,
+                      height: Dimens.xs,
+                      margin: const EdgeInsetsDirectional.only(
+                        top: Dimens.md,
+                        bottom: Dimens.sm,
                       ),
-                    )
-                  else
-                    Dimens.gapMd,
-                  if (hasHeader)
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                        Dimens.lg,
-                        Dimens.xs,
-                        Dimens.sm,
-                        Dimens.sm,
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: title == null
-                                ? const SizedBox.shrink()
-                                : Text(
-                              title!,
-                              style: theme.textTheme.titleLarge,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          if (showCloseButton)
-                            IconButton(
-                              onPressed: () => Navigator.maybePop(context),
-                              icon: const Icon(Icons.close_rounded),
-                              color: s.onSurfaceVariant,
-                              style: IconButton.styleFrom(
-                                backgroundColor: s.surfaceContainerHighest,
-                              ),
-                            ),
-                        ],
+                      decoration: BoxDecoration(
+                        color: s.outlineVariant,
+                        borderRadius: Dimens.borderPill,
                       ),
                     ),
-                  Flexible(child: body),
-                  if (footer != null)
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                        Dimens.lg,
-                        Dimens.md,
-                        Dimens.lg,
-                        Dimens.lg,
-                      ),
-                      child: footer,
-                    )
-                  else
-                    Dimens.gapLg,
+                  )
+                else
+                  Dimens.gapMd,
+                if (hasHeader) ...[
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      Dimens.lg,
+                      Dimens.xs,
+                      Dimens.md,
+                      Dimens.md,
+                    ),
+                    child: Row(
+                      children: [
+                        if (leadingWidget != null) ...[
+                          leadingWidget,
+                          Dimens.gapMd,
+                        ],
+                        Expanded(
+                          child: title == null
+                              ? const SizedBox.shrink()
+                              : Text(
+                            title!,
+                            style: theme.textTheme.titleMedium,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        if (showCloseButton) ...[
+                          Dimens.gapSm,
+                          IconButton(
+                            onPressed: () => Navigator.maybePop(context),
+                            icon: const Icon(Icons.close_rounded),
+                            iconSize: Dimens.iconMd - Dimens.xs,
+                            color: s.onSurfaceVariant,
+                            tooltip: MaterialLocalizations.of(
+                              context,
+                            ).closeButtonTooltip,
+                            style: IconButton.styleFrom(
+                              backgroundColor: s.surfaceContainerHighest,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: Dimens.borderMd,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  const Divider(),
                 ],
-              ),
+                if (hasHeader) Dimens.gapMd,
+                Flexible(child: body),
+                if (footer != null) ...[
+                  Dimens.gapMd,
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      Dimens.lg,
+                      Dimens.md,
+                      Dimens.lg,
+                      Dimens.lg,
+                    ),
+                    child: footer,
+                  ),
+                ] else
+                  Dimens.gapLg,
+              ],
             ),
           ),
         ),

@@ -28,6 +28,9 @@ class AddressesScreen extends StatelessWidget {
     return AppBottomSheet.show<void>(
       context,
       title: address == null ? l10n.addressesAddTitle : l10n.addressesEditTitle,
+      icon: address == null
+          ? Icons.add_location_alt_rounded
+          : Icons.edit_location_alt_rounded,
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: cubit),

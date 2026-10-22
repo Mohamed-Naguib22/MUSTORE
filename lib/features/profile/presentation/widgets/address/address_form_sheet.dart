@@ -4,6 +4,7 @@ import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
+import 'package:mustore/core/widgets/icons/icon_badge.dart';
 import 'package:mustore/core/widgets/inputs/app_dropdown_field.dart';
 import 'package:mustore/core/widgets/inputs/app_form.dart';
 import 'package:mustore/core/widgets/inputs/app_input_style.dart';
@@ -159,7 +160,7 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
           key: ValueKey(
             'country-${state.selectedCountry?.id}-${state.countries.length}',
           ),
-          label: l10n.profileFieldRequired,
+          label: l10n.addressesFieldCountry,
           hint: l10n.addressesCountryHint,
           prefixIcon: Icons.public_rounded,
           initialValue: state.selectedCountry?.id,
@@ -267,17 +268,29 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: _field(l10n.addressesFieldBuilding, _building),
+                child: _field(
+                  l10n.addressesFieldBuilding,
+                  _building,
+                  icon: Icons.apartment_rounded,
+                ),
               ),
               Dimens.gapMd,
               Expanded(
-                child: _field(l10n.addressesFieldApartment, _apartment),
+                child: _field(
+                  l10n.addressesFieldApartment,
+                  _apartment,
+                  icon: Icons.door_front_door_outlined,
+                ),
               ),
             ],
           ),
           if (!_isEdit) ...[
             Dimens.gapLg,
-            _field(l10n.addressesFieldFloor, _floor),
+            _field(
+              l10n.addressesFieldFloor,
+              _floor,
+              icon: Icons.stairs_outlined,
+            ),
           ],
           Dimens.gapLg,
           _field(
@@ -294,19 +307,34 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
               l10n.addressesFieldAdditionalInfo,
               _additionalInfo,
               hint: l10n.addressesAdditionalInfoHint,
+              icon: Icons.notes_rounded,
               maxLines: 3,
               action: TextInputAction.done,
             ),
-            Dimens.gapMd,
-            SwitchListTile.adaptive(
-              contentPadding: EdgeInsets.zero,
-              value: _isDefault,
-              onChanged: (v) => setState(() => _isDefault = v),
-              title: Text(
-                l10n.addressesSetAsDefault,
-                style: theme.textTheme.bodyMedium,
+            Dimens.gapLg,
+            Material(
+              color: s.surfaceContainerHighest,
+              borderRadius: Dimens.borderMd,
+              clipBehavior: Clip.antiAlias,
+              child: SwitchListTile.adaptive(
+                contentPadding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: Dimens.md,
+                  vertical: Dimens.xs,
+                ),
+                secondary: IconBadge(
+                  icon: Icons.star_outline_rounded,
+                  isHighlighted: _isDefault,
+                ),
+                value: _isDefault,
+                onChanged: (v) => setState(() => _isDefault = v),
+                title: Text(
+                  l10n.addressesSetAsDefault,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                activeTrackColor: s.primary,
               ),
-              activeTrackColor: s.primary,
             ),
           ],
           Dimens.gapLg,
@@ -322,7 +350,6 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
               onPressed: _submit,
             ),
           ),
-          Dimens.gapLg,
         ],
       ),
     );
