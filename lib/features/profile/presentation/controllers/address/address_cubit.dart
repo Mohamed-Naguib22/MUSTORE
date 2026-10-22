@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/use_case/use_case.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/utils/mixins/safe_emit_mixin.dart';
+import 'package:mustore/features/profile/domain/entities/address.dart';
 import 'package:mustore/features/profile/domain/params/address/add_address_params.dart';
 import 'package:mustore/features/profile/domain/params/address/update_address_params.dart';
 import 'package:mustore/features/profile/domain/use_cases/address/add_address_use_case.dart';
@@ -83,7 +84,10 @@ class AddressCubit extends Cubit<AddressState>
     }
   }
 
-  Future<void> updateAddress(UpdateAddressParams params) async {
+  Future<void> updateAddress(
+      UpdateAddressParams params,
+      Address updated,
+      ) async {
     if (state.updateStatus.isLoading) return;
 
     safeEmit(
@@ -100,13 +104,12 @@ class AddressCubit extends Cubit<AddressState>
       ),
       onRight: (_) => state.copyWith(
         updateStatus: RequestStatus.success,
+        addresses: [
+          for (final a in state.addresses) a.id == updated.id ? updated : a,
+        ],
         clearFailure: true,
       ),
     );
-
-    if (state.updateStatus == RequestStatus.success) {
-      await fetchAddresses(silent: true);
-    }
   }
 
   Future<void> setAddressAsDefault(String addressId) async {
@@ -140,6 +143,9 @@ class AddressCubit extends Cubit<AddressState>
 
   Future<void> deleteAddress(String addressId) async {
     if (state.deleteStatus.isLoading) return;
+
+    final address = state.addressById(addressId);
+    if (address == null || address.isDefault) return;
 
     safeEmit(
       state.copyWith(deleteStatus: RequestStatus.loading, clearFailure: true),

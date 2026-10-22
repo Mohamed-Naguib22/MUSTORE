@@ -49,6 +49,13 @@ class AddressState extends Equatable {
         failure: clearFailure ? null : (failure ?? this.failure),
       );
 
+  Address? addressById(String id) {
+    for (final a in addresses) {
+      if (a.id == id) return a;
+    }
+    return null;
+  }
+
   @override
   List<Object?> get props => [
     status,

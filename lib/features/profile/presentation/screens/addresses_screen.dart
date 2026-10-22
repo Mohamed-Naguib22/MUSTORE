@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/app/di/injection.dart';
@@ -147,9 +148,10 @@ class AddressesScreen extends StatelessWidget {
             child: BlocBuilder<AddressCubit, AddressState>(
               buildWhen: (p, c) =>
               p.status != c.status ||
-                  p.addresses != c.addresses ||
-                  p.setDefaultStatus != c.setDefaultStatus ||
-                  p.deleteStatus != c.deleteStatus,
+                  !listEquals(
+                    p.addresses.map((a) => a.id).toList(),
+                    c.addresses.map((a) => a.id).toList(),
+                  ),
               builder: (context, state) {
                 final cubit = context.read<AddressCubit>();
                 final isLoading = state.status == RequestStatus.loading ||
@@ -201,13 +203,33 @@ class AddressesScreen extends StatelessWidget {
                     physics: const AlwaysScrollableScrollPhysics(),
                     children: [
                       for (final address in state.addresses) ...[
-                        AddressCard(
-                          address: address,
-                          onEdit: () => _openForm(context, address: address),
-                          onDelete: () => _confirmDelete(context, address),
-                          onSetDefault: address.isDefault
-                              ? null
-                              : () => cubit.setAddressAsDefault(address.id),
+                        BlocBuilder<AddressCubit, AddressState>(
+                          key: ValueKey(address.id),
+                          buildWhen: (p, c) =>
+                          p.addresses
+                              .where((a) => a.id == address.id)
+                              .firstOrNull !=
+                              c.addresses
+                                  .where((a) => a.id == address.id)
+                                  .firstOrNull,
+                          builder: (context, state) {
+                            final current = state.addresses
+                                .where((a) => a.id == address.id)
+                                .firstOrNull;
+                            if (current == null) return const SizedBox.shrink();
+
+                            return AddressCard(
+                              address: current,
+                              onEdit: () =>
+                                  _openForm(context, address: current),
+                              onDelete: () => _confirmDelete(context, current),
+                              onSetDefault: current.isDefault
+                                  ? null
+                                  : () => context
+                                  .read<AddressCubit>()
+                                  .setAddressAsDefault(current.id),
+                            );
+                          },
                         ),
                         Dimens.gapMd,
                       ],

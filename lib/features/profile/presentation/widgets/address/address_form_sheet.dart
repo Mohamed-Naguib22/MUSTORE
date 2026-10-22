@@ -42,7 +42,7 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
   late final _postalCode =
   TextEditingController(text: widget.address?.postalCode);
 
-  bool _isDefault = false;
+  final _isDefault = ValueNotifier<bool>(false);
 
   bool get _isEdit => widget.address != null;
 
@@ -58,6 +58,7 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
     ]) {
       c.dispose();
     }
+    _isDefault.dispose();
     super.dispose();
   }
 
@@ -73,21 +74,44 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
 
-    final cityId = context.read<LocationCubit>().state.selectedCity?.id;
-    if (cityId == null) return;
+    final location = context.read<LocationCubit>().state;
+    final city = location.selectedCity;
+    if (city == null) return;
 
     final cubit = context.read<AddressCubit>();
+    final canSetDefault = cubit.state.defaultAddress == null;
 
     if (_isEdit) {
+      final old = widget.address!;
+      final governorate = location.selectedGovernorate;
+      final country = location.selectedCountry;
+
+      final updated = Address(
+        id: old.id,
+        street: _street.text.trim(),
+        building: _nullIfEmpty(_building),
+        apartment: _nullIfEmpty(_apartment),
+        floor: old.floor,
+        additionalInfo: old.additionalInfo,
+        postalCode: _postalCode.text.trim(),
+        isDefault: old.isDefault,
+        city: city.name,
+        governorate: governorate?.name ?? old.governorate,
+        cityId: city.id,
+        governorateId: governorate?.id ?? old.governorateId,
+        countryId: country?.id ?? old.countryId,
+      );
+
       cubit.updateAddress(
         UpdateAddressParams(
-          id: widget.address!.id,
-          street: _street.text.trim(),
-          building: _nullIfEmpty(_building),
-          apartment: _nullIfEmpty(_apartment),
-          postalCode: _postalCode.text.trim(),
-          cityId: cityId,
+          id: old.id,
+          street: updated.street,
+          building: updated.building,
+          apartment: updated.apartment,
+          postalCode: updated.postalCode,
+          cityId: city.id,
         ),
+        updated,
       );
     } else {
       cubit.addAddress(
@@ -98,8 +122,8 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
           floor: _nullIfEmpty(_floor),
           additionalInfo: _nullIfEmpty(_additionalInfo),
           postalCode: _postalCode.text.trim(),
-          isDefault: _isDefault,
-          cityId: cityId,
+          isDefault: canSetDefault && _isDefault.value,
+          cityId: city.id,
         ),
       );
     }
@@ -214,6 +238,9 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
     final theme = Theme.of(context);
     final s = theme.colorScheme;
     final l10n = S.of(context);
+    final hasDefault = context.select<AddressCubit, bool>(
+          (c) => c.state.defaultAddress != null,
+    );
 
     return BlocListener<AddressCubit, AddressState>(
       listenWhen: (p, c) => _isEdit
@@ -299,44 +326,49 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
               maxLines: 3,
               textInputAction: TextInputAction.done,
             ),
-            Dimens.gapLg,
-            Material(
-              color: s.surfaceContainerHighest,
-              borderRadius: Dimens.borderMd,
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: () => setState(() => _isDefault = !_isDefault),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(minHeight: Dimens.buttonHeight),
-                  child: Row(
-                    children: [
-                      IconBadge(
-                        icon: _isDefault
-                            ? Icons.star_rounded
-                            : Icons.star_outline_rounded,
-                        isHighlighted: _isDefault,
-                        showBackground: false,
-                        size: kMinInteractiveDimension,
-                        iconSize: AppInputStyle.iconSize,
+            if (!hasDefault) ...[
+              Dimens.gapLg,
+              ValueListenableBuilder<bool>(
+                valueListenable: _isDefault,
+                builder: (context, isDefault, _) => Material(
+                  color: s.surfaceContainerHighest,
+                  borderRadius: Dimens.borderMd,
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () => _isDefault.value = !isDefault,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(minHeight: Dimens.buttonHeight),
+                      child: Row(
+                        children: [
+                          IconBadge(
+                            icon: isDefault
+                                ? Icons.star_rounded
+                                : Icons.star_outline_rounded,
+                            isHighlighted: isDefault,
+                            showBackground: false,
+                            size: kMinInteractiveDimension,
+                            iconSize: AppInputStyle.iconSize,
+                          ),
+                          Expanded(
+                            child: Text(
+                              l10n.addressesSetAsDefault,
+                              style: AppInputStyle.textStyle(context),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(end: Dimens.lg),
+                            child: AppSwitch(
+                              value: isDefault,
+                              onChanged: (v) => _isDefault.value = v,
+                            ),
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: Text(
-                          l10n.addressesSetAsDefault,
-                          style: AppInputStyle.textStyle(context),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(end: Dimens.lg),
-                        child: AppSwitch(
-                          value: _isDefault,
-                          onChanged: (v) => setState(() => _isDefault = v),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ],
           Dimens.gapLg,
           BlocSelector<AddressCubit, AddressState, bool>(

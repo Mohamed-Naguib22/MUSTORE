@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/actions/app_popup_menu.dart';
 import 'package:mustore/core/widgets/icons/icon_badge.dart';
@@ -63,7 +64,7 @@ class AddressCard extends StatelessWidget {
         ? s.primary.withValues(alpha: 0.25)
         : s.outlineVariant;
 
-    final fieldColor = theme.scaffoldBackgroundColor;
+    final chipColor = isDefault ? s.surface : AppColors.transparent;
 
     const contentPadding = EdgeInsetsDirectional.only(end: Dimens.sm);
 
@@ -87,7 +88,7 @@ class AddressCard extends StatelessWidget {
               IconBadge(
                 icon: isDefault
                     ? Icons.home_rounded
-                    : Icons.location_on_outlined,
+                    : Icons.business_outlined,
                 isHighlighted: isDefault,
               ),
               Dimens.gapMd,
@@ -125,7 +126,7 @@ class AddressCard extends StatelessWidget {
                             '${address.city}, ${address.governorate}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: text.bodyMedium?.copyWith(
+                            style: text.bodySmall?.copyWith(
                               color: s.onSurfaceVariant,
                             ),
                           ),
@@ -146,13 +147,14 @@ class AddressCard extends StatelessWidget {
                     label: l10n.addressesMenuEdit,
                     icon: Icons.edit_outlined,
                   ),
-                  AppPopupMenuItem(
-                    value: _AddressAction.delete,
-                    label: l10n.addressesMenuDelete,
-                    icon: Icons.delete_outline_rounded,
-                    isDestructive: true,
-                    dividerBefore: true,
-                  ),
+                  if (!isDefault)
+                    AppPopupMenuItem(
+                      value: _AddressAction.delete,
+                      label: l10n.addressesMenuDelete,
+                      icon: Icons.delete_outline_rounded,
+                      isDestructive: true,
+                      dividerBefore: true,
+                    ),
                 ],
               ),
             ],
@@ -168,24 +170,24 @@ class AddressCard extends StatelessWidget {
                   _DetailChip(
                     icon: d.icon,
                     label: d.label,
-                    color: fieldColor,
+                    color: chipColor,
                     verticalPadding: _chipVerticalPadding,
                   ),
               ],
             ),
           ),
           if (address.additionalInfo != null) ...[
-            Dimens.gapMd,
+            const SizedBox(height: Dimens.md),
             Padding(
-              padding: contentPadding,
-              child: _NoteBlock(
-                message: address.additionalInfo!,
-                color: fieldColor,
+              padding: const EdgeInsetsDirectional.only(
+                start: Dimens.xs,
+                end: Dimens.sm,
               ),
+              child: _NoteBlock(message: address.additionalInfo!),
             ),
           ],
           if (onSetDefault != null) ...[
-            Dimens.gapMd,
+            Dimens.gapLg,
             Padding(
               padding: contentPadding,
               child: AppButton(
@@ -224,18 +226,25 @@ class _DetailChip extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: color,
-        borderRadius: Dimens.borderSm,
+        borderRadius: Dimens.borderMd,
+        border: Border.all(color: s.outlineVariant),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.symmetric(
-          horizontal: Dimens.md,
-          vertical: verticalPadding,
+        padding: EdgeInsetsDirectional.only(
+          start: Dimens.sm + Dimens.xxs,
+          end: Dimens.md,
+          top: verticalPadding,
+          bottom: verticalPadding,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: Dimens.iconSm, color: s.onSurfaceVariant),
-            Dimens.gapXs,
+            Icon(
+              icon,
+              size: Dimens.iconSm,
+              color: s.onSurfaceVariant,
+            ),
+            const SizedBox(width: Dimens.xs + Dimens.xxs),
             Flexible(
               child: Text(
                 label,
@@ -243,6 +252,7 @@ class _DetailChip extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.labelMedium?.copyWith(
                   color: s.onSurface,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -254,51 +264,39 @@ class _DetailChip extends StatelessWidget {
 }
 
 class _NoteBlock extends StatelessWidget {
-  const _NoteBlock({required this.message, required this.color});
+  const _NoteBlock({required this.message});
 
   final String message;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final s = theme.colorScheme;
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: Dimens.borderMd,
-      ),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: Dimens.md,
-          vertical: Dimens.md,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsetsDirectional.only(top: Dimens.xxs),
+          child: Icon(
+            Icons.sticky_note_2_outlined,
+            size: Dimens.iconSm,
+            color: s.onSurfaceVariant,
+          ),
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.only(top: Dimens.xxs),
-              child: Icon(
-                Icons.info_outline_rounded,
-                size: Dimens.iconSm,
-                color: s.onSurfaceVariant,
-              ),
+        Dimens.gapSm,
+        Expanded(
+          child: Text(
+            message,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: s.onSurfaceVariant,
+              height: 1.45,
             ),
-            Dimens.gapSm,
-            Expanded(
-              child: Text(
-                message,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: s.onSurfaceVariant,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -323,7 +321,7 @@ class _DefaultChip extends StatelessWidget {
         ),
         child: Text(
           S.of(context).addressesDefaultBadge,
-          style: theme.textTheme.labelMedium?.copyWith(
+          style: theme.textTheme.labelSmall?.copyWith(
             color: s.onPrimaryContainer,
             fontWeight: FontWeight.w600,
           ),
