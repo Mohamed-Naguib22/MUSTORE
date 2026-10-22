@@ -38,8 +38,6 @@ class AppButton extends StatefulWidget {
   final bool expand;
   final double height;
   final BorderRadius borderRadius;
-
-  /// Optional label font size. When null, the theme's labelLarge size is used.
   final double? fontSize;
 
   @override
@@ -66,7 +64,6 @@ class _AppButtonState extends State<AppButton> {
       AppButtonVariant.secondary => (bg: s.secondary, fg: s.onSecondary),
       AppButtonVariant.danger => (bg: s.error, fg: s.onError),
       AppButtonVariant.tonal => (
-      // Dark primary is light, so a 12% tint nearly vanishes on dark cards.
       bg: s.primary.withValues(
         alpha: s.brightness == Brightness.dark ? 0.24 : 0.12,
       ),
@@ -78,6 +75,22 @@ class _AppButtonState extends State<AppButton> {
     bg: widget.backgroundColor ?? base.bg,
     fg: widget.foregroundColor ?? base.fg,
     );
+  }
+
+  Border? _border(ColorScheme s, bool interactive) {
+    if (widget.variant == AppButtonVariant.outlined) {
+      return Border.all(
+        color: interactive
+            ? s.outline
+            : s.onSurface.withValues(alpha: 0.12),
+      );
+    }
+    if (widget.variant == AppButtonVariant.secondary &&
+        interactive &&
+        s.brightness == Brightness.light) {
+      return Border.all(color: s.onSurface.withValues(alpha: 0.14));
+    }
+    return null;
   }
 
   @override
@@ -96,6 +109,7 @@ class _AppButtonState extends State<AppButton> {
 
     final theme = Theme.of(context);
     final c = _colors(theme.colorScheme, interactive);
+    final border = _border(theme.colorScheme, interactive);
     final textStyle = (theme.textTheme.labelLarge ?? const TextStyle())
         .copyWith(color: c.fg, fontSize: widget.fontSize);
 
@@ -160,16 +174,12 @@ class _AppButtonState extends State<AppButton> {
             color: c.bg,
             borderRadius: widget.borderRadius,
           ),
-          foregroundDecoration: widget.variant == AppButtonVariant.outlined
-              ? BoxDecoration(
+          foregroundDecoration: border == null
+              ? null
+              : BoxDecoration(
             borderRadius: widget.borderRadius,
-            border: Border.all(
-              color: interactive
-                  ? theme.colorScheme.primary.withValues(alpha: 0.55)
-                  : theme.colorScheme.onSurface.withValues(alpha: 0.12),
-            ),
-          )
-              : null,
+            border: border,
+          ),
           child: Material(
             type: MaterialType.transparency,
             child: InkWell(

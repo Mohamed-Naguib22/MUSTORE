@@ -41,7 +41,7 @@ abstract final class AppInputStyle {
     return InputDecoration(
       hintText: hint,
       hintStyle: text.bodyMedium
-          ?.copyWith(color: s.onSurfaceVariant.withValues(alpha: 0.7)),
+          ?.copyWith(color: s.onSurfaceVariant.withValues(alpha: 0.85)),
       helperText: helperText,
       helperStyle: text.bodySmall?.copyWith(color: s.onSurfaceVariant),
       helperMaxLines: 2,

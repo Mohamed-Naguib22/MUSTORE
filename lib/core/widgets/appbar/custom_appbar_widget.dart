@@ -148,8 +148,8 @@ class CustomAppbarAction extends StatelessWidget {
       onPressed: onPressed,
       icon: icon,
       badgeCount: count,
-      badgeColor: scheme.secondary,
-      badgeTextColor: scheme.onSecondary,
+      badgeColor: scheme.primary,
+      badgeTextColor: scheme.onPrimary,
     );
   }
 }

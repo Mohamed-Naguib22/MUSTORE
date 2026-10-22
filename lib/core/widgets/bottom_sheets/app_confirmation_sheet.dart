@@ -61,7 +61,6 @@ class AppConfirmationSheet extends StatelessWidget {
           child: IconBadge(
             icon: icon,
             isDestructive: isDestructive,
-            isHighlighted: !isDestructive,
             size: Dimens.xxxl + Dimens.sm,
             iconSize: Dimens.iconMd + Dimens.xs,
             borderRadius: Dimens.borderLg,

@@ -41,6 +41,8 @@ class ContactCard extends StatelessWidget {
         ? s.primary.withValues(alpha: 0.25)
         : s.outlineVariant;
 
+    final statusColor = isVerified ? s.primary : s.error;
+
     const contentPadding = EdgeInsetsDirectional.only(end: Dimens.sm);
     final hasActions = onVerify != null || onSetPrimary != null;
 
@@ -97,7 +99,7 @@ class ContactCard extends StatelessWidget {
                               ? Icons.verified_rounded
                               : Icons.error_outline_rounded,
                           size: Dimens.iconSm,
-                          color: isVerified ? s.primary : s.error,
+                          color: statusColor,
                         ),
                         Dimens.gapXs,
                         Expanded(
@@ -108,7 +110,7 @@ class ContactCard extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: text.bodySmall?.copyWith(
-                              color: isVerified ? s.primary : s.error,
+                              color: statusColor,
                             ),
                           ),
                         ),
@@ -189,7 +191,7 @@ class _PrimaryChip extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: s.primaryContainer,
+        color: s.secondary,
         borderRadius: Dimens.borderPill,
       ),
       child: Padding(
@@ -200,7 +202,7 @@ class _PrimaryChip extends StatelessWidget {
         child: Text(
           S.of(context).contactsPrimaryBadge,
           style: theme.textTheme.labelSmall?.copyWith(
-            color: s.onPrimaryContainer,
+            color: s.onSecondary,
             fontWeight: FontWeight.w600,
           ),
         ),

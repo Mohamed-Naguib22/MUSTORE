@@ -44,7 +44,7 @@ class IconBadge extends StatelessWidget {
       scheme.errorContainer.withValues(alpha: 0.6),
       scheme.onErrorContainer,
       ),
-      (_, true) => (scheme.primaryContainer, scheme.onPrimaryContainer),
+      (_, true) => (scheme.primary, scheme.onPrimary),
       _ => (scheme.surfaceContainerHighest, scheme.onPrimaryContainer),
     };
 

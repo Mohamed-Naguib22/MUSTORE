@@ -312,7 +312,7 @@ class _DefaultChip extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: s.primaryContainer,
+        color: s.secondary,
         borderRadius: Dimens.borderPill,
       ),
       child: Padding(
@@ -323,7 +323,7 @@ class _DefaultChip extends StatelessWidget {
         child: Text(
           S.of(context).addressesDefaultBadge,
           style: theme.textTheme.labelSmall?.copyWith(
-            color: s.onPrimaryContainer,
+            color: s.onSecondary,
             fontWeight: FontWeight.w600,
           ),
         ),

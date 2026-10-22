@@ -6,6 +6,10 @@ import 'package:toastification/toastification.dart';
 abstract final class AppToast {
   static const Duration _defaultDuration = Duration(seconds: 4);
 
+  /// Darker amber for the warning icon on light surfaces. The brand warning
+  /// amber is only ~2:1 on white; this is ~5:1. Dark mode keeps the brand one.
+  static const Color _warningOnLight = Color(0xFFB45309);
+
   static ToastificationItem success(
       BuildContext context,
       String message, {
@@ -55,6 +59,7 @@ abstract final class AppToast {
     final theme = Theme.of(context);
     final s = theme.colorScheme;
     final text = theme.textTheme;
+    final isLight = s.brightness == Brightness.light;
 
     final (accent, icon, type) = switch (kind) {
       _ToastKind.success => (
@@ -68,10 +73,11 @@ abstract final class AppToast {
       ToastificationType.error,
       ),
       _ToastKind.warning => (
-      AppColors.warning,
+      isLight ? _warningOnLight : AppColors.warning,
       Icons.priority_high_rounded,
       ToastificationType.warning,
       ),
+    // Neutral ink (near-white in dark mode): info stays calm and on-theme.
       _ToastKind.info => (
       s.primary,
       Icons.info_outline_rounded,

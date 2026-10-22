@@ -33,6 +33,7 @@ class AppMessageWidget extends StatelessWidget {
       variant: AppCardVariant.filled,
       color: scheme.errorContainer.withValues(alpha: 0.45),
       margin: margin,
+      borderColor: scheme.onErrorContainer.withValues(alpha: 0.15),
       borderRadius: Dimens.borderMd,
       child: Row(
         children: [

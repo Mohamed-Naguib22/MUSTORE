@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FontsProvider {
-  static const _latin = 'Plus Jakarta Sans';
-  static const _arabic = 'Cairo';
+  FontsProvider._();
 
-  static const _arabicHeightBoost = 0.15;
+  static const _arabicHeightBoost = 0.1;
 
   static TextStyle _style(
       bool isArabic,
@@ -15,15 +14,12 @@ class FontsProvider {
         double height = 1.35,
         Color? color,
       }) =>
-      GoogleFonts.getFont(
-        isArabic ? _arabic : _latin,
-        textStyle: TextStyle(
-          fontSize: size,
-          fontWeight: weight,
-          letterSpacing: isArabic ? 0 : letterSpacing,
-          height: isArabic ? height + _arabicHeightBoost : height,
-          color: color,
-        ),
+      GoogleFonts.ibmPlexSansArabic(
+        fontSize: size,
+        fontWeight: weight,
+        letterSpacing: isArabic ? 0 : letterSpacing,
+        height: isArabic ? height + _arabicHeightBoost : height,
+        color: color,
       );
 
   static TextStyle getHeadline1TextStyle({required bool isArabic, Color? color}) =>
@@ -64,4 +60,13 @@ class FontsProvider {
 
   static TextStyle getOverLineTextStyle({required bool isArabic, Color? color}) =>
       _style(isArabic, 10, FontWeight.w600, letterSpacing: 0.8, height: 1.3, color: color);
+
+  static TextStyle getPriceTextStyle({
+    required bool isArabic,
+    Color? color,
+    double size = 16,
+    FontWeight weight = FontWeight.w700,
+  }) =>
+      _style(isArabic, size, weight, height: 1.2, color: color)
+          .copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
 }

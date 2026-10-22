@@ -61,7 +61,8 @@ class _AppTextButtonState extends State<AppTextButton> {
     if (widget.foregroundColor != null) return widget.foregroundColor!;
     return switch (widget.variant) {
       AppTextButtonVariant.primary => s.primary,
-      AppTextButtonVariant.secondary => s.secondary,
+      AppTextButtonVariant.secondary =>
+      s.brightness == Brightness.dark ? s.secondary : s.onSecondaryContainer,
       AppTextButtonVariant.danger => s.error,
       AppTextButtonVariant.neutral => s.onSurface,
     };
@@ -92,7 +93,8 @@ class _AppTextButtonState extends State<AppTextButton> {
     final fg = _foreground(theme.colorScheme, interactive);
     final textStyle = (theme.textTheme.labelMedium?.copyWith(
       fontWeight: FontWeight.bold,
-    ) ?? const TextStyle())
+    ) ??
+        const TextStyle())
         .merge(widget.textStyle)
         .copyWith(color: fg);
     final iconSize = widget.iconSize ?? Dimens.iconMd - Dimens.xs;

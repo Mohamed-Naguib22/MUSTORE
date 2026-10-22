@@ -123,7 +123,7 @@ class AppBottomSheet extends StatelessWidget {
                         bottom: Dimens.sm,
                       ),
                       decoration: BoxDecoration(
-                        color: s.outlineVariant,
+                        color: s.outline,
                         borderRadius: Dimens.borderPill,
                       ),
                     ),
