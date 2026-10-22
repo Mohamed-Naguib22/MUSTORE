@@ -1520,6 +1520,46 @@ class S {
     );
   }
 
+  /// `e.g. 12`
+  String get addressesBuildingHint {
+    return Intl.message(
+      'e.g. 12',
+      name: 'addressesBuildingHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g. 5`
+  String get addressesApartmentHint {
+    return Intl.message(
+      'e.g. 5',
+      name: 'addressesApartmentHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g. 3`
+  String get addressesFloorHint {
+    return Intl.message(
+      'e.g. 3',
+      name: 'addressesFloorHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g. 11511`
+  String get addressesPostalCodeHint {
+    return Intl.message(
+      'e.g. 11511',
+      name: 'addressesPostalCodeHint',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Season Sale`
   String get bannerSeasonSaleTitle {
     return Intl.message(

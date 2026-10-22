@@ -3,6 +3,8 @@ import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 
 abstract final class AppInputStyle {
+  static const double iconSize = Dimens.iconMd - Dimens.xs;
+
   static InputDecoration decoration(
       BuildContext context, {
         String? hint,
@@ -19,21 +21,27 @@ abstract final class AppInputStyle {
     final s = theme.colorScheme;
     final text = theme.textTheme;
 
-    OutlineInputBorder border(Color color, {double width = 1}) => OutlineInputBorder(
-      borderRadius: borderRadius,
-      borderSide: BorderSide(color: color, width: width),
-    );
+    OutlineInputBorder border(Color color, {double width = 1}) =>
+        OutlineInputBorder(
+          borderRadius: borderRadius,
+          borderSide: BorderSide(color: color, width: width),
+        );
 
     final iconColor = WidgetStateColor.resolveWith((states) {
-      if (states.contains(WidgetState.disabled)) return s.onSurface.withValues(alpha: 0.38);
+      if (states.contains(WidgetState.disabled)) {
+        return s.onSurface.withValues(alpha: 0.38);
+      }
       if (states.contains(WidgetState.error)) return s.error;
       if (states.contains(WidgetState.focused)) return s.primary;
       return s.onSurfaceVariant;
     });
 
+    final overlayIcon = multiline && prefixIcon != null;
+
     return InputDecoration(
       hintText: hint,
-      hintStyle: text.bodyMedium?.copyWith(color: s.onSurfaceVariant.withValues(alpha: 0.7)),
+      hintStyle: text.bodyMedium
+          ?.copyWith(color: s.onSurfaceVariant.withValues(alpha: 0.7)),
       helperText: helperText,
       helperStyle: text.bodySmall?.copyWith(color: s.onSurfaceVariant),
       helperMaxLines: 2,
@@ -45,17 +53,20 @@ abstract final class AppInputStyle {
       fillColor: enabled
           ? s.surfaceContainerHighest
           : s.surfaceContainerHighest.withValues(alpha: 0.5),
-      prefixIcon: prefixIcon == null
+      prefixIcon: (prefixIcon == null || multiline)
           ? null
-          : Icon(prefixIcon, size: Dimens.iconMd - Dimens.xs),
+          : Icon(prefixIcon, size: iconSize),
       prefixIconColor: iconColor,
       suffixIcon: suffixIcon,
       suffixIconColor: iconColor,
-      contentPadding: const EdgeInsetsDirectional.symmetric(
-        horizontal: Dimens.lg,
-        vertical: Dimens.md,
+      contentPadding: EdgeInsetsDirectional.only(
+        start: overlayIcon ? Dimens.lg + iconSize + Dimens.md : Dimens.lg,
+        end: Dimens.lg,
+        top: Dimens.md,
+        bottom: Dimens.md,
       ),
-      constraints: multiline ? null : const BoxConstraints(minHeight: Dimens.buttonHeight),
+      constraints:
+      multiline ? null : const BoxConstraints(minHeight: Dimens.buttonHeight),
       border: border(AppColors.transparent),
       enabledBorder: border(AppColors.transparent),
       disabledBorder: border(AppColors.transparent),

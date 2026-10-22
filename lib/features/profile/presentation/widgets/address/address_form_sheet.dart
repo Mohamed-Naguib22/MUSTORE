@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
@@ -8,13 +9,15 @@ import 'package:mustore/core/widgets/icons/icon_badge.dart';
 import 'package:mustore/core/widgets/inputs/app_dropdown_field.dart';
 import 'package:mustore/core/widgets/inputs/app_form.dart';
 import 'package:mustore/core/widgets/inputs/app_input_style.dart';
+import 'package:mustore/core/widgets/inputs/app_switch.dart';
+import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/profile/domain/entities/address.dart';
 import 'package:mustore/features/profile/domain/params/address/add_address_params.dart';
 import 'package:mustore/features/profile/domain/params/address/update_address_params.dart';
 import 'package:mustore/features/profile/presentation/controllers/address/address_cubit.dart';
 import 'package:mustore/features/profile/presentation/controllers/address/address_state.dart';
-import 'package:mustore/features/profile/presentation/controllers/location/location_cubit.dart'; // adjust path
-import 'package:mustore/features/profile/presentation/controllers/location/location_state.dart'; // adjust path
+import 'package:mustore/features/profile/presentation/controllers/location/location_cubit.dart';
+import 'package:mustore/features/profile/presentation/controllers/location/location_state.dart';
 import 'package:mustore/generated/l10n.dart';
 
 class AddressFormSheet extends StatefulWidget {
@@ -102,37 +105,8 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
     }
   }
 
-  Widget _field(
-      String label,
-      TextEditingController controller, {
-        String? hint,
-        IconData? icon,
-        String? Function(String?)? validator,
-        TextInputType? keyboardType,
-        TextInputAction action = TextInputAction.next,
-        int maxLines = 1,
-      }) {
-    return AppInputStyle.labeled(
-      context,
-      label: label,
-      field: TextFormField(
-        controller: controller,
-        validator: validator,
-        keyboardType: keyboardType,
-        textInputAction: action,
-        maxLines: maxLines,
-        style: AppInputStyle.textStyle(context),
-        decoration: AppInputStyle.decoration(
-          context,
-          hint: hint,
-          prefixIcon: icon,
-          multiline: maxLines > 1,
-        ),
-      ),
-    );
-  }
-
-  String? _errorFor(BuildContext context, RequestStatus status, LocationState s) {
+  String? _errorFor(
+      BuildContext context, RequestStatus status, LocationState s) {
     if (status != RequestStatus.failure) return null;
     final message = s.failure?.localizedMessage(context);
     return (message == null || message.isEmpty) ? null : message;
@@ -142,8 +116,8 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
     final l10n = S.of(context);
     final location = context.read<LocationCubit>();
 
-    final countryEnabled = state.countries.length > 1 &&
-        !state.countriesStatus.isLoading;
+    final countryEnabled =
+        state.countries.length > 1 && !state.countriesStatus.isLoading;
 
     final governorateEnabled = state.selectedCountry != null &&
         state.governorates.isNotEmpty &&
@@ -252,11 +226,12 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
       child: AppForm(
         formKey: _formKey,
         children: [
-          _field(
-            l10n.addressesFieldStreet,
-            _street,
+          AppTextField(
+            controller: _street,
+            label: l10n.addressesFieldStreet,
             hint: l10n.addressesStreetHint,
-            icon: Icons.signpost_outlined,
+            prefixIcon: Icons.signpost_outlined,
+            textInputAction: TextInputAction.next,
             validator: _required,
           ),
           Dimens.gapLg,
@@ -268,72 +243,98 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: _field(
-                  l10n.addressesFieldBuilding,
-                  _building,
-                  icon: Icons.apartment_rounded,
+                child: AppTextField(
+                  controller: _building,
+                  label: l10n.addressesFieldBuilding,
+                  hint: l10n.addressesBuildingHint,
+                  prefixIcon: Icons.apartment_rounded,
+                  textInputAction: TextInputAction.next,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
               Dimens.gapMd,
               Expanded(
-                child: _field(
-                  l10n.addressesFieldApartment,
-                  _apartment,
-                  icon: Icons.door_front_door_outlined,
+                child: AppTextField(
+                  controller: _apartment,
+                  label: l10n.addressesFieldApartment,
+                  hint: l10n.addressesApartmentHint,
+                  prefixIcon: Icons.door_front_door_outlined,
+                  textInputAction: TextInputAction.next,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
             ],
           ),
           if (!_isEdit) ...[
             Dimens.gapLg,
-            _field(
-              l10n.addressesFieldFloor,
-              _floor,
-              icon: Icons.stairs_outlined,
+            AppTextField(
+              controller: _floor,
+              label: l10n.addressesFieldFloor,
+              hint: l10n.addressesFloorHint,
+              prefixIcon: Icons.stairs_outlined,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
           ],
           Dimens.gapLg,
-          _field(
-            l10n.addressesFieldPostalCode,
-            _postalCode,
-            icon: Icons.markunread_mailbox_outlined,
+          AppTextField(
+            controller: _postalCode,
+            label: l10n.addressesFieldPostalCode,
+            hint: l10n.addressesPostalCodeHint,
+            prefixIcon: Icons.markunread_mailbox_outlined,
             keyboardType: TextInputType.number,
+            textInputAction:
+            _isEdit ? TextInputAction.done : TextInputAction.next,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            maxLength: 5,
             validator: _required,
-            action: _isEdit ? TextInputAction.done : TextInputAction.next,
           ),
           if (!_isEdit) ...[
             Dimens.gapLg,
-            _field(
-              l10n.addressesFieldAdditionalInfo,
-              _additionalInfo,
+            AppTextField(
+              controller: _additionalInfo,
+              label: l10n.addressesFieldAdditionalInfo,
               hint: l10n.addressesAdditionalInfoHint,
-              icon: Icons.notes_rounded,
+              prefixIcon: Icons.notes_rounded,
               maxLines: 3,
-              action: TextInputAction.done,
+              textInputAction: TextInputAction.done,
             ),
             Dimens.gapLg,
             Material(
               color: s.surfaceContainerHighest,
               borderRadius: Dimens.borderMd,
               clipBehavior: Clip.antiAlias,
-              child: SwitchListTile.adaptive(
-                contentPadding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: Dimens.md,
-                  vertical: Dimens.xs,
-                ),
-                secondary: IconBadge(
-                  icon: Icons.star_outline_rounded,
-                  isHighlighted: _isDefault,
-                ),
-                value: _isDefault,
-                onChanged: (v) => setState(() => _isDefault = v),
-                title: Text(
-                  l10n.addressesSetAsDefault,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w500,
+              child: InkWell(
+                onTap: () => setState(() => _isDefault = !_isDefault),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: Dimens.buttonHeight),
+                  child: Row(
+                    children: [
+                      IconBadge(
+                        icon: _isDefault
+                            ? Icons.star_rounded
+                            : Icons.star_outline_rounded,
+                        isHighlighted: _isDefault,
+                        showBackground: false,
+                        size: kMinInteractiveDimension,
+                        iconSize: AppInputStyle.iconSize,
+                      ),
+                      Expanded(
+                        child: Text(
+                          l10n.addressesSetAsDefault,
+                          style: AppInputStyle.textStyle(context),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(end: Dimens.lg),
+                        child: AppSwitch(
+                          value: _isDefault,
+                          onChanged: (v) => setState(() => _isDefault = v),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                activeTrackColor: s.primary,
               ),
             ),
           ],

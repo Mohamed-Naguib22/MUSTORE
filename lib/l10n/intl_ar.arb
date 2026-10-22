@@ -181,6 +181,10 @@
   "addressesFieldGovernorate": "المحافظة",
   "addressesGovernorateHint": "اختر المحافظة",
   "addressesGovernorateRequired": "من فضلك اختر المحافظة",
+  "addressesBuildingHint": "مثال: 12",
+  "addressesApartmentHint": "مثال: 5",
+  "addressesFloorHint": "مثال: 3",
+  "addressesPostalCodeHint": "مثال: 11511",
 
   "bannerSeasonSaleTitle": "تخفيضات الموسم",
   "bannerSeasonSaleSubtitle": "خصم يصل إلى 50٪ على منتجات مختارة",

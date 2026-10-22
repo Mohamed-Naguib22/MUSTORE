@@ -59,7 +59,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Landmarks, delivery notes…",
     ),
     "addressesApartment": m0,
+    "addressesApartmentHint": MessageLookupByLibrary.simpleMessage("e.g. 5"),
     "addressesBuilding": m1,
+    "addressesBuildingHint": MessageLookupByLibrary.simpleMessage("e.g. 12"),
     "addressesCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "addressesCityHint": MessageLookupByLibrary.simpleMessage("Select city"),
     "addressesCityRequired": MessageLookupByLibrary.simpleMessage(
@@ -109,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "addressesFieldStreet": MessageLookupByLibrary.simpleMessage("Street"),
     "addressesFloor": m3,
+    "addressesFloorHint": MessageLookupByLibrary.simpleMessage("e.g. 3"),
     "addressesGenericError": MessageLookupByLibrary.simpleMessage(
       "Something went wrong.",
     ),
@@ -125,6 +128,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "addressesMenuEdit": MessageLookupByLibrary.simpleMessage("Edit"),
     "addressesMenuSetDefault": MessageLookupByLibrary.simpleMessage(
       "Set as default",
+    ),
+    "addressesPostalCodeHint": MessageLookupByLibrary.simpleMessage(
+      "e.g. 11511",
     ),
     "addressesRetry": MessageLookupByLibrary.simpleMessage("Retry"),
     "addressesSaveChanges": MessageLookupByLibrary.simpleMessage(

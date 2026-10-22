@@ -7,6 +7,7 @@ class IconBadge extends StatelessWidget {
     required this.icon,
     this.isDestructive = false,
     this.isHighlighted = false,
+    this.showBackground = true,
     this.size = Dimens.badge,
     this.iconSize = Dimens.iconBadge,
     this.borderRadius = Dimens.borderMd,
@@ -15,6 +16,7 @@ class IconBadge extends StatelessWidget {
   final IconData icon;
   final bool isDestructive;
   final bool isHighlighted;
+  final bool showBackground;
   final double size;
   final double iconSize;
   final BorderRadius borderRadius;
@@ -22,6 +24,20 @@ class IconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+
+    if (!showBackground) {
+      final color = isDestructive
+          ? scheme.error
+          : isHighlighted
+          ? scheme.primary
+          : scheme.onSurfaceVariant;
+
+      return SizedBox(
+        width: size,
+        height: size,
+        child: Icon(icon, size: iconSize, color: color),
+      );
+    }
 
     final (bg, fg) = switch ((isDestructive, isHighlighted)) {
       (true, _) => (

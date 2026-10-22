@@ -182,6 +182,10 @@
   "addressesFieldGovernorate": "Governorate",
   "addressesGovernorateHint": "Select governorate",
   "addressesGovernorateRequired": "Please select a governorate",
+  "addressesBuildingHint": "e.g. 12",
+  "addressesApartmentHint": "e.g. 5",
+  "addressesFloorHint": "e.g. 3",
+  "addressesPostalCodeHint": "e.g. 11511",
 
   "bannerSeasonSaleTitle": "Season Sale",
   "bannerSeasonSaleSubtitle": "Up to 50% off selected items",

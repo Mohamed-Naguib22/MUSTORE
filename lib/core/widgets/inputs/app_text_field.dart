@@ -79,9 +79,13 @@ class _AppTextFieldState extends State<AppTextField> {
 
     final Widget? suffix = widget.isPassword
         ? IconButton(
-      onPressed: widget.enabled ? () => setState(() => _obscured = !_obscured) : null,
+      onPressed: widget.enabled
+          ? () => setState(() => _obscured = !_obscured)
+          : null,
       icon: Icon(
-        _obscured ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+        _obscured
+            ? Icons.visibility_off_outlined
+            : Icons.visibility_outlined,
         size: Dimens.iconMd - Dimens.xs,
       ),
     )
@@ -124,10 +128,45 @@ class _AppTextFieldState extends State<AppTextField> {
       ),
     );
 
+    final Widget input = isMultiline && widget.prefixIcon != null
+        ? Focus(
+      canRequestFocus: false,
+      skipTraversal: true,
+      child: Builder(
+        builder: (context) {
+          final focused = Focus.of(context).hasFocus;
+          final color = !widget.enabled
+              ? s.onSurface.withValues(alpha: 0.38)
+              : widget.errorText != null
+              ? s.error
+              : focused
+              ? s.primary
+              : s.onSurfaceVariant;
+          return Stack(
+            children: [
+              field,
+              PositionedDirectional(
+                start: Dimens.lg,
+                top: Dimens.md,
+                child: IgnorePointer(
+                  child: Icon(
+                    widget.prefixIcon,
+                    size: AppInputStyle.iconSize,
+                    color: color,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    )
+        : field;
+
     return AppInputStyle.labeled(
       context,
       label: widget.label,
-      field: field,
+      field: input,
     );
   }
 }

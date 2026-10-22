@@ -59,7 +59,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "علامات مميزة، ملاحظات للتوصيل…",
     ),
     "addressesApartment": m0,
+    "addressesApartmentHint": MessageLookupByLibrary.simpleMessage("مثال: 5"),
     "addressesBuilding": m1,
+    "addressesBuildingHint": MessageLookupByLibrary.simpleMessage("مثال: 12"),
     "addressesCancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
     "addressesCityHint": MessageLookupByLibrary.simpleMessage("اختر المدينة"),
     "addressesCityRequired": MessageLookupByLibrary.simpleMessage(
@@ -105,6 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "addressesFieldStreet": MessageLookupByLibrary.simpleMessage("الشارع"),
     "addressesFloor": m3,
+    "addressesFloorHint": MessageLookupByLibrary.simpleMessage("مثال: 3"),
     "addressesGenericError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ ما.",
     ),
@@ -121,6 +124,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "addressesMenuEdit": MessageLookupByLibrary.simpleMessage("تعديل"),
     "addressesMenuSetDefault": MessageLookupByLibrary.simpleMessage(
       "تعيين كافتراضي",
+    ),
+    "addressesPostalCodeHint": MessageLookupByLibrary.simpleMessage(
+      "مثال: 11511",
     ),
     "addressesRetry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
     "addressesSaveChanges": MessageLookupByLibrary.simpleMessage(
