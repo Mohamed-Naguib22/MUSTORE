@@ -44,6 +44,7 @@ class AppBottomSheet extends StatelessWidget {
       useSafeArea: true,
       useRootNavigator: useRootNavigator,
       isDismissible: isDismissible,
+      showDragHandle: false,
       enableDrag: enableDrag,
       backgroundColor: AppColors.transparent,
       elevation: 0,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/widgets/icons/icon_badge.dart';
 
 class AppListTile extends StatelessWidget {
   const AppListTile({
@@ -37,7 +38,7 @@ class AppListTile extends StatelessWidget {
 
     final leadingWidget = leading ??
         (icon != null
-            ? _IconBadge(icon: icon!, isDestructive: isDestructive)
+            ? IconBadge(icon: icon!, isDestructive: isDestructive)
             : null);
 
     final trailingWidget = trailing ??
@@ -101,36 +102,6 @@ class AppListTile extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _IconBadge extends StatelessWidget {
-  const _IconBadge({required this.icon, required this.isDestructive});
-
-  final IconData icon;
-  final bool isDestructive;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Container(
-      width: Dimens.badge,
-      height: Dimens.badge,
-      decoration: BoxDecoration(
-        color: isDestructive
-            ? scheme.errorContainer.withValues(alpha: 0.6)
-            : scheme.surfaceContainerHighest,
-        borderRadius: Dimens.borderMd,
-      ),
-      child: Icon(
-        icon,
-        size: Dimens.iconBadge,
-        color: isDestructive
-            ? scheme.onErrorContainer
-            : scheme.onPrimaryContainer,
       ),
     );
   }
