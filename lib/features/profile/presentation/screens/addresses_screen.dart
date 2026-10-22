@@ -6,6 +6,7 @@ import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:mustore/core/widgets/bottom_sheets/app_confirmation_sheet.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/feedback/app_message_widget.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
@@ -49,49 +50,21 @@ class AddressesScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _confirmDelete(BuildContext context, Address address) {
+  Future<void> _confirmDelete(BuildContext context, Address address) async {
     final cubit = context.read<AddressCubit>();
     final l10n = S.of(context);
-    final theme = Theme.of(context);
 
-    return AppBottomSheet.show<void>(
+    final confirmed = await AppConfirmationSheet.show(
       context,
       title: l10n.addressesDeleteTitle,
-      scrollable: false,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.only(bottom: Dimens.lg),
-        child: Text(
-          l10n.addressesDeleteMessage(address.street, address.city),
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-      ),
-      footer: Builder(
-        builder: (sheetContext) => Row(
-          children: [
-            Expanded(
-              child: AppButton(
-                label: l10n.addressesCancel,
-                variant: AppButtonVariant.tonal,
-                onPressed: () => Navigator.pop(sheetContext),
-              ),
-            ),
-            Dimens.gapMd,
-            Expanded(
-              child: AppButton(
-                label: l10n.addressesDelete,
-                variant: AppButtonVariant.danger,
-                onPressed: () {
-                  Navigator.pop(sheetContext);
-                  cubit.deleteAddress(address.id);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+      message: l10n.addressesDeleteMessage(address.street, address.city),
+      confirmLabel: l10n.addressesDelete,
+      cancelLabel: l10n.addressesCancel,
+      icon: Icons.delete_outline_rounded,
+      isDestructive: true,
     );
+
+    if (confirmed) cubit.deleteAddress(address.id);
   }
 
   void _toastOnChange(
