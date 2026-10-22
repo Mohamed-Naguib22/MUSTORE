@@ -13,7 +13,6 @@
   "failureNoData": "لا توجد بيانات محفوظة",
   "failureCache": "تعذّر حفظ إعداداتك، يرجى المحاولة مرة أخرى",
 
-  "settings": "الإعدادات",
   "settingsTheme": "المظهر",
   "settingsLanguage": "اللغة",
   "settingsAccount": "الحساب",
@@ -26,6 +25,7 @@
   "navCart": "السلة",
   "navCategories": "الفئات",
   "navAccount": "حسابي",
+  "navWishlist": "المفضلة",
   "pageCheckout": "إتمام الشراء",
 
   "authEmail": "البريد الإلكتروني",

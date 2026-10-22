@@ -13,7 +13,6 @@
   "failureNoData": "No saved data available",
   "failureCache": "Failed to save your settings, please try again",
 
-  "settings": "Settings",
   "settingsTheme": "Theme",
   "settingsLanguage": "Language",
   "settingsAccount": "Account",
@@ -26,6 +25,7 @@
   "navCart": "Cart",
   "navCategories": "Categories",
   "navAccount": "Account",
+  "navWishlist": "Wishlist",
   "pageCheckout": "Checkout",
 
   "authEmail": "Email",

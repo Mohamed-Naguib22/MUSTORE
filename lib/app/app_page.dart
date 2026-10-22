@@ -12,7 +12,6 @@ import 'package:mustore/features/home/presentation/screens/home_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/account_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/edit_profile_screen.dart';
-import 'package:mustore/features/settings/presentation/screens/settings_screen.dart';
 import 'package:mustore/features/shopping/presentation/screens/cart_screen.dart';
 import 'package:mustore/features/shopping/presentation/screens/checkout_screen.dart';
 import 'package:mustore/generated/l10n.dart';
@@ -56,6 +55,11 @@ enum AppPage {
       selectedIcon: Icons.grid_view_rounded,
       isTab: true),
 
+  wishlist('/wishlist', AccessLevel.public, CartScreen.new,
+      icon: Icons.favorite_border_rounded,
+      selectedIcon: Icons.favorite,
+      isTab: true),
+
   account('/account', AccessLevel.authenticated, AccountScreen.new,
       icon: Icons.person_outline_rounded,
       selectedIcon: Icons.person_rounded,
@@ -67,11 +71,6 @@ enum AppPage {
 
   editProfile('/account/edit-profile', AccessLevel.authenticated, EditProfileScreen.new,
       parent: account, fullScreen: true),
-
-  settings('/settings', AccessLevel.public, SettingsScreen.new,
-      icon: Icons.settings_outlined,
-      selectedIcon: Icons.settings_rounded,
-      isTab: true),
 
   checkout('/cart/checkout', AccessLevel.public, CheckoutScreen.new,
       parent: cart, fullScreen: true);
@@ -107,7 +106,7 @@ enum AppPage {
     account => l10n.navAccount,
     editProfile => l10n.pageEditProfile,
     addresses => l10n.pageAddresses,
-    settings => l10n.settings,
+    wishlist => l10n.navWishlist,
     checkout => l10n.pageCheckout,
   };
 
