@@ -8,6 +8,6 @@ class SetAddressAsDefaultUseCase implements UseCase<Unit, String> {
   final AddressRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(String addressId) =>
-      _repository.setAddressAsDefault(addressId);
+  Future<Either<Failure, Unit>> call(String addressId) async =>
+      await _repository.setAddressAsDefault(addressId);
 }

@@ -8,6 +8,6 @@ class DeleteProfilePictureUseCase implements UseCase<Unit, NoParams> {
   final AccountRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(NoParams params) =>
-      _repository.deleteProfilePicture();
+  Future<Either<Failure, Unit>> call(NoParams params) async =>
+      await _repository.deleteProfilePicture();
 }

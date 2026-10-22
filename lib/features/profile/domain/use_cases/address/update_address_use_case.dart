@@ -9,6 +9,6 @@ class UpdateAddressUseCase implements UseCase<Unit, UpdateAddressParams> {
   final AddressRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(UpdateAddressParams params) =>
-      _repository.updateAddress(params);
+  Future<Either<Failure, Unit>> call(UpdateAddressParams params) async =>
+      await _repository.updateAddress(params);
 }

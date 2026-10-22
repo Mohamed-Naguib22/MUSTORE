@@ -9,6 +9,6 @@ class GetAddressesUseCase implements UseCase<List<Address>, NoParams> {
   final AddressRepository _repository;
 
   @override
-  Future<Either<Failure, List<Address>>> call(NoParams params) =>
-      _repository.getAddresses();
+  Future<Either<Failure, List<Address>>> call(NoParams params) async =>
+      await _repository.getAddresses();
 }

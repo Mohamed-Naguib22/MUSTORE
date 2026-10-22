@@ -9,6 +9,6 @@ class GetProfileUseCase implements UseCase<UserProfile, NoParams> {
   final AccountRepository _repository;
 
   @override
-  Future<Either<Failure, UserProfile>> call(NoParams params) =>
-      _repository.getProfile();
+  Future<Either<Failure, UserProfile>> call(NoParams params) async =>
+      await _repository.getProfile();
 }

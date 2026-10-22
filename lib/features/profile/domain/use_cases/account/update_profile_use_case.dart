@@ -9,6 +9,6 @@ class UpdateProfileUseCase implements UseCase<Unit, UpdateProfileParams> {
   final AccountRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(UpdateProfileParams params) =>
-      _repository.updateProfile(params);
+  Future<Either<Failure, Unit>> call(UpdateProfileParams params) async =>
+      await _repository.updateProfile(params);
 }

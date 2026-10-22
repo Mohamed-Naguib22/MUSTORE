@@ -3,6 +3,7 @@ import 'package:mustore/features/profile/data/constants/address_endpoints.dart';
 import 'package:mustore/features/profile/data/models/address_model.dart';
 import 'package:mustore/features/profile/domain/params/address/add_address_params.dart';
 import 'package:mustore/features/profile/domain/params/address/update_address_params.dart';
+
 import 'address_remote_data_source.dart';
 
 class AddressRemoteDataSourceImpl implements AddressRemoteDataSource {
@@ -41,10 +42,12 @@ class AddressRemoteDataSourceImpl implements AddressRemoteDataSource {
   }
 
   @override
-  Future<void> setAddressAsDefault(String addressId) =>
-      _apiClient.patch(path: AddressEndpoints.setAsDefault(addressId));
+  Future<void> setAddressAsDefault(String addressId) async {
+    await _apiClient.patch(path: AddressEndpoints.setAsDefault(addressId));
+  }
 
   @override
-  Future<void> deleteAddress(String addressId) =>
-      _apiClient.delete(path: AddressEndpoints.delete(addressId));
+  Future<void> deleteAddress(String addressId) async {
+    await _apiClient.delete(path: AddressEndpoints.delete(addressId));
+  }
 }

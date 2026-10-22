@@ -8,6 +8,6 @@ class SetProfilePictureUseCase implements UseCase<Unit, String> {
   final AccountRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(String filePath) =>
-      _repository.setProfilePicture(filePath);
+  Future<Either<Failure, Unit>> call(String filePath) async =>
+      await _repository.setProfilePicture(filePath);
 }

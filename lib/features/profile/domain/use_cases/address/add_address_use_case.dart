@@ -10,6 +10,6 @@ class AddAddressUseCase implements UseCase<Address, AddAddressParams> {
   final AddressRepository _repository;
 
   @override
-  Future<Either<Failure, Address>> call(AddAddressParams params) =>
-      _repository.addAddress(params);
+  Future<Either<Failure, Address>> call(AddAddressParams params) async =>
+      await _repository.addAddress(params);
 }
