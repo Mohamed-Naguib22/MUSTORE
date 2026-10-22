@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 
-enum AppButtonVariant { primary, secondary, tonal, danger }
+enum AppButtonVariant { primary, secondary, tonal, outlined, danger }
 
 class AppButton extends StatefulWidget {
   const AppButton({
@@ -21,6 +21,7 @@ class AppButton extends StatefulWidget {
     this.expand = true,
     this.height = Dimens.buttonHeight,
     this.borderRadius = Dimens.borderMd,
+    this.fontSize,
   });
 
   final String label;
@@ -38,6 +39,9 @@ class AppButton extends StatefulWidget {
   final double height;
   final BorderRadius borderRadius;
 
+  /// Optional label font size. When null, the theme's labelLarge size is used.
+  final double? fontSize;
+
   @override
   State<AppButton> createState() => _AppButtonState();
 }
@@ -45,10 +49,15 @@ class AppButton extends StatefulWidget {
 class _AppButtonState extends State<AppButton> {
   bool _pressed = false;
 
+  double get _iconSize =>
+      widget.fontSize != null ? Dimens.iconSm : Dimens.iconMd - Dimens.xs;
+
   ({Color bg, Color fg}) _colors(ColorScheme s, bool interactive) {
     if (!interactive) {
       return (
-      bg: s.onSurface.withValues(alpha: 0.12),
+      bg: widget.variant == AppButtonVariant.outlined
+          ? AppColors.transparent
+          : s.onSurface.withValues(alpha: 0.12),
       fg: s.onSurface.withValues(alpha: 0.38),
       );
     }
@@ -57,9 +66,13 @@ class _AppButtonState extends State<AppButton> {
       AppButtonVariant.secondary => (bg: s.secondary, fg: s.onSecondary),
       AppButtonVariant.danger => (bg: s.error, fg: s.onError),
       AppButtonVariant.tonal => (
-      bg: s.primary.withValues(alpha: 0.12),
+      // Dark primary is light, so a 12% tint nearly vanishes on dark cards.
+      bg: s.primary.withValues(
+        alpha: s.brightness == Brightness.dark ? 0.24 : 0.12,
+      ),
       fg: s.primary,
       ),
+      AppButtonVariant.outlined => (bg: AppColors.transparent, fg: s.primary),
     };
     return (
     bg: widget.backgroundColor ?? base.bg,
@@ -83,8 +96,8 @@ class _AppButtonState extends State<AppButton> {
 
     final theme = Theme.of(context);
     final c = _colors(theme.colorScheme, interactive);
-    final textStyle =
-    (theme.textTheme.labelLarge ?? const TextStyle()).copyWith(color: c.fg);
+    final textStyle = (theme.textTheme.labelLarge ?? const TextStyle())
+        .copyWith(color: c.fg, fontSize: widget.fontSize);
 
     final content = Row(
       mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
@@ -94,7 +107,7 @@ class _AppButtonState extends State<AppButton> {
           widget.leading!,
           Dimens.gapSm,
         ] else if (widget.icon != null) ...[
-          Icon(widget.icon, size: Dimens.iconMd - Dimens.xs, color: c.fg),
+          Icon(widget.icon, size: _iconSize, color: c.fg),
           Dimens.gapSm,
         ],
         Flexible(
@@ -110,8 +123,7 @@ class _AppButtonState extends State<AppButton> {
           widget.trailing!,
         ] else if (widget.trailingIcon != null) ...[
           Dimens.gapSm,
-          Icon(widget.trailingIcon,
-              size: Dimens.iconMd - Dimens.xs, color: c.fg),
+          Icon(widget.trailingIcon, size: _iconSize, color: c.fg),
         ],
       ],
     );
@@ -148,6 +160,16 @@ class _AppButtonState extends State<AppButton> {
             color: c.bg,
             borderRadius: widget.borderRadius,
           ),
+          foregroundDecoration: widget.variant == AppButtonVariant.outlined
+              ? BoxDecoration(
+            borderRadius: widget.borderRadius,
+            border: Border.all(
+              color: interactive
+                  ? theme.colorScheme.primary.withValues(alpha: 0.55)
+                  : theme.colorScheme.onSurface.withValues(alpha: 0.12),
+            ),
+          )
+              : null,
           child: Material(
             type: MaterialType.transparency,
             child: InkWell(

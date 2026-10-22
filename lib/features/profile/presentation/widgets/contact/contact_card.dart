@@ -22,11 +22,7 @@ class ContactCard extends StatelessWidget {
   final Contact contact;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
-
-  /// Null when the contact is already primary.
   final VoidCallback? onSetPrimary;
-
-  /// Null when the contact is already verified.
   final VoidCallback? onVerify;
 
   @override
@@ -66,7 +62,9 @@ class ContactCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconBadge(
-                icon: isPrimary ? Icons.phone_in_talk_rounded : Icons.phone_outlined,
+                icon: isPrimary
+                    ? Icons.phone_in_talk_rounded
+                    : Icons.phone_outlined,
                 isHighlighted: isPrimary,
               ),
               Dimens.gapMd,
@@ -82,7 +80,7 @@ class ContactCard extends StatelessWidget {
                             textDirection: TextDirection.ltr,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: text.titleMedium,
+                            style: text.titleSmall,
                           ),
                         ),
                         if (isPrimary) ...[
@@ -130,7 +128,6 @@ class ContactCard extends StatelessWidget {
                     label: l10n.contactsMenuEdit,
                     icon: Icons.edit_outlined,
                   ),
-                  // The primary contact can never be deleted.
                   if (!isPrimary)
                     AppPopupMenuItem(
                       value: _ContactAction.delete,
@@ -155,7 +152,8 @@ class ContactCard extends StatelessWidget {
                         label: l10n.contactsVerifyAction,
                         icon: Icons.verified_user_outlined,
                         variant: AppButtonVariant.tonal,
-                        height: 44,
+                        height: Dimens.buttonHeightSm,
+                        fontSize: Dimens.fontSm,
                         onPressed: onVerify,
                       ),
                     ),
@@ -165,8 +163,9 @@ class ContactCard extends StatelessWidget {
                       child: AppButton(
                         label: l10n.contactsMenuSetPrimary,
                         icon: Icons.check_circle_outline_rounded,
-                        variant: AppButtonVariant.tonal,
-                        height: 44,
+                        variant: AppButtonVariant.outlined,
+                        height: Dimens.buttonHeightSm,
+                        fontSize: Dimens.fontSm,
                         onPressed: onSetPrimary,
                       ),
                     ),

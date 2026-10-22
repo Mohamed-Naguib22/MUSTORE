@@ -53,6 +53,9 @@ abstract final class Dimens {
   static const double illustration = 220;
 
   static const double buttonHeight = 48;
+  static const double buttonHeightSm = 44;
+
+  static const double fontSm = 13;
 
   static const double listTileInset = lg + badge + md;
 
