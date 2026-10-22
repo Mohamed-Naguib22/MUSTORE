@@ -69,6 +69,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select city"),
         "addressesCityRequired":
             MessageLookupByLibrary.simpleMessage("Please select a city"),
+        "addressesCountryHint":
+            MessageLookupByLibrary.simpleMessage("Select country"),
+        "addressesCountryRequired":
+            MessageLookupByLibrary.simpleMessage("Please select a country"),
         "addressesDefaultBadge":
             MessageLookupByLibrary.simpleMessage("Default"),
         "addressesDefaultChanged":
@@ -92,7 +96,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "addressesFieldBuilding":
             MessageLookupByLibrary.simpleMessage("Building"),
         "addressesFieldCity": MessageLookupByLibrary.simpleMessage("City"),
+        "addressesFieldCountry":
+            MessageLookupByLibrary.simpleMessage("Country"),
         "addressesFieldFloor": MessageLookupByLibrary.simpleMessage("Floor"),
+        "addressesFieldGovernorate":
+            MessageLookupByLibrary.simpleMessage("Governorate"),
         "addressesFieldPostalCode":
             MessageLookupByLibrary.simpleMessage("Postal code"),
         "addressesFieldRequired":
@@ -101,6 +109,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "addressesFloor": m3,
         "addressesGenericError":
             MessageLookupByLibrary.simpleMessage("Something went wrong."),
+        "addressesGovernorateHint":
+            MessageLookupByLibrary.simpleMessage("Select governorate"),
+        "addressesGovernorateRequired":
+            MessageLookupByLibrary.simpleMessage("Please select a governorate"),
         "addressesLoadFailedTitle":
             MessageLookupByLibrary.simpleMessage("Could not load addresses"),
         "addressesMenuDelete": MessageLookupByLibrary.simpleMessage("Delete"),

@@ -175,6 +175,12 @@
   "addressesSaveChanges": "حفظ التغييرات",
   "addressesAddAction": "إضافة العنوان",
   "addressesFieldRequired": "هذا الحقل مطلوب",
+  "addressesFieldCountry": "الدولة",
+  "addressesCountryHint": "اختر الدولة",
+  "addressesCountryRequired": "من فضلك اختر الدولة",
+  "addressesFieldGovernorate": "المحافظة",
+  "addressesGovernorateHint": "اختر المحافظة",
+  "addressesGovernorateRequired": "من فضلك اختر المحافظة",
 
   "bannerSeasonSaleTitle": "تخفيضات الموسم",
   "bannerSeasonSaleSubtitle": "خصم يصل إلى 50٪ على منتجات مختارة",

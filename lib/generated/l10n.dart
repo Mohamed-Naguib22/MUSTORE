@@ -1650,6 +1650,66 @@ class S {
     );
   }
 
+  /// `Country`
+  String get addressesFieldCountry {
+    return Intl.message(
+      'Country',
+      name: 'addressesFieldCountry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select country`
+  String get addressesCountryHint {
+    return Intl.message(
+      'Select country',
+      name: 'addressesCountryHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a country`
+  String get addressesCountryRequired {
+    return Intl.message(
+      'Please select a country',
+      name: 'addressesCountryRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Governorate`
+  String get addressesFieldGovernorate {
+    return Intl.message(
+      'Governorate',
+      name: 'addressesFieldGovernorate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select governorate`
+  String get addressesGovernorateHint {
+    return Intl.message(
+      'Select governorate',
+      name: 'addressesGovernorateHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a governorate`
+  String get addressesGovernorateRequired {
+    return Intl.message(
+      'Please select a governorate',
+      name: 'addressesGovernorateRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Season Sale`
   String get bannerSeasonSaleTitle {
     return Intl.message(

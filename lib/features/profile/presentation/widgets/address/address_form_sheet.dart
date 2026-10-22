@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
@@ -7,11 +8,12 @@ import 'package:mustore/core/widgets/inputs/app_dropdown_field.dart';
 import 'package:mustore/core/widgets/inputs/app_form.dart';
 import 'package:mustore/core/widgets/inputs/app_input_style.dart';
 import 'package:mustore/features/profile/domain/entities/address.dart';
-import 'package:mustore/features/profile/domain/entities/city_option.dart';
 import 'package:mustore/features/profile/domain/params/address/add_address_params.dart';
 import 'package:mustore/features/profile/domain/params/address/update_address_params.dart';
 import 'package:mustore/features/profile/presentation/controllers/address/address_cubit.dart';
 import 'package:mustore/features/profile/presentation/controllers/address/address_state.dart';
+import 'package:mustore/features/profile/presentation/controllers/location/location_cubit.dart'; // adjust path
+import 'package:mustore/features/profile/presentation/controllers/location/location_state.dart'; // adjust path
 import 'package:mustore/generated/l10n.dart';
 
 class AddressFormSheet extends StatefulWidget {
@@ -36,19 +38,9 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
   late final _postalCode =
   TextEditingController(text: widget.address?.postalCode);
 
-  late String? _cityId = _initialCityId();
   bool _isDefault = false;
 
   bool get _isEdit => widget.address != null;
-
-  String? _initialCityId() {
-    final name = widget.address?.city;
-    if (name == null) return null;
-    for (final c in mockCities) {
-      if (c.matches(name)) return c.id;
-    }
-    return null;
-  }
 
   @override
   void dispose() {
@@ -77,6 +69,9 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
 
+    final cityId = context.read<LocationCubit>().state.selectedCity?.id;
+    if (cityId == null) return;
+
     final cubit = context.read<AddressCubit>();
 
     if (_isEdit) {
@@ -87,7 +82,7 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
           building: _nullIfEmpty(_building),
           apartment: _nullIfEmpty(_apartment),
           postalCode: _postalCode.text.trim(),
-          cityId: _cityId,
+          cityId: cityId,
         ),
       );
     } else {
@@ -100,7 +95,7 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
           additionalInfo: _nullIfEmpty(_additionalInfo),
           postalCode: _postalCode.text.trim(),
           isDefault: _isDefault,
-          cityId: _cityId!,
+          cityId: cityId,
         ),
       );
     }
@@ -136,12 +131,114 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
     );
   }
 
+  String? _errorFor(BuildContext context, RequestStatus status, LocationState s) {
+    if (status != RequestStatus.failure) return null;
+    final message = s.failure?.localizedMessage(context);
+    return (message == null || message.isEmpty) ? null : message;
+  }
+
+  Widget _locationFields(BuildContext context, LocationState state) {
+    final l10n = S.of(context);
+    final location = context.read<LocationCubit>();
+
+    final countryEnabled = state.countries.length > 1 &&
+        !state.countriesStatus.isLoading;
+
+    final governorateEnabled = state.selectedCountry != null &&
+        state.governorates.isNotEmpty &&
+        !state.governoratesStatus.isLoading;
+
+    final cityEnabled = state.selectedGovernorate != null &&
+        state.cities.isNotEmpty &&
+        !state.citiesStatus.isLoading;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        AppDropdownField<String>(
+          key: ValueKey(
+            'country-${state.selectedCountry?.id}-${state.countries.length}',
+          ),
+          label: l10n.profileFieldRequired,
+          hint: l10n.addressesCountryHint,
+          prefixIcon: Icons.public_rounded,
+          initialValue: state.selectedCountry?.id,
+          enabled: countryEnabled,
+          errorText: _errorFor(context, state.countriesStatus, state),
+          validator: (v) => v == null ? l10n.addressesCountryRequired : null,
+          onChanged: (id) {
+            for (final c in state.countries) {
+              if (c.id == id) {
+                location.selectCountry(c);
+                break;
+              }
+            }
+          },
+          items: [
+            for (final c in state.countries)
+              DropdownMenuItem(value: c.id, child: Text(c.name)),
+          ],
+        ),
+        Dimens.gapLg,
+        AppDropdownField<String>(
+          key: ValueKey(
+            'gov-${state.selectedGovernorate?.id}-${state.governorates.length}',
+          ),
+          label: l10n.addressesFieldGovernorate,
+          hint: l10n.addressesGovernorateHint,
+          prefixIcon: Icons.map_outlined,
+          initialValue: state.selectedGovernorate?.id,
+          enabled: governorateEnabled,
+          errorText: _errorFor(context, state.governoratesStatus, state),
+          validator: (v) =>
+          v == null ? l10n.addressesGovernorateRequired : null,
+          onChanged: (id) {
+            for (final g in state.governorates) {
+              if (g.id == id) {
+                location.selectGovernorate(g);
+                break;
+              }
+            }
+          },
+          items: [
+            for (final g in state.governorates)
+              DropdownMenuItem(value: g.id, child: Text(g.name)),
+          ],
+        ),
+        Dimens.gapLg,
+        AppDropdownField<String>(
+          key: ValueKey(
+            'city-${state.selectedCity?.id}-${state.cities.length}',
+          ),
+          label: l10n.addressesFieldCity,
+          hint: l10n.addressesCityHint,
+          prefixIcon: Icons.location_city_rounded,
+          initialValue: state.selectedCity?.id,
+          enabled: cityEnabled,
+          errorText: _errorFor(context, state.citiesStatus, state),
+          validator: (v) => v == null ? l10n.addressesCityRequired : null,
+          onChanged: (id) {
+            for (final c in state.cities) {
+              if (c.id == id) {
+                location.selectCity(c);
+                break;
+              }
+            }
+          },
+          items: [
+            for (final c in state.cities)
+              DropdownMenuItem(value: c.id, child: Text(c.name)),
+          ],
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final s = theme.colorScheme;
     final l10n = S.of(context);
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     return BlocListener<AddressCubit, AddressState>(
       listenWhen: (p, c) => _isEdit
@@ -162,20 +259,8 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
             validator: _required,
           ),
           Dimens.gapLg,
-          AppDropdownField<String>(
-            label: l10n.addressesFieldCity,
-            hint: l10n.addressesCityHint,
-            prefixIcon: Icons.location_city_rounded,
-            initialValue: _cityId,
-            validator: (v) => v == null ? l10n.addressesCityRequired : null,
-            onChanged: (v) => _cityId = v,
-            items: [
-              for (final city in mockCities)
-                DropdownMenuItem(
-                  value: city.id,
-                  child: Text(city.label(isArabic)),
-                ),
-            ],
+          BlocBuilder<LocationCubit, LocationState>(
+            builder: _locationFields,
           ),
           Dimens.gapLg,
           Row(

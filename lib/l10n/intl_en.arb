@@ -176,6 +176,12 @@
   "addressesSaveChanges": "Save changes",
   "addressesAddAction": "Add address",
   "addressesFieldRequired": "This field is required",
+  "addressesFieldCountry": "Country",
+  "addressesCountryHint": "Select country",
+  "addressesCountryRequired": "Please select a country",
+  "addressesFieldGovernorate": "Governorate",
+  "addressesGovernorateHint": "Select governorate",
+  "addressesGovernorateRequired": "Please select a governorate",
 
   "bannerSeasonSaleTitle": "Season Sale",
   "bannerSeasonSaleSubtitle": "Up to 50% off selected items",

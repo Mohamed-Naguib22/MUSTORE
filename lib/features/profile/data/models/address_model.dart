@@ -12,6 +12,9 @@ class AddressModel extends Address {
     required super.isDefault,
     required super.city,
     required super.governorate,
+    required super.countryId,
+    required super.cityId,
+    required super.governorateId,
   });
 
   factory AddressModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +29,9 @@ class AddressModel extends Address {
       isDefault: json['isDefault'] as bool,
       city: json['city'] as String,
       governorate: json['governorate'] as String,
+      cityId: json['cityId'] as String,
+      governorateId: json['governorateId'] as String,
+      countryId: json['countryId'] as String,
     );
   }
 }

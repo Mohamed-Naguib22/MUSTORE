@@ -69,6 +69,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اختر المدينة"),
         "addressesCityRequired":
             MessageLookupByLibrary.simpleMessage("من فضلك اختر المدينة"),
+        "addressesCountryHint":
+            MessageLookupByLibrary.simpleMessage("اختر الدولة"),
+        "addressesCountryRequired":
+            MessageLookupByLibrary.simpleMessage("من فضلك اختر الدولة"),
         "addressesDefaultBadge":
             MessageLookupByLibrary.simpleMessage("افتراضي"),
         "addressesDefaultChanged":
@@ -92,7 +96,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "addressesFieldBuilding":
             MessageLookupByLibrary.simpleMessage("المبنى"),
         "addressesFieldCity": MessageLookupByLibrary.simpleMessage("المدينة"),
+        "addressesFieldCountry": MessageLookupByLibrary.simpleMessage("الدولة"),
         "addressesFieldFloor": MessageLookupByLibrary.simpleMessage("الدور"),
+        "addressesFieldGovernorate":
+            MessageLookupByLibrary.simpleMessage("المحافظة"),
         "addressesFieldPostalCode":
             MessageLookupByLibrary.simpleMessage("الرمز البريدي"),
         "addressesFieldRequired":
@@ -101,6 +108,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "addressesFloor": m3,
         "addressesGenericError":
             MessageLookupByLibrary.simpleMessage("حدث خطأ ما."),
+        "addressesGovernorateHint":
+            MessageLookupByLibrary.simpleMessage("اختر المحافظة"),
+        "addressesGovernorateRequired":
+            MessageLookupByLibrary.simpleMessage("من فضلك اختر المحافظة"),
         "addressesLoadFailedTitle":
             MessageLookupByLibrary.simpleMessage("تعذر تحميل العناوين"),
         "addressesMenuDelete": MessageLookupByLibrary.simpleMessage("حذف"),
