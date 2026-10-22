@@ -14,6 +14,6 @@ class GetRecommendedProductsUseCase
   @override
   Future<Either<Failure, PaginatedList<Product>>> call(
       PaginationParams params,
-      ) =>
-      _repository.getRecommendedProducts(params);
+      ) async =>
+      await _repository.getRecommendedProducts(params);
 }

@@ -14,6 +14,6 @@ class GetNewArrivalsUseCase
   @override
   Future<Either<Failure, PaginatedList<Product>>> call(
       PaginationParams params,
-      ) =>
-      _repository.getNewArrivals(params);
+      ) async =>
+      await _repository.getNewArrivals(params);
 }

@@ -9,6 +9,6 @@ class ResendOtpUseCase implements UseCase<Unit, ResendOtpParams> {
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(ResendOtpParams params) =>
-      _repository.resendOtp(params);
+  Future<Either<Failure, Unit>> call(ResendOtpParams params) async =>
+      await _repository.resendOtp(params);
 }

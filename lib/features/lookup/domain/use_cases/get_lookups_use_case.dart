@@ -9,5 +9,5 @@ class GetLookupsUseCase<P> implements UseCase<List<Lookup>, P> {
   final Future<Either<Failure, List<Lookup>>> Function(P params) _fetch;
 
   @override
-  Future<Either<Failure, List<Lookup>>> call(P params) => _fetch(params);
+  Future<Either<Failure, List<Lookup>>> call(P params) async => await _fetch(params);
 }

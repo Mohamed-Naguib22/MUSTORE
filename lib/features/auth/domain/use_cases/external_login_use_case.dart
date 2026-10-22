@@ -11,6 +11,6 @@ class ExternalLoginUseCase
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, AuthSession>> call(ExternalLoginParams params) =>
-      _repository.externalLogin(params);
+  Future<Either<Failure, AuthSession>> call(ExternalLoginParams params) async =>
+      await _repository.externalLogin(params);
 }

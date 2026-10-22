@@ -9,6 +9,6 @@ class ForgetPasswordUseCase implements UseCase<Unit, ForgetPasswordParams> {
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(ForgetPasswordParams params) =>
-      _repository.forgetPassword(params);
+  Future<Either<Failure, Unit>> call(ForgetPasswordParams params) async =>
+      await _repository.forgetPassword(params);
 }

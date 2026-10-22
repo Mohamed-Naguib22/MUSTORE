@@ -14,6 +14,6 @@ class GetRecentlyViewedProductsUseCase
   @override
   Future<Either<Failure, PaginatedList<Product>>> call(
       PaginationParams params,
-      ) =>
-      _repository.getRecentlyViewedProducts(params);
+      ) async =>
+      await _repository.getRecentlyViewedProducts(params);
 }

@@ -11,6 +11,6 @@ class ResetPasswordUseCase
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, AuthSession>> call(ResetPasswordParams params) =>
-      _repository.resetPassword(params);
+  Future<Either<Failure, AuthSession>> call(ResetPasswordParams params) async =>
+      await _repository.resetPassword(params);
 }

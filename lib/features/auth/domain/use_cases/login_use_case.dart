@@ -10,6 +10,6 @@ class LoginUseCase implements UseCase<AuthSession, LoginParams> {
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, AuthSession>> call(LoginParams params) =>
-      _repository.login(params);
+  Future<Either<Failure, AuthSession>> call(LoginParams params) async =>
+      await _repository.login(params);
 }

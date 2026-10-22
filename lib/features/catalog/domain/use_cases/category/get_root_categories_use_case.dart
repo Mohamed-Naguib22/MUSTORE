@@ -12,6 +12,6 @@ class GetRootCategoriesUseCase
   @override
   Future<Either<Failure, List<Category>>> call(
       int take,
-      ) =>
-      _repository.rootCategories(take);
+      ) async =>
+      await _repository.rootCategories(take);
 }

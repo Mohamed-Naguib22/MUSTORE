@@ -9,6 +9,6 @@ class RegisterUseCase implements UseCase<Unit, RegisterParams> {
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(RegisterParams params) =>
-      _repository.register(params);
+  Future<Either<Failure, Unit>> call(RegisterParams params) async =>
+      await _repository.register(params);
 }

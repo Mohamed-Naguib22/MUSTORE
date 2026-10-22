@@ -9,6 +9,6 @@ class SetLocaleUseCase implements UseCase<Unit, Locale?> {
   final SettingsRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(Locale? params) =>
-      _repository.setLocale(params);
+  Future<Either<Failure, Unit>> call(Locale? params) async =>
+      await _repository.setLocale(params);
 }

@@ -9,6 +9,6 @@ class GetLocaleUseCase implements UseCase<Locale?, NoParams> {
   final SettingsRepository _repository;
 
   @override
-  Future<Either<Failure, Locale?>> call(NoParams params) =>
-      _repository.getLocale();
+  Future<Either<Failure, Locale?>> call(NoParams params) async =>
+      await _repository.getLocale();
 }

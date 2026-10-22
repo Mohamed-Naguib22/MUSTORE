@@ -14,6 +14,6 @@ class GetProductsOnSaleUseCase
   @override
   Future<Either<Failure, PaginatedList<Product>>> call(
       PaginationParams params,
-      ) =>
-      _repository.getProductsOnSale(params);
+      ) async =>
+      await _repository.getProductsOnSale(params);
 }

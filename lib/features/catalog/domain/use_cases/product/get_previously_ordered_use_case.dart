@@ -14,6 +14,6 @@ class GetPreviouslyOrderedUseCase
   @override
   Future<Either<Failure, PaginatedList<Product>>> call(
       PaginationParams params,
-      ) =>
-      _repository.getPreviouslyOrdered(params);
+      ) async =>
+      await _repository.getPreviouslyOrdered(params);
 }

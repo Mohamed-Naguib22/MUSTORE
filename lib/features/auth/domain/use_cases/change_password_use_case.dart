@@ -11,6 +11,6 @@ class ChangePasswordUseCase
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, AuthSession>> call(ChangePasswordParams params) =>
-      _repository.changePassword(params);
+  Future<Either<Failure, AuthSession>> call(ChangePasswordParams params) async =>
+      await _repository.changePassword(params);
 }

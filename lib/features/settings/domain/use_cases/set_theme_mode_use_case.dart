@@ -9,6 +9,6 @@ class SetThemeModeUseCase implements UseCase<Unit, ThemeMode> {
   final SettingsRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(ThemeMode params) =>
-      _repository.setThemeMode(params);
+  Future<Either<Failure, Unit>> call(ThemeMode params) async =>
+      await _repository.setThemeMode(params);
 }

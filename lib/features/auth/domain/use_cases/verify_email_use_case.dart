@@ -10,6 +10,6 @@ class VerifyEmailUseCase implements UseCase<AuthSession, VerifyEmailParams> {
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, AuthSession>> call(VerifyEmailParams params) =>
-      _repository.verifyEmail(params);
+  Future<Either<Failure, AuthSession>> call(VerifyEmailParams params) async =>
+      await _repository.verifyEmail(params);
 }

@@ -9,6 +9,6 @@ class RevokeSessionUseCase implements UseCase<Unit, RevokeSessionParams> {
   final AuthRepository _repository;
 
   @override
-  Future<Either<Failure, Unit>> call(RevokeSessionParams params) =>
-      _repository.revokeSession(params);
+  Future<Either<Failure, Unit>> call(RevokeSessionParams params) async =>
+      await _repository.revokeSession(params);
 }
