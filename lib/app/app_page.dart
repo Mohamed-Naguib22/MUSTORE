@@ -11,6 +11,7 @@ import 'package:mustore/features/catalog/presentation/screens/categories_screen.
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/account_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/addresses_screen.dart';
+import 'package:mustore/features/profile/presentation/screens/contact_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:mustore/features/shopping/presentation/screens/cart_screen.dart';
 import 'package:mustore/features/shopping/presentation/screens/checkout_screen.dart';
@@ -69,6 +70,9 @@ enum AppPage {
   addresses('/account/addresses', AccessLevel.authenticated, AddressesScreen.new,
       parent: account, fullScreen: true),
 
+  contacts('/account/contacts', AccessLevel.authenticated, ContactScreen.new,
+      parent: account, fullScreen: true),
+
   editProfile('/account/edit-profile', AccessLevel.authenticated, EditProfileScreen.new,
       parent: account, fullScreen: true),
 
@@ -106,6 +110,7 @@ enum AppPage {
     account => l10n.navAccount,
     editProfile => l10n.pageEditProfile,
     addresses => l10n.pageAddresses,
+    contacts => l10n.pageContacts,
     wishlist => l10n.navWishlist,
     checkout => l10n.pageCheckout,
   };

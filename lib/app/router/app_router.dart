@@ -16,6 +16,7 @@ import 'package:mustore/features/catalog/presentation/controllers/product/produc
 import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 import 'package:mustore/features/profile/presentation/controllers/account/profile_cubit.dart';
 import 'package:mustore/features/profile/presentation/controllers/address/address_cubit.dart';
+import 'package:mustore/features/profile/presentation/controllers/contact/contact_cubit.dart';
 import 'package:mustore/features/profile/presentation/controllers/location/location_cubit.dart';
 
 class AppRouter {
@@ -114,6 +115,10 @@ class AppRouter {
           BlocProvider(create: (_) => sl<AddressCubit>()..fetchAddresses()),
           BlocProvider(create: (_) => sl<LocationCubit>()),
         ],
+        child: child,
+      ),
+      AppPage.contacts => BlocProvider(
+        create: (_) => sl<ContactCubit>()..fetchContacts(),
         child: child,
       ),
       _ => child,

@@ -23,7 +23,7 @@ class ContactSectionWidget extends StatelessWidget {
         AppListTile(
           icon: Icons.phone_outlined,
           title: l10n.accountPhoneNumbers,
-          onTap: () {},
+          onTap: () => context.pushNamed(AppPage.contacts.name),
         ),
       ],
     );

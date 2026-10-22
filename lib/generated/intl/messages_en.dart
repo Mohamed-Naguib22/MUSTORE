@@ -31,14 +31,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(min) => "At least ${min} characters";
 
-  static String m5(price) => "${price} EGP";
+  static String m5(phone) => "Delete ${phone}? This can\'t be undone.";
 
-  static String m6(appName) => "Join ${appName} and start shopping 🛒";
+  static String m6(phone) => "Enter the code we sent to ${phone}.";
 
-  static String m7(email) =>
+  static String m7(price) => "${price} EGP";
+
+  static String m8(appName) => "Join ${appName} and start shopping 🛒";
+
+  static String m9(email) =>
       "Enter the code sent to ${email} and choose a new password";
 
-  static String m8(email) => "Enter the code we sent to ${email}";
+  static String m10(email) => "Enter the code we sent to ${email}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -245,6 +249,81 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonSomethingWentWrong": MessageLookupByLibrary.simpleMessage(
       "Something went wrong. Please try again.",
     ),
+    "contactsAddAction": MessageLookupByLibrary.simpleMessage("Add"),
+    "contactsAddNew": MessageLookupByLibrary.simpleMessage("Add phone number"),
+    "contactsAddTitle": MessageLookupByLibrary.simpleMessage(
+      "Add phone number",
+    ),
+    "contactsAdded": MessageLookupByLibrary.simpleMessage("Phone number added"),
+    "contactsCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "contactsCodeHint": MessageLookupByLibrary.simpleMessage("6-digit code"),
+    "contactsCodeSent": MessageLookupByLibrary.simpleMessage(
+      "Verification code sent",
+    ),
+    "contactsDelete": MessageLookupByLibrary.simpleMessage("Delete"),
+    "contactsDeleteMessage": m5,
+    "contactsDeleteTitle": MessageLookupByLibrary.simpleMessage(
+      "Delete phone number",
+    ),
+    "contactsDeleted": MessageLookupByLibrary.simpleMessage(
+      "Phone number deleted",
+    ),
+    "contactsEditTitle": MessageLookupByLibrary.simpleMessage(
+      "Edit phone number",
+    ),
+    "contactsEmptyMessage": MessageLookupByLibrary.simpleMessage(
+      "Add a phone number so we can reach you about your orders.",
+    ),
+    "contactsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No phone numbers yet",
+    ),
+    "contactsFieldCode": MessageLookupByLibrary.simpleMessage(
+      "Verification code",
+    ),
+    "contactsFieldPhone": MessageLookupByLibrary.simpleMessage("Phone number"),
+    "contactsFieldRequired": MessageLookupByLibrary.simpleMessage(
+      "This field is required",
+    ),
+    "contactsLoadFailedTitle": MessageLookupByLibrary.simpleMessage(
+      "Couldn\'t load phone numbers",
+    ),
+    "contactsMenuDelete": MessageLookupByLibrary.simpleMessage("Delete"),
+    "contactsMenuEdit": MessageLookupByLibrary.simpleMessage("Edit"),
+    "contactsMenuSetPrimary": MessageLookupByLibrary.simpleMessage(
+      "Set as primary",
+    ),
+    "contactsPhoneDuplicate": MessageLookupByLibrary.simpleMessage(
+      "This number is already saved",
+    ),
+    "contactsPhoneHint": MessageLookupByLibrary.simpleMessage(
+      "e.g. 01012345678",
+    ),
+    "contactsPhoneInvalid": MessageLookupByLibrary.simpleMessage(
+      "Enter a valid phone number",
+    ),
+    "contactsPrimaryBadge": MessageLookupByLibrary.simpleMessage("Primary"),
+    "contactsPrimaryChanged": MessageLookupByLibrary.simpleMessage(
+      "Primary number changed",
+    ),
+    "contactsResendCode": MessageLookupByLibrary.simpleMessage("Resend code"),
+    "contactsRetry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "contactsSaveChanges": MessageLookupByLibrary.simpleMessage("Save changes"),
+    "contactsUnverifiedBadge": MessageLookupByLibrary.simpleMessage(
+      "Not verified",
+    ),
+    "contactsUpdated": MessageLookupByLibrary.simpleMessage(
+      "Phone number updated",
+    ),
+    "contactsVerified": MessageLookupByLibrary.simpleMessage(
+      "Phone number verified",
+    ),
+    "contactsVerifiedBadge": MessageLookupByLibrary.simpleMessage("Verified"),
+    "contactsVerifyAction": MessageLookupByLibrary.simpleMessage("Verify"),
+    "contactsVerifyMessage": m6,
+    "contactsVerifySubmit": MessageLookupByLibrary.simpleMessage("Verify"),
+    "contactsVerifyTitle": MessageLookupByLibrary.simpleMessage(
+      "Verify phone number",
+    ),
     "failureCache": MessageLookupByLibrary.simpleMessage(
       "Failed to save your settings, please try again",
     ),
@@ -320,8 +399,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "navWishlist": MessageLookupByLibrary.simpleMessage("Wishlist"),
     "pageAddresses": MessageLookupByLibrary.simpleMessage("Addresses"),
     "pageCheckout": MessageLookupByLibrary.simpleMessage("Checkout"),
+    "pageContacts": MessageLookupByLibrary.simpleMessage("Contacts"),
     "pageEditProfile": MessageLookupByLibrary.simpleMessage("Your Profile"),
-    "priceEgp": m5,
+    "priceEgp": m7,
     "profileChooseGallery": MessageLookupByLibrary.simpleMessage(
       "Choose from gallery",
     ),
@@ -343,7 +423,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileTakePhoto": MessageLookupByLibrary.simpleMessage("Take a photo"),
     "profileUpdated": MessageLookupByLibrary.simpleMessage("Profile updated"),
     "registerButton": MessageLookupByLibrary.simpleMessage("Create account"),
-    "registerSubtitle": m6,
+    "registerSubtitle": m8,
     "registerSuccess": MessageLookupByLibrary.simpleMessage(
       "Account created. Please verify your email.",
     ),
@@ -351,7 +431,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "resetPasswordButton": MessageLookupByLibrary.simpleMessage(
       "Reset password",
     ),
-    "resetPasswordSubtitle": m7,
+    "resetPasswordSubtitle": m9,
     "resetPasswordSuccess": MessageLookupByLibrary.simpleMessage(
       "Password reset successfully",
     ),
@@ -379,7 +459,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "A new code has been sent to your email",
     ),
     "verifyEmailResend": MessageLookupByLibrary.simpleMessage("Resend code"),
-    "verifyEmailSubtitle": m8,
+    "verifyEmailSubtitle": m10,
     "verifyEmailSuccess": MessageLookupByLibrary.simpleMessage(
       "Email verified successfully",
     ),

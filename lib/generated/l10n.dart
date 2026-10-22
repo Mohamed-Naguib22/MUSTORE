@@ -1560,6 +1560,356 @@ class S {
     );
   }
 
+  /// `Contacts`
+  String get pageContacts {
+    return Intl.message('Contacts', name: 'pageContacts', desc: '', args: []);
+  }
+
+  /// `Add phone number`
+  String get contactsAddTitle {
+    return Intl.message(
+      'Add phone number',
+      name: 'contactsAddTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit phone number`
+  String get contactsEditTitle {
+    return Intl.message(
+      'Edit phone number',
+      name: 'contactsEditTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete phone number`
+  String get contactsDeleteTitle {
+    return Intl.message(
+      'Delete phone number',
+      name: 'contactsDeleteTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete {phone}? This can't be undone.`
+  String contactsDeleteMessage(Object phone) {
+    return Intl.message(
+      'Delete $phone? This can\'t be undone.',
+      name: 'contactsDeleteMessage',
+      desc: '',
+      args: [phone],
+    );
+  }
+
+  /// `Delete`
+  String get contactsDelete {
+    return Intl.message('Delete', name: 'contactsDelete', desc: '', args: []);
+  }
+
+  /// `Cancel`
+  String get contactsCancel {
+    return Intl.message('Cancel', name: 'contactsCancel', desc: '', args: []);
+  }
+
+  /// `Phone number added`
+  String get contactsAdded {
+    return Intl.message(
+      'Phone number added',
+      name: 'contactsAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number updated`
+  String get contactsUpdated {
+    return Intl.message(
+      'Phone number updated',
+      name: 'contactsUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary number changed`
+  String get contactsPrimaryChanged {
+    return Intl.message(
+      'Primary number changed',
+      name: 'contactsPrimaryChanged',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number deleted`
+  String get contactsDeleted {
+    return Intl.message(
+      'Phone number deleted',
+      name: 'contactsDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification code sent`
+  String get contactsCodeSent {
+    return Intl.message(
+      'Verification code sent',
+      name: 'contactsCodeSent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number verified`
+  String get contactsVerified {
+    return Intl.message(
+      'Phone number verified',
+      name: 'contactsVerified',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't load phone numbers`
+  String get contactsLoadFailedTitle {
+    return Intl.message(
+      'Couldn\'t load phone numbers',
+      name: 'contactsLoadFailedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get contactsRetry {
+    return Intl.message('Retry', name: 'contactsRetry', desc: '', args: []);
+  }
+
+  /// `Add phone number`
+  String get contactsAddNew {
+    return Intl.message(
+      'Add phone number',
+      name: 'contactsAddNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No phone numbers yet`
+  String get contactsEmptyTitle {
+    return Intl.message(
+      'No phone numbers yet',
+      name: 'contactsEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add a phone number so we can reach you about your orders.`
+  String get contactsEmptyMessage {
+    return Intl.message(
+      'Add a phone number so we can reach you about your orders.',
+      name: 'contactsEmptyMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get contactsMenuEdit {
+    return Intl.message('Edit', name: 'contactsMenuEdit', desc: '', args: []);
+  }
+
+  /// `Delete`
+  String get contactsMenuDelete {
+    return Intl.message(
+      'Delete',
+      name: 'contactsMenuDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set as primary`
+  String get contactsMenuSetPrimary {
+    return Intl.message(
+      'Set as primary',
+      name: 'contactsMenuSetPrimary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary`
+  String get contactsPrimaryBadge {
+    return Intl.message(
+      'Primary',
+      name: 'contactsPrimaryBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verified`
+  String get contactsVerifiedBadge {
+    return Intl.message(
+      'Verified',
+      name: 'contactsVerifiedBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not verified`
+  String get contactsUnverifiedBadge {
+    return Intl.message(
+      'Not verified',
+      name: 'contactsUnverifiedBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify`
+  String get contactsVerifyAction {
+    return Intl.message(
+      'Verify',
+      name: 'contactsVerifyAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get contactsFieldPhone {
+    return Intl.message(
+      'Phone number',
+      name: 'contactsFieldPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g. 01012345678`
+  String get contactsPhoneHint {
+    return Intl.message(
+      'e.g. 01012345678',
+      name: 'contactsPhoneHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This field is required`
+  String get contactsFieldRequired {
+    return Intl.message(
+      'This field is required',
+      name: 'contactsFieldRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a valid phone number`
+  String get contactsPhoneInvalid {
+    return Intl.message(
+      'Enter a valid phone number',
+      name: 'contactsPhoneInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This number is already saved`
+  String get contactsPhoneDuplicate {
+    return Intl.message(
+      'This number is already saved',
+      name: 'contactsPhoneDuplicate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save changes`
+  String get contactsSaveChanges {
+    return Intl.message(
+      'Save changes',
+      name: 'contactsSaveChanges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get contactsAddAction {
+    return Intl.message('Add', name: 'contactsAddAction', desc: '', args: []);
+  }
+
+  /// `Verify phone number`
+  String get contactsVerifyTitle {
+    return Intl.message(
+      'Verify phone number',
+      name: 'contactsVerifyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the code we sent to {phone}.`
+  String contactsVerifyMessage(Object phone) {
+    return Intl.message(
+      'Enter the code we sent to $phone.',
+      name: 'contactsVerifyMessage',
+      desc: '',
+      args: [phone],
+    );
+  }
+
+  /// `Verification code`
+  String get contactsFieldCode {
+    return Intl.message(
+      'Verification code',
+      name: 'contactsFieldCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `6-digit code`
+  String get contactsCodeHint {
+    return Intl.message(
+      '6-digit code',
+      name: 'contactsCodeHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend code`
+  String get contactsResendCode {
+    return Intl.message(
+      'Resend code',
+      name: 'contactsResendCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify`
+  String get contactsVerifySubmit {
+    return Intl.message(
+      'Verify',
+      name: 'contactsVerifySubmit',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Season Sale`
   String get bannerSeasonSaleTitle {
     return Intl.message(

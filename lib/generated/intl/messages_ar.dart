@@ -31,14 +31,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(min) => "${min} أحرف على الأقل";
 
-  static String m5(price) => "${price} ج.م";
+  static String m5(phone) =>
+      "هل تريد حذف ${phone}؟ لا يمكن التراجع عن هذا الإجراء.";
 
-  static String m6(appName) => "انضم إلى ${appName} وابدأ التسوق 🛒";
+  static String m6(phone) => "أدخل الرمز الذي أرسلناه إلى ${phone}.";
 
-  static String m7(email) =>
+  static String m7(price) => "${price} ج.م";
+
+  static String m8(appName) => "انضم إلى ${appName} وابدأ التسوق 🛒";
+
+  static String m9(email) =>
       "أدخل الرمز المرسل إلى ${email} واختر كلمة مرور جديدة";
 
-  static String m8(email) => "أدخل الرمز الذي أرسلناه إلى ${email}";
+  static String m10(email) => "أدخل الرمز الذي أرسلناه إلى ${email}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -237,6 +242,85 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonSomethingWentWrong": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
     ),
+    "contactsAddAction": MessageLookupByLibrary.simpleMessage("إضافة"),
+    "contactsAddNew": MessageLookupByLibrary.simpleMessage("إضافة رقم هاتف"),
+    "contactsAddTitle": MessageLookupByLibrary.simpleMessage("إضافة رقم هاتف"),
+    "contactsAdded": MessageLookupByLibrary.simpleMessage(
+      "تمت إضافة رقم الهاتف",
+    ),
+    "contactsCancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+    "contactsCodeHint": MessageLookupByLibrary.simpleMessage(
+      "رمز مكون من 6 أرقام",
+    ),
+    "contactsCodeSent": MessageLookupByLibrary.simpleMessage(
+      "تم إرسال رمز التحقق",
+    ),
+    "contactsDelete": MessageLookupByLibrary.simpleMessage("حذف"),
+    "contactsDeleteMessage": m5,
+    "contactsDeleteTitle": MessageLookupByLibrary.simpleMessage(
+      "حذف رقم الهاتف",
+    ),
+    "contactsDeleted": MessageLookupByLibrary.simpleMessage(
+      "تم حذف رقم الهاتف",
+    ),
+    "contactsEditTitle": MessageLookupByLibrary.simpleMessage(
+      "تعديل رقم الهاتف",
+    ),
+    "contactsEmptyMessage": MessageLookupByLibrary.simpleMessage(
+      "أضف رقم هاتف حتى نتمكن من التواصل معك بشأن طلباتك.",
+    ),
+    "contactsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "لا توجد أرقام هاتف حتى الآن",
+    ),
+    "contactsFieldCode": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
+    "contactsFieldPhone": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
+    "contactsFieldRequired": MessageLookupByLibrary.simpleMessage(
+      "هذا الحقل مطلوب",
+    ),
+    "contactsLoadFailedTitle": MessageLookupByLibrary.simpleMessage(
+      "تعذر تحميل أرقام الهاتف",
+    ),
+    "contactsMenuDelete": MessageLookupByLibrary.simpleMessage("حذف"),
+    "contactsMenuEdit": MessageLookupByLibrary.simpleMessage("تعديل"),
+    "contactsMenuSetPrimary": MessageLookupByLibrary.simpleMessage(
+      "تعيين كرقم أساسي",
+    ),
+    "contactsPhoneDuplicate": MessageLookupByLibrary.simpleMessage(
+      "هذا الرقم محفوظ بالفعل",
+    ),
+    "contactsPhoneHint": MessageLookupByLibrary.simpleMessage(
+      "مثال: 01012345678",
+    ),
+    "contactsPhoneInvalid": MessageLookupByLibrary.simpleMessage(
+      "أدخل رقم هاتف صحيحًا",
+    ),
+    "contactsPrimaryBadge": MessageLookupByLibrary.simpleMessage("أساسي"),
+    "contactsPrimaryChanged": MessageLookupByLibrary.simpleMessage(
+      "تم تغيير الرقم الأساسي",
+    ),
+    "contactsResendCode": MessageLookupByLibrary.simpleMessage(
+      "إعادة إرسال الرمز",
+    ),
+    "contactsRetry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
+    "contactsSaveChanges": MessageLookupByLibrary.simpleMessage(
+      "حفظ التغييرات",
+    ),
+    "contactsUnverifiedBadge": MessageLookupByLibrary.simpleMessage(
+      "لم يتم التحقق",
+    ),
+    "contactsUpdated": MessageLookupByLibrary.simpleMessage(
+      "تم تحديث رقم الهاتف",
+    ),
+    "contactsVerified": MessageLookupByLibrary.simpleMessage(
+      "تم التحقق من رقم الهاتف",
+    ),
+    "contactsVerifiedBadge": MessageLookupByLibrary.simpleMessage("تم التحقق"),
+    "contactsVerifyAction": MessageLookupByLibrary.simpleMessage("تحقق"),
+    "contactsVerifyMessage": m6,
+    "contactsVerifySubmit": MessageLookupByLibrary.simpleMessage("تحقق"),
+    "contactsVerifyTitle": MessageLookupByLibrary.simpleMessage(
+      "التحقق من رقم الهاتف",
+    ),
     "failureCache": MessageLookupByLibrary.simpleMessage(
       "تعذّر حفظ إعداداتك، يرجى المحاولة مرة أخرى",
     ),
@@ -308,10 +392,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "navWishlist": MessageLookupByLibrary.simpleMessage("المفضلة"),
     "pageAddresses": MessageLookupByLibrary.simpleMessage("العناوين"),
     "pageCheckout": MessageLookupByLibrary.simpleMessage("إتمام الشراء"),
+    "pageContacts": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
     "pageEditProfile": MessageLookupByLibrary.simpleMessage(
       "تعديل الملف الشخصي",
     ),
-    "priceEgp": m5,
+    "priceEgp": m7,
     "profileChooseGallery": MessageLookupByLibrary.simpleMessage(
       "اختيار من المعرض",
     ),
@@ -335,7 +420,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "تم تحديث الملف الشخصي",
     ),
     "registerButton": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
-    "registerSubtitle": m6,
+    "registerSubtitle": m8,
     "registerSuccess": MessageLookupByLibrary.simpleMessage(
       "تم إنشاء الحساب. يرجى تأكيد بريدك الإلكتروني.",
     ),
@@ -343,7 +428,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "resetPasswordButton": MessageLookupByLibrary.simpleMessage(
       "إعادة تعيين كلمة المرور",
     ),
-    "resetPasswordSubtitle": m7,
+    "resetPasswordSubtitle": m9,
     "resetPasswordSuccess": MessageLookupByLibrary.simpleMessage(
       "تمت إعادة تعيين كلمة المرور بنجاح",
     ),
@@ -373,7 +458,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "verifyEmailResend": MessageLookupByLibrary.simpleMessage(
       "إعادة إرسال الرمز",
     ),
-    "verifyEmailSubtitle": m8,
+    "verifyEmailSubtitle": m10,
     "verifyEmailSuccess": MessageLookupByLibrary.simpleMessage(
       "تم تأكيد البريد الإلكتروني بنجاح",
     ),
