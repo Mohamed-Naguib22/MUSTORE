@@ -16,7 +16,7 @@ class PictureEditorWidget extends StatelessWidget {
   final VoidCallback? onTap;
 
   static const double _size = Dimens.iconXl + Dimens.lg;
-  static const double _badge = Dimens.xl + Dimens.xs;
+  static const double _badge = Dimens.xl;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class PictureEditorWidget extends StatelessWidget {
                   icon: Icons.edit_rounded,
                   onPressed: enabled ? onTap : null,
                   size: _badge,
-                  iconSize: Dimens.iconSm,
+                  iconSize: Dimens.iconXs,
                   variant: AppIconButtonVariant.primary,
                 ),
               ),

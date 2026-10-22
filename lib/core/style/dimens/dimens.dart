@@ -40,6 +40,7 @@ abstract final class Dimens {
   static const BorderRadius borderXl = BorderRadius.all(Radius.circular(radiusXl));
   static const BorderRadius borderPill = BorderRadius.all(Radius.circular(radiusPill));
 
+  static const double iconXs = 12;
   static const double iconSm = 16;
   static const double iconMd = 24;
   static const double iconLg = 40;
