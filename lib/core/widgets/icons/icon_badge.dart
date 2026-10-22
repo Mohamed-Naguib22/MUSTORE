@@ -7,11 +7,17 @@ class IconBadge extends StatelessWidget {
     required this.icon,
     this.isDestructive = false,
     this.isHighlighted = false,
+    this.size = Dimens.badge,
+    this.iconSize = Dimens.iconBadge,
+    this.borderRadius = Dimens.borderMd,
   });
 
   final IconData icon;
   final bool isDestructive;
   final bool isHighlighted;
+  final double size;
+  final double iconSize;
+  final BorderRadius borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +33,14 @@ class IconBadge extends StatelessWidget {
     };
 
     return Container(
-      width: Dimens.badge,
-      height: Dimens.badge,
+      width: size,
+      height: size,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         color: bg,
-        borderRadius: Dimens.borderMd,
+        borderRadius: borderRadius,
       ),
-      child: Icon(icon, size: Dimens.iconBadge, color: fg),
+      child: Icon(icon, size: iconSize, color: fg),
     );
   }
 }
