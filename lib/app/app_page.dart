@@ -10,6 +10,7 @@ import 'package:mustore/features/auth/presentation/screens/verify_email_screen.d
 import 'package:mustore/features/catalog/presentation/screens/categories_screen.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/account_screen.dart';
+import 'package:mustore/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:mustore/features/settings/presentation/screens/settings_screen.dart';
 import 'package:mustore/features/shopping/presentation/screens/cart_screen.dart';
@@ -61,6 +62,9 @@ enum AppPage {
       isTab: true,
       appBar: AppBarMode.none),
 
+  addresses('/account/addresses', AccessLevel.authenticated, AddressesScreen.new,
+      parent: account, fullScreen: true),
+
   editProfile('/account/edit-profile', AccessLevel.authenticated, EditProfileScreen.new,
       parent: account, fullScreen: true),
 
@@ -102,6 +106,7 @@ enum AppPage {
     categories => l10n.navCategories,
     account => l10n.navAccount,
     editProfile => l10n.pageEditProfile,
+    addresses => l10n.pageAddresses,
     settings => l10n.settings,
     checkout => l10n.pageCheckout,
   };

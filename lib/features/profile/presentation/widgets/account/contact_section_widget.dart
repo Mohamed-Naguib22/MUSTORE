@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mustore/core/widgets/lists/app_list_tile.dart';
 import 'package:mustore/generated/l10n.dart';
 import 'account_section_widget.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mustore/app/app_page.dart';
 
 class ContactSectionWidget extends StatelessWidget {
   const ContactSectionWidget({super.key});
@@ -16,7 +18,7 @@ class ContactSectionWidget extends StatelessWidget {
         AppListTile(
           icon: Icons.location_on_outlined,
           title: l10n.accountAddresses,
-          onTap: () {},
+          onTap: () => context.pushNamed(AppPage.addresses.name),
         ),
         AppListTile(
           icon: Icons.phone_outlined,

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:mustore/core/network/api/api_client.dart';
 import 'package:mustore/features/profile/data/constants/account_endpoints.dart';
 import 'package:mustore/features/profile/data/models/user_profile_model.dart';
-import 'package:mustore/features/profile/domain/params/update_profile_params.dart';
+import 'package:mustore/features/profile/domain/params/account/update_profile_params.dart';
 import 'account_remote_data_source.dart';
 
 class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {

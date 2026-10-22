@@ -20,16 +20,25 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(min) => "At least ${min} characters";
+  static String m0(apartment) => "Apt ${apartment}";
 
-  static String m1(price) => "${price} EGP";
+  static String m1(building) => "Bldg ${building}";
 
-  static String m2(appName) => "Join ${appName} and start shopping 🛒";
+  static String m2(street, city) =>
+      "${street}, ${city} will be removed from your saved addresses.";
 
-  static String m3(email) =>
+  static String m3(floor) => "Floor ${floor}";
+
+  static String m4(min) => "At least ${min} characters";
+
+  static String m5(price) => "${price} EGP";
+
+  static String m6(appName) => "Join ${appName} and start shopping 🛒";
+
+  static String m7(email) =>
       "Enter the code sent to ${email} and choose a new password";
 
-  static String m4(email) => "Enter the code we sent to ${email}";
+  static String m8(email) => "Enter the code we sent to ${email}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -44,6 +53,69 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountSecurity":
             MessageLookupByLibrary.simpleMessage("Account security"),
         "accountTitle": MessageLookupByLibrary.simpleMessage("Account"),
+        "addressesAddAction":
+            MessageLookupByLibrary.simpleMessage("Add address"),
+        "addressesAddNew":
+            MessageLookupByLibrary.simpleMessage("Add new address"),
+        "addressesAddTitle":
+            MessageLookupByLibrary.simpleMessage("Add address"),
+        "addressesAdded": MessageLookupByLibrary.simpleMessage("Address added"),
+        "addressesAdditionalInfoHint":
+            MessageLookupByLibrary.simpleMessage("Landmarks, delivery notes…"),
+        "addressesApartment": m0,
+        "addressesBuilding": m1,
+        "addressesCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "addressesCityHint":
+            MessageLookupByLibrary.simpleMessage("Select city"),
+        "addressesCityRequired":
+            MessageLookupByLibrary.simpleMessage("Please select a city"),
+        "addressesDefaultBadge":
+            MessageLookupByLibrary.simpleMessage("Default"),
+        "addressesDefaultChanged":
+            MessageLookupByLibrary.simpleMessage("Default address changed"),
+        "addressesDelete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "addressesDeleteMessage": m2,
+        "addressesDeleteTitle":
+            MessageLookupByLibrary.simpleMessage("Delete address?"),
+        "addressesDeleted":
+            MessageLookupByLibrary.simpleMessage("Address deleted"),
+        "addressesEditTitle":
+            MessageLookupByLibrary.simpleMessage("Edit address"),
+        "addressesEmptyMessage": MessageLookupByLibrary.simpleMessage(
+            "Add a delivery address to speed up checkout."),
+        "addressesEmptyTitle":
+            MessageLookupByLibrary.simpleMessage("No addresses yet"),
+        "addressesFieldAdditionalInfo":
+            MessageLookupByLibrary.simpleMessage("Additional info"),
+        "addressesFieldApartment":
+            MessageLookupByLibrary.simpleMessage("Apartment"),
+        "addressesFieldBuilding":
+            MessageLookupByLibrary.simpleMessage("Building"),
+        "addressesFieldCity": MessageLookupByLibrary.simpleMessage("City"),
+        "addressesFieldFloor": MessageLookupByLibrary.simpleMessage("Floor"),
+        "addressesFieldPostalCode":
+            MessageLookupByLibrary.simpleMessage("Postal code"),
+        "addressesFieldRequired":
+            MessageLookupByLibrary.simpleMessage("This field is required"),
+        "addressesFieldStreet": MessageLookupByLibrary.simpleMessage("Street"),
+        "addressesFloor": m3,
+        "addressesGenericError":
+            MessageLookupByLibrary.simpleMessage("Something went wrong."),
+        "addressesLoadFailedTitle":
+            MessageLookupByLibrary.simpleMessage("Could not load addresses"),
+        "addressesMenuDelete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "addressesMenuEdit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "addressesMenuSetDefault":
+            MessageLookupByLibrary.simpleMessage("Set as default"),
+        "addressesRetry": MessageLookupByLibrary.simpleMessage("Retry"),
+        "addressesSaveChanges":
+            MessageLookupByLibrary.simpleMessage("Save changes"),
+        "addressesSetAsDefault":
+            MessageLookupByLibrary.simpleMessage("Set as default address"),
+        "addressesStreetHint":
+            MessageLookupByLibrary.simpleMessage("e.g. 26th of July Corridor"),
+        "addressesUpdated":
+            MessageLookupByLibrary.simpleMessage("Address updated"),
         "appTitle": MessageLookupByLibrary.simpleMessage("MUSTORE"),
         "authConfirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm password"),
@@ -90,7 +162,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter your password"),
         "authPasswordRequired":
             MessageLookupByLibrary.simpleMessage("Password is required"),
-        "authPasswordTooShort": m0,
+        "authPasswordTooShort": m4,
         "authPasswordsMismatch":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
         "authPhone": MessageLookupByLibrary.simpleMessage("Phone number"),
@@ -178,9 +250,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "navCart": MessageLookupByLibrary.simpleMessage("Cart"),
         "navCategories": MessageLookupByLibrary.simpleMessage("Categories"),
         "navHome": MessageLookupByLibrary.simpleMessage("Home"),
+        "pageAddresses": MessageLookupByLibrary.simpleMessage("Addresses"),
         "pageCheckout": MessageLookupByLibrary.simpleMessage("Checkout"),
         "pageEditProfile": MessageLookupByLibrary.simpleMessage("Your Profile"),
-        "priceEgp": m1,
+        "priceEgp": m5,
         "profileChooseGallery":
             MessageLookupByLibrary.simpleMessage("Choose from gallery"),
         "profileEmail": MessageLookupByLibrary.simpleMessage("Email"),
@@ -202,13 +275,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Profile updated"),
         "registerButton":
             MessageLookupByLibrary.simpleMessage("Create account"),
-        "registerSubtitle": m2,
+        "registerSubtitle": m6,
         "registerSuccess": MessageLookupByLibrary.simpleMessage(
             "Account created. Please verify your email."),
         "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),
         "resetPasswordButton":
             MessageLookupByLibrary.simpleMessage("Reset password"),
-        "resetPasswordSubtitle": m3,
+        "resetPasswordSubtitle": m7,
         "resetPasswordSuccess":
             MessageLookupByLibrary.simpleMessage("Password reset successfully"),
         "resetPasswordTitle":
@@ -232,7 +305,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "A new code has been sent to your email"),
         "verifyEmailResend":
             MessageLookupByLibrary.simpleMessage("Resend code"),
-        "verifyEmailSubtitle": m4,
+        "verifyEmailSubtitle": m8,
         "verifyEmailSuccess":
             MessageLookupByLibrary.simpleMessage("Email verified successfully"),
         "verifyEmailTitle":

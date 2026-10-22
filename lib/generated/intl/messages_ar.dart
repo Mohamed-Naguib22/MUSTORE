@@ -20,16 +20,25 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(min) => "${min} أحرف على الأقل";
+  static String m0(apartment) => "شقة ${apartment}";
 
-  static String m1(price) => "${price} ج.م";
+  static String m1(building) => "مبنى ${building}";
 
-  static String m2(appName) => "انضم إلى ${appName} وابدأ التسوق 🛒";
+  static String m2(street, city) =>
+      "سيتم حذف ${street}، ${city} من عناوينك المحفوظة.";
 
-  static String m3(email) =>
+  static String m3(floor) => "الدور ${floor}";
+
+  static String m4(min) => "${min} أحرف على الأقل";
+
+  static String m5(price) => "${price} ج.م";
+
+  static String m6(appName) => "انضم إلى ${appName} وابدأ التسوق 🛒";
+
+  static String m7(email) =>
       "أدخل الرمز المرسل إلى ${email} واختر كلمة مرور جديدة";
 
-  static String m4(email) => "أدخل الرمز الذي أرسلناه إلى ${email}";
+  static String m8(email) => "أدخل الرمز الذي أرسلناه إلى ${email}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -43,6 +52,71 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountPreferences": MessageLookupByLibrary.simpleMessage("التفضيلات"),
         "accountSecurity": MessageLookupByLibrary.simpleMessage("أمان الحساب"),
         "accountTitle": MessageLookupByLibrary.simpleMessage("الحساب"),
+        "addressesAddAction":
+            MessageLookupByLibrary.simpleMessage("إضافة العنوان"),
+        "addressesAddNew":
+            MessageLookupByLibrary.simpleMessage("إضافة عنوان جديد"),
+        "addressesAddTitle":
+            MessageLookupByLibrary.simpleMessage("إضافة عنوان"),
+        "addressesAdded":
+            MessageLookupByLibrary.simpleMessage("تمت إضافة العنوان"),
+        "addressesAdditionalInfoHint": MessageLookupByLibrary.simpleMessage(
+            "علامات مميزة، ملاحظات للتوصيل…"),
+        "addressesApartment": m0,
+        "addressesBuilding": m1,
+        "addressesCancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+        "addressesCityHint":
+            MessageLookupByLibrary.simpleMessage("اختر المدينة"),
+        "addressesCityRequired":
+            MessageLookupByLibrary.simpleMessage("من فضلك اختر المدينة"),
+        "addressesDefaultBadge":
+            MessageLookupByLibrary.simpleMessage("افتراضي"),
+        "addressesDefaultChanged":
+            MessageLookupByLibrary.simpleMessage("تم تغيير العنوان الافتراضي"),
+        "addressesDelete": MessageLookupByLibrary.simpleMessage("حذف"),
+        "addressesDeleteMessage": m2,
+        "addressesDeleteTitle":
+            MessageLookupByLibrary.simpleMessage("حذف العنوان؟"),
+        "addressesDeleted":
+            MessageLookupByLibrary.simpleMessage("تم حذف العنوان"),
+        "addressesEditTitle":
+            MessageLookupByLibrary.simpleMessage("تعديل العنوان"),
+        "addressesEmptyMessage": MessageLookupByLibrary.simpleMessage(
+            "أضف عنوان توصيل لإتمام الطلب بشكل أسرع."),
+        "addressesEmptyTitle":
+            MessageLookupByLibrary.simpleMessage("لا توجد عناوين بعد"),
+        "addressesFieldAdditionalInfo":
+            MessageLookupByLibrary.simpleMessage("معلومات إضافية"),
+        "addressesFieldApartment":
+            MessageLookupByLibrary.simpleMessage("الشقة"),
+        "addressesFieldBuilding":
+            MessageLookupByLibrary.simpleMessage("المبنى"),
+        "addressesFieldCity": MessageLookupByLibrary.simpleMessage("المدينة"),
+        "addressesFieldFloor": MessageLookupByLibrary.simpleMessage("الدور"),
+        "addressesFieldPostalCode":
+            MessageLookupByLibrary.simpleMessage("الرمز البريدي"),
+        "addressesFieldRequired":
+            MessageLookupByLibrary.simpleMessage("هذا الحقل مطلوب"),
+        "addressesFieldStreet": MessageLookupByLibrary.simpleMessage("الشارع"),
+        "addressesFloor": m3,
+        "addressesGenericError":
+            MessageLookupByLibrary.simpleMessage("حدث خطأ ما."),
+        "addressesLoadFailedTitle":
+            MessageLookupByLibrary.simpleMessage("تعذر تحميل العناوين"),
+        "addressesMenuDelete": MessageLookupByLibrary.simpleMessage("حذف"),
+        "addressesMenuEdit": MessageLookupByLibrary.simpleMessage("تعديل"),
+        "addressesMenuSetDefault":
+            MessageLookupByLibrary.simpleMessage("تعيين كافتراضي"),
+        "addressesRetry":
+            MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
+        "addressesSaveChanges":
+            MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
+        "addressesSetAsDefault":
+            MessageLookupByLibrary.simpleMessage("تعيين كعنوان افتراضي"),
+        "addressesStreetHint":
+            MessageLookupByLibrary.simpleMessage("مثال: محور 26 يوليو"),
+        "addressesUpdated":
+            MessageLookupByLibrary.simpleMessage("تم تحديث العنوان"),
         "appTitle": MessageLookupByLibrary.simpleMessage("متجر"),
         "authConfirmPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
@@ -88,7 +162,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور"),
         "authPasswordRequired":
             MessageLookupByLibrary.simpleMessage("كلمة المرور مطلوبة"),
-        "authPasswordTooShort": m0,
+        "authPasswordTooShort": m4,
         "authPasswordsMismatch":
             MessageLookupByLibrary.simpleMessage("كلمتا المرور غير متطابقتين"),
         "authPhone": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
@@ -176,10 +250,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "navCart": MessageLookupByLibrary.simpleMessage("السلة"),
         "navCategories": MessageLookupByLibrary.simpleMessage("الفئات"),
         "navHome": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+        "pageAddresses": MessageLookupByLibrary.simpleMessage("العناوين"),
         "pageCheckout": MessageLookupByLibrary.simpleMessage("إتمام الشراء"),
         "pageEditProfile":
             MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
-        "priceEgp": m1,
+        "priceEgp": m5,
         "profileChooseGallery":
             MessageLookupByLibrary.simpleMessage("اختيار من المعرض"),
         "profileEmail":
@@ -200,13 +275,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "profileUpdated":
             MessageLookupByLibrary.simpleMessage("تم تحديث الملف الشخصي"),
         "registerButton": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
-        "registerSubtitle": m2,
+        "registerSubtitle": m6,
         "registerSuccess": MessageLookupByLibrary.simpleMessage(
             "تم إنشاء الحساب. يرجى تأكيد بريدك الإلكتروني."),
         "registerTitle": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "resetPasswordButton":
             MessageLookupByLibrary.simpleMessage("إعادة تعيين كلمة المرور"),
-        "resetPasswordSubtitle": m3,
+        "resetPasswordSubtitle": m7,
         "resetPasswordSuccess": MessageLookupByLibrary.simpleMessage(
             "تمت إعادة تعيين كلمة المرور بنجاح"),
         "resetPasswordTitle":
@@ -231,7 +306,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم إرسال رمز جديد إلى بريدك الإلكتروني"),
         "verifyEmailResend":
             MessageLookupByLibrary.simpleMessage("إعادة إرسال الرمز"),
-        "verifyEmailSubtitle": m4,
+        "verifyEmailSubtitle": m8,
         "verifyEmailSuccess": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد البريد الإلكتروني بنجاح"),
         "verifyEmailTitle":

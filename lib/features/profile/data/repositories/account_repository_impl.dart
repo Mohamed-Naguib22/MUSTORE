@@ -4,7 +4,7 @@ import 'package:mustore/core/network/connectivity/network_connection.dart';
 import 'package:mustore/core/utils/mixins/network_mixin.dart';
 import 'package:mustore/features/profile/data/data_sources/account/account_remote_data_source.dart';
 import 'package:mustore/features/profile/domain/entities/user_profile.dart';
-import 'package:mustore/features/profile/domain/params/update_profile_params.dart';
+import 'package:mustore/features/profile/domain/params/account/update_profile_params.dart';
 import 'package:mustore/features/profile/domain/repositories/account_repository.dart';
 
 class AccountRepositoryImpl with NetworkMixin implements AccountRepository {

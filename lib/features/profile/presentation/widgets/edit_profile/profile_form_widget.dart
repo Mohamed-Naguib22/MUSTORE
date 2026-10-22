@@ -7,7 +7,7 @@ import 'package:mustore/core/widgets/inputs/app_form.dart';
 import 'package:mustore/core/widgets/inputs/app_text_field.dart';
 import 'package:mustore/features/profile/domain/entities/user_profile.dart';
 import 'package:mustore/features/profile/domain/enums/gender.dart';
-import 'package:mustore/features/profile/domain/params/update_profile_params.dart';
+import 'package:mustore/features/profile/domain/params/account/update_profile_params.dart';
 import 'package:mustore/features/profile/presentation/widgets/edit_profile/picture_editor_widget.dart';
 import 'package:mustore/generated/l10n.dart';
 

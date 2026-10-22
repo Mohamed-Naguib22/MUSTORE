@@ -14,7 +14,8 @@ import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/category/category_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_cubit.dart';
 import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
-import 'package:mustore/features/profile/presentation/controllers/profile_cubit.dart';
+import 'package:mustore/features/profile/presentation/controllers/account/profile_cubit.dart';
+import 'package:mustore/features/profile/presentation/controllers/address/address_cubit.dart';
 
 class AppRouter {
   AppRouter(AuthCubit authCubit)
@@ -105,6 +106,10 @@ class AppRouter {
       ),
       AppPage.editProfile => BlocProvider(
         create: (_) => sl<ProfileCubit>()..fetchProfile(),
+        child: child,
+      ),
+      AppPage.addresses => BlocProvider(
+        create: (_) => sl<AddressCubit>()..fetchAddresses(),
         child: child,
       ),
       _ => child,

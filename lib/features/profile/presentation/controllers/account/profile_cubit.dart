@@ -2,13 +2,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/use_case/use_case.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/utils/mixins/safe_emit_mixin.dart';
-import 'package:mustore/features/profile/domain/params/update_profile_params.dart';
-import 'package:mustore/features/profile/domain/use_cases/delete_account_use_case.dart';
-import 'package:mustore/features/profile/domain/use_cases/delete_profile_picture_use_case.dart';
-import 'package:mustore/features/profile/domain/use_cases/get_profile_use_case.dart';
-import 'package:mustore/features/profile/domain/use_cases/set_profile_picture_use_case.dart';
-import 'package:mustore/features/profile/domain/use_cases/update_profile_use_case.dart';
-import 'package:mustore/features/profile/presentation/controllers/profile_state.dart';
+import 'package:mustore/features/profile/domain/params/account/update_profile_params.dart';
+import 'package:mustore/features/profile/domain/use_cases/account/delete_account_use_case.dart';
+import 'package:mustore/features/profile/domain/use_cases/account/delete_profile_picture_use_case.dart';
+import 'package:mustore/features/profile/domain/use_cases/account/get_profile_use_case.dart';
+import 'package:mustore/features/profile/domain/use_cases/account/set_profile_picture_use_case.dart';
+import 'package:mustore/features/profile/domain/use_cases/account/update_profile_use_case.dart';
+import 'package:mustore/features/profile/presentation/controllers/account/profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState>
     with SafeEmitMixin<ProfileState> {

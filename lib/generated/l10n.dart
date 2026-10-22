@@ -1260,6 +1260,396 @@ class S {
     );
   }
 
+  /// `Addresses`
+  String get pageAddresses {
+    return Intl.message(
+      'Addresses',
+      name: 'pageAddresses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add address`
+  String get addressesAddTitle {
+    return Intl.message(
+      'Add address',
+      name: 'addressesAddTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit address`
+  String get addressesEditTitle {
+    return Intl.message(
+      'Edit address',
+      name: 'addressesEditTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete address?`
+  String get addressesDeleteTitle {
+    return Intl.message(
+      'Delete address?',
+      name: 'addressesDeleteTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{street}, {city} will be removed from your saved addresses.`
+  String addressesDeleteMessage(Object street, Object city) {
+    return Intl.message(
+      '$street, $city will be removed from your saved addresses.',
+      name: 'addressesDeleteMessage',
+      desc: '',
+      args: [street, city],
+    );
+  }
+
+  /// `Cancel`
+  String get addressesCancel {
+    return Intl.message(
+      'Cancel',
+      name: 'addressesCancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get addressesDelete {
+    return Intl.message(
+      'Delete',
+      name: 'addressesDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address added`
+  String get addressesAdded {
+    return Intl.message(
+      'Address added',
+      name: 'addressesAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address updated`
+  String get addressesUpdated {
+    return Intl.message(
+      'Address updated',
+      name: 'addressesUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default address changed`
+  String get addressesDefaultChanged {
+    return Intl.message(
+      'Default address changed',
+      name: 'addressesDefaultChanged',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address deleted`
+  String get addressesDeleted {
+    return Intl.message(
+      'Address deleted',
+      name: 'addressesDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not load addresses`
+  String get addressesLoadFailedTitle {
+    return Intl.message(
+      'Could not load addresses',
+      name: 'addressesLoadFailedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong.`
+  String get addressesGenericError {
+    return Intl.message(
+      'Something went wrong.',
+      name: 'addressesGenericError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get addressesRetry {
+    return Intl.message(
+      'Retry',
+      name: 'addressesRetry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add new address`
+  String get addressesAddNew {
+    return Intl.message(
+      'Add new address',
+      name: 'addressesAddNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No addresses yet`
+  String get addressesEmptyTitle {
+    return Intl.message(
+      'No addresses yet',
+      name: 'addressesEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add a delivery address to speed up checkout.`
+  String get addressesEmptyMessage {
+    return Intl.message(
+      'Add a delivery address to speed up checkout.',
+      name: 'addressesEmptyMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bldg {building}`
+  String addressesBuilding(Object building) {
+    return Intl.message(
+      'Bldg $building',
+      name: 'addressesBuilding',
+      desc: '',
+      args: [building],
+    );
+  }
+
+  /// `Floor {floor}`
+  String addressesFloor(Object floor) {
+    return Intl.message(
+      'Floor $floor',
+      name: 'addressesFloor',
+      desc: '',
+      args: [floor],
+    );
+  }
+
+  /// `Apt {apartment}`
+  String addressesApartment(Object apartment) {
+    return Intl.message(
+      'Apt $apartment',
+      name: 'addressesApartment',
+      desc: '',
+      args: [apartment],
+    );
+  }
+
+  /// `Default`
+  String get addressesDefaultBadge {
+    return Intl.message(
+      'Default',
+      name: 'addressesDefaultBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get addressesMenuEdit {
+    return Intl.message(
+      'Edit',
+      name: 'addressesMenuEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set as default`
+  String get addressesMenuSetDefault {
+    return Intl.message(
+      'Set as default',
+      name: 'addressesMenuSetDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get addressesMenuDelete {
+    return Intl.message(
+      'Delete',
+      name: 'addressesMenuDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Street`
+  String get addressesFieldStreet {
+    return Intl.message(
+      'Street',
+      name: 'addressesFieldStreet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g. 26th of July Corridor`
+  String get addressesStreetHint {
+    return Intl.message(
+      'e.g. 26th of July Corridor',
+      name: 'addressesStreetHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get addressesFieldCity {
+    return Intl.message(
+      'City',
+      name: 'addressesFieldCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select city`
+  String get addressesCityHint {
+    return Intl.message(
+      'Select city',
+      name: 'addressesCityHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a city`
+  String get addressesCityRequired {
+    return Intl.message(
+      'Please select a city',
+      name: 'addressesCityRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Building`
+  String get addressesFieldBuilding {
+    return Intl.message(
+      'Building',
+      name: 'addressesFieldBuilding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apartment`
+  String get addressesFieldApartment {
+    return Intl.message(
+      'Apartment',
+      name: 'addressesFieldApartment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Floor`
+  String get addressesFieldFloor {
+    return Intl.message(
+      'Floor',
+      name: 'addressesFieldFloor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Postal code`
+  String get addressesFieldPostalCode {
+    return Intl.message(
+      'Postal code',
+      name: 'addressesFieldPostalCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Additional info`
+  String get addressesFieldAdditionalInfo {
+    return Intl.message(
+      'Additional info',
+      name: 'addressesFieldAdditionalInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Landmarks, delivery notes…`
+  String get addressesAdditionalInfoHint {
+    return Intl.message(
+      'Landmarks, delivery notes…',
+      name: 'addressesAdditionalInfoHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set as default address`
+  String get addressesSetAsDefault {
+    return Intl.message(
+      'Set as default address',
+      name: 'addressesSetAsDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save changes`
+  String get addressesSaveChanges {
+    return Intl.message(
+      'Save changes',
+      name: 'addressesSaveChanges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add address`
+  String get addressesAddAction {
+    return Intl.message(
+      'Add address',
+      name: 'addressesAddAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This field is required`
+  String get addressesFieldRequired {
+    return Intl.message(
+      'This field is required',
+      name: 'addressesFieldRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Season Sale`
   String get bannerSeasonSaleTitle {
     return Intl.message(
