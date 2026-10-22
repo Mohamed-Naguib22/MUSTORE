@@ -63,6 +63,37 @@ class Address extends Equatable {
     );
   }
 
+  Address copyWith({
+    String? id,
+    String? street,
+    String? building,
+    String? apartment,
+    String? floor,
+    String? additionalInfo,
+    String? postalCode,
+    bool? isDefault,
+    String? city,
+    String? governorate,
+    String? cityId,
+    String? governorateId,
+    String? countryId,
+  }) =>
+      Address(
+        id: id ?? this.id,
+        street: street ?? this.street,
+        building: building ?? this.building,
+        apartment: apartment ?? this.apartment,
+        floor: floor ?? this.floor,
+        additionalInfo: additionalInfo ?? this.additionalInfo,
+        postalCode: postalCode ?? this.postalCode,
+        isDefault: isDefault ?? this.isDefault,
+        city: city ?? this.city,
+        governorate: governorate ?? this.governorate,
+        cityId: cityId ?? this.cityId,
+        governorateId: governorateId ?? this.governorateId,
+        countryId: countryId ?? this.countryId,
+      );
+
   @override
   List<Object?> get props => [
     id,

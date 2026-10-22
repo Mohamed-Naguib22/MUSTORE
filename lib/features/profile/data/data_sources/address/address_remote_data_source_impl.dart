@@ -21,11 +21,13 @@ class AddressRemoteDataSourceImpl implements AddressRemoteDataSource {
   }
 
   @override
-  Future<void> addAddress(AddAddressParams params) async {
-    await _apiClient.post(
+  Future<AddressModel> addAddress(AddAddressParams params) async {
+    final response = await _apiClient.post(
       path: AddressEndpoints.add,
       data: params.toJson(),
     );
+
+    return AddressModel.fromJson(response.data as Map<String, dynamic>);
   }
 
   @override

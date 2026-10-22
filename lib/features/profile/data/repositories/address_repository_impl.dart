@@ -21,14 +21,11 @@ class AddressRepositoryImpl with NetworkMixin implements AddressRepository {
 
   @override
   Future<Either<Failure, List<Address>>> getAddresses() =>
-      onlineOnly<List<Address>>(() => _remote.getAddresses());
+      onlineOnly<List<Address>>(() async => await _remote.getAddresses());
 
   @override
-  Future<Either<Failure, Unit>> addAddress(AddAddressParams params) =>
-      onlineOnly<Unit>(() async {
-        await _remote.addAddress(params);
-        return unit;
-      });
+  Future<Either<Failure, Address>> addAddress(AddAddressParams params) =>
+      onlineOnly<Address>(() async => await _remote.addAddress(params));
 
   @override
   Future<Either<Failure, Unit>> updateAddress(UpdateAddressParams params) =>

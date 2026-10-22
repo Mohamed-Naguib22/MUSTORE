@@ -6,7 +6,7 @@ import 'package:mustore/features/profile/domain/params/address/update_address_pa
 
 abstract interface class AddressRepository {
   Future<Either<Failure, List<Address>>> getAddresses();
-  Future<Either<Failure, Unit>> addAddress(AddAddressParams params);
+  Future<Either<Failure, Address>> addAddress(AddAddressParams params);
   Future<Either<Failure, Unit>> updateAddress(UpdateAddressParams params);
   Future<Either<Failure, Unit>> setAddressAsDefault(String addressId);
   Future<Either<Failure, Unit>> deleteAddress(String addressId);

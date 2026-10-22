@@ -33,14 +33,12 @@ class AddressCubit extends Cubit<AddressState>
   final SetAddressAsDefaultUseCase _setAddressAsDefault;
   final DeleteAddressUseCase _deleteAddress;
 
-  Future<void> fetchAddresses({bool silent = false}) async {
+  Future<void> fetchAddresses() async {
     if (state.status.isLoading) return;
 
-    if (!silent) {
-      safeEmit(
-        state.copyWith(status: RequestStatus.loading, clearFailure: true),
-      );
-    }
+    safeEmit(
+      state.copyWith(status: RequestStatus.loading, clearFailure: true),
+    );
 
     final result = await _getAddresses(const NoParams());
 
@@ -73,15 +71,12 @@ class AddressCubit extends Cubit<AddressState>
         addStatus: RequestStatus.failure,
         failure: failure,
       ),
-      onRight: (_) => state.copyWith(
+      onRight: (added) => state.copyWith(
         addStatus: RequestStatus.success,
+        addresses: [...state.addresses, added],
         clearFailure: true,
       ),
     );
-
-    if (state.addStatus == RequestStatus.success) {
-      await fetchAddresses(silent: true);
-    }
   }
 
   Future<void> updateAddress(
@@ -132,13 +127,13 @@ class AddressCubit extends Cubit<AddressState>
       ),
       onRight: (_) => state.copyWith(
         setDefaultStatus: RequestStatus.success,
+        addresses: [
+          for (final a in state.addresses)
+            a.copyWith(isDefault: a.id == addressId),
+        ],
         clearFailure: true,
       ),
     );
-
-    if (state.setDefaultStatus == RequestStatus.success) {
-      await fetchAddresses(silent: true);
-    }
   }
 
   Future<void> deleteAddress(String addressId) async {
@@ -161,13 +156,10 @@ class AddressCubit extends Cubit<AddressState>
       ),
       onRight: (_) => state.copyWith(
         deleteStatus: RequestStatus.success,
+        addresses: state.addresses.where((a) => a.id != addressId).toList(),
         clearFailure: true,
       ),
     );
-
-    if (state.deleteStatus == RequestStatus.success) {
-      await fetchAddresses(silent: true);
-    }
   }
 
   void reset() => safeEmit(const AddressState());

@@ -4,7 +4,7 @@ import 'package:mustore/features/profile/domain/params/address/update_address_pa
 
 abstract interface class AddressRemoteDataSource {
   Future<List<AddressModel>> getAddresses();
-  Future<void> addAddress(AddAddressParams params);
+  Future<AddressModel> addAddress(AddAddressParams params);
   Future<void> updateAddress(UpdateAddressParams params);
   Future<void> setAddressAsDefault(String addressId);
   Future<void> deleteAddress(String addressId);

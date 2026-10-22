@@ -198,7 +198,7 @@ class AddressesScreen extends StatelessWidget {
                 }
 
                 return RefreshIndicator(
-                  onRefresh: () => cubit.fetchAddresses(silent: true),
+                  onRefresh: () => cubit.fetchAddresses(),
                   child: AppListView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     children: [
