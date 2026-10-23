@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 
-class IconBadge extends StatelessWidget {
-  const IconBadge({
+class AppIconBadge extends StatelessWidget {
+  const AppIconBadge({
     super.key,
     required this.icon,
     this.isDestructive = false,

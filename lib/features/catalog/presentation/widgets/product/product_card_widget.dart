@@ -208,9 +208,7 @@ class ProductCardWidget extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: text.titleSmall?.copyWith(
-                          color: sale == null
-                              ? scheme.onSurface
-                              : scheme.primary,
+                          color: sale == null ? scheme.onSurface : scheme.error,
                           fontWeight: FontWeight.w700,
                         ),
                       ),

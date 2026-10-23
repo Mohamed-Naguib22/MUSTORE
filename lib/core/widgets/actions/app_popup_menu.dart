@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/buttons/app_icon_button.dart';
-import 'package:mustore/core/widgets/icons/icon_badge.dart';
+import 'package:mustore/core/widgets/icons/app_icon_badge.dart';
 
 class AppPopupMenuItem<T> {
   const AppPopupMenuItem({
@@ -202,7 +202,7 @@ class _MenuEntryState<T> extends State<_MenuEntry<T>> {
                 if (item.icon != null) ...[
                   Opacity(
                     opacity: disabled ? 0.38 : 1,
-                    child: IconBadge(
+                    child: AppIconBadge(
                       icon: item.icon!,
                       isDestructive: destructive,
                       size: AppPopupMenu._badgeSize,

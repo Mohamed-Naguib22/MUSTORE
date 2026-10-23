@@ -3,7 +3,7 @@ import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/actions/app_popup_menu.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/cards/app_card.dart';
-import 'package:mustore/core/widgets/icons/icon_badge.dart';
+import 'package:mustore/core/widgets/icons/app_icon_badge.dart';
 import 'package:mustore/features/profile/domain/entities/contact.dart';
 import 'package:mustore/generated/l10n.dart';
 
@@ -63,7 +63,7 @@ class ContactCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconBadge(
+              AppIconBadge(
                 icon: isPrimary
                     ? Icons.phone_in_talk_rounded
                     : Icons.phone_outlined,

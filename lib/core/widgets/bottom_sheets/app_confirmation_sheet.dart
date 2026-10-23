@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
-import 'package:mustore/core/widgets/icons/icon_badge.dart';
+import 'package:mustore/core/widgets/icons/app_icon_badge.dart';
 
 class AppConfirmationSheet extends StatelessWidget {
   const AppConfirmationSheet({
@@ -58,7 +58,7 @@ class AppConfirmationSheet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Center(
-          child: IconBadge(
+          child: AppIconBadge(
             icon: icon,
             isDestructive: isDestructive,
             size: Dimens.xxxl + Dimens.sm,

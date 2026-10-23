@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
-import 'package:mustore/core/widgets/icons/icon_badge.dart';
+import 'package:mustore/core/widgets/icons/app_icon_badge.dart';
 
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({
@@ -82,7 +82,7 @@ class AppBottomSheet extends StatelessWidget {
     final keyboard = MediaQuery.viewInsetsOf(context).bottom;
 
     final leadingWidget =
-        leading ?? (icon != null ? IconBadge(icon: icon!) : null);
+        leading ?? (icon != null ? AppIconBadge(icon: icon!) : null);
 
     final hasHeader =
         title != null || showCloseButton || leadingWidget != null;

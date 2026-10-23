@@ -5,7 +5,7 @@ import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
-import 'package:mustore/core/widgets/icons/icon_badge.dart';
+import 'package:mustore/core/widgets/icons/app_icon_badge.dart';
 import 'package:mustore/core/widgets/inputs/app_dropdown_field.dart';
 import 'package:mustore/core/widgets/inputs/app_form.dart';
 import 'package:mustore/core/widgets/inputs/app_input_style.dart';
@@ -340,7 +340,7 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
                       constraints: const BoxConstraints(minHeight: Dimens.buttonHeight),
                       child: Row(
                         children: [
-                          IconBadge(
+                          AppIconBadge(
                             icon: isDefault
                                 ? Icons.star_rounded
                                 : Icons.star_outline_rounded,

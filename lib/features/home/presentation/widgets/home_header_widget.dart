@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
+import 'package:mustore/core/widgets/icons/app_icon_badge.dart';
 import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 import 'package:mustore/generated/l10n.dart';
 
@@ -19,6 +20,7 @@ class HomeHeaderWidget extends StatelessWidget {
   final VoidCallback? onNotificationsTap;
 
   static const double _tile = Dimens.iconLg;
+  static const double _icon = Dimens.iconMd;
 
   @override
   Widget build(BuildContext context) {
@@ -44,17 +46,10 @@ class HomeHeaderWidget extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      width: _tile,
-                      height: _tile,
-                      decoration: BoxDecoration(
-                        color: scheme.primaryContainer,
-                        borderRadius: Dimens.borderMd,
-                      ),
-                      child: Icon(
-                        Icons.location_on_rounded,
-                        color: scheme.onPrimaryContainer,
-                      ),
+                    const AppIconBadge(
+                      icon: Icons.location_on_rounded,
+                      size: _tile,
+                      iconSize: _icon,
                     ),
                     Dimens.gapSm,
                     Flexible(
@@ -135,28 +130,34 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    Widget child = Icon(icon, color: scheme.onSurface);
+    Widget tile = Stack(
+      children: [
+        AppIconBadge(
+          icon: icon,
+          size: HomeHeaderWidget._tile,
+          iconSize: HomeHeaderWidget._icon,
+        ),
+        Positioned.fill(
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              onTap: onTap ?? () {},
+              borderRadius: Dimens.borderMd,
+            ),
+          ),
+        ),
+      ],
+    );
+
     if (badgeCount > 0) {
-      child = Badge.count(
+      tile = Badge.count(
         count: badgeCount,
         backgroundColor: scheme.error,
         textColor: scheme.onError,
-        child: child,
+        child: tile,
       );
     }
 
-    return Material(
-      color: scheme.surfaceContainerHighest,
-      borderRadius: Dimens.borderMd,
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap ?? () {},
-        child: SizedBox(
-          width: HomeHeaderWidget._tile,
-          height: HomeHeaderWidget._tile,
-          child: Center(child: child),
-        ),
-      ),
-    );
+    return tile;
   }
 }

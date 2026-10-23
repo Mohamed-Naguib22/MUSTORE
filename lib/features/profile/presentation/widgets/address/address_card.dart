@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/actions/app_popup_menu.dart';
-import 'package:mustore/core/widgets/icons/icon_badge.dart';
+import 'package:mustore/core/widgets/icons/app_icon_badge.dart';
 import 'package:mustore/core/widgets/buttons/app_button.dart';
 import 'package:mustore/core/widgets/cards/app_card.dart';
 import 'package:mustore/features/profile/domain/entities/address.dart';
@@ -85,7 +85,7 @@ class AddressCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconBadge(
+              AppIconBadge(
                 icon: isDefault
                     ? Icons.home_rounded
                     : Icons.business_outlined,

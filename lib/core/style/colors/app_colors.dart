@@ -59,21 +59,21 @@ abstract final class AppColors {
   static const darkOnAccent = Color(0xFF0D0F14);
   static const onSecondary = Color(0xFF1B1F2E);
 
-  static const bannerIndigo = Color(0xFF3340B5);
-  static const bannerIndigoLight = Color(0xFF4A57D1);
-  static const bannerEmber = Color(0xFFB8360A);
-  static const bannerEmberLight = Color(0xFFD4501E);
-  static const bannerForest = Color(0xFF0D6338);
-  static const bannerForestLight = Color(0xFF178A52);
+  static const bannerDenim = Color(0xFF2B3A67);
+  static const bannerDenimLight = Color(0xFF3B4E85);
+  static const bannerMoss = Color(0xFF3F5B2A);
+  static const bannerMossLight = Color(0xFF55783A);
+  static const bannerPlum = Color(0xFF5A3560);
+  static const bannerPlumLight = Color(0xFF744A7C);
 
   static const onBanner = white;
   static const onBannerMuted = Color(0xD9FFFFFF);
   static const bannerIcon = Color(0x3DFFFFFF);
   static const onBannerSecondary = onSecondary;
 
-  static const List<Color> bannerPrimary = [bannerIndigo, bannerIndigoLight];
-  static const List<Color> bannerSecondary = [bannerEmber, bannerEmberLight];
-  static const List<Color> bannerSuccess = [bannerForest, bannerForestLight];
+  static const List<Color> bannerPrimary = [bannerDenim, bannerDenimLight];
+  static const List<Color> bannerSecondary = [bannerMoss, bannerMossLight];
+  static const List<Color> bannerSuccess = [bannerPlum, bannerPlumLight];
 
   static const success = Color(0xFF117A53);
   static const successBright = Color(0xFF1FA971);
