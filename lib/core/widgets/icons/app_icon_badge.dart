@@ -42,7 +42,7 @@ class AppIconBadge extends StatelessWidget {
     final (bg, fg) = switch ((isDestructive, isHighlighted)) {
       (true, _) => (
       scheme.errorContainer.withValues(alpha: 0.6),
-      scheme.onErrorContainer,
+      scheme.error,
       ),
       (_, true) => (scheme.primary, scheme.onPrimary),
       _ => (scheme.surfaceContainerHighest, scheme.onPrimaryContainer),

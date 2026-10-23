@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:mustore/core/style/colors/app_colors.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
@@ -91,6 +90,7 @@ class AppPopupMenu<T> extends StatelessWidget {
     button.localToGlobal(Offset.zero, ancestor: overlay) & button.size;
     final isRtl = Directionality.of(triggerContext) == TextDirection.rtl;
     final s = Theme.of(triggerContext).colorScheme;
+    final isDark = s.brightness == Brightness.dark;
 
     final menuWidth = _resolveWidth(triggerContext);
 
@@ -111,8 +111,8 @@ class AppPopupMenu<T> extends StatelessWidget {
       context: triggerContext,
       position: position,
       color: s.surface,
-      elevation: 0,
-      shadowColor: AppColors.transparent,
+      elevation: 2,
+      shadowColor: AppColors.black.withValues(alpha: 0.10),
       surfaceTintColor: AppColors.transparent,
       constraints: BoxConstraints.tightFor(width: menuWidth),
       menuPadding: const EdgeInsets.all(Dimens.xs),
@@ -123,11 +123,12 @@ class AppPopupMenu<T> extends StatelessWidget {
       ),
       shape: RoundedRectangleBorder(
         borderRadius: borderRadius,
-        side: BorderSide(color: s.outlineVariant),
+        side: BorderSide(color: isDark ? s.outline : s.outlineVariant),
       ),
       items: [
         for (final item in items) ...[
-          if (item.dividerBefore) const PopupMenuDivider(height: Dimens.md),
+          if (item.dividerBefore)
+            const PopupMenuDivider(height: Dimens.md),
           _MenuEntry<T>(item: item),
         ],
       ],
