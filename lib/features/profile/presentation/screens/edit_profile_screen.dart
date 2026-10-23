@@ -4,7 +4,6 @@ import 'package:mustore/core/error/failure_message.dart';
 import 'package:mustore/core/services/media/file_picker_helper.dart';
 import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/utils/enums/request_status.dart';
-import 'package:mustore/core/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:mustore/core/widgets/feedback/app_message_widget.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
 import 'package:mustore/core/widgets/lists/app_list_view.dart';
@@ -31,13 +30,12 @@ class EditProfileScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _onPictureTap(BuildContext context, UserProfile profile,) async {
+  Future<void> _onPictureTap(BuildContext context, UserProfile profile) async {
     final cubit = context.read<ProfileCubit>();
 
-    final action = await AppBottomSheet.show<PictureAction>(
+    final action = await PictureActionSheet.show(
       context,
-      padding: EdgeInsets.zero,
-      child: PictureActionSheet(canRemove: !profile.isDefaultPicture),
+      canRemove: !profile.isDefaultPicture,
     );
 
     if (action == null || !context.mounted) return;

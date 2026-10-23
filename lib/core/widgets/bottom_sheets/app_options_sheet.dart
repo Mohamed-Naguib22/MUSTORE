@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mustore/core/style/dimens/dimens.dart';
 import 'package:mustore/core/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:mustore/core/widgets/lists/app_divider.dart';
 import 'package:mustore/core/widgets/lists/app_list_tile.dart';
 
 class AppOption<T> {
@@ -29,7 +31,7 @@ class AppOptionsSheet<T> extends StatelessWidget {
     return AppBottomSheet.show<T>(
       context,
       isDismissible: isDismissible,
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: Dimens.sm),
       child: AppOptionsSheet<T>(options: options),
     );
   }
@@ -39,14 +41,19 @@ class AppOptionsSheet<T> extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        for (final option in options)
+        for (var i = 0; i < options.length; i++) ...[
+          if (i > 0)
+            options[i].icon != null
+                ? const AppDivider.listTile()
+                : const AppDivider(indent: Dimens.lg),
           AppListTile(
-            icon: option.icon,
-            title: option.label,
-            isDestructive: option.isDestructive,
+            icon: options[i].icon,
+            title: options[i].label,
+            isDestructive: options[i].isDestructive,
             showChevron: false,
-            onTap: () => Navigator.of(context).pop(option.value),
+            onTap: () => Navigator.of(context).pop(options[i].value),
           ),
+        ],
       ],
     );
   }
