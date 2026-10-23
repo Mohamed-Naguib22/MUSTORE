@@ -3,6 +3,8 @@
   "appTitle": "MUSTORE",
 
   "commonRetry": "Retry",
+  "commonDelete": "Delete",
+  "commonCancel": "Cancel",
   "commonSomethingWentWrong": "Something went wrong. Please try again.",
 
   "failureNetwork": "No internet connection",
@@ -121,6 +123,10 @@
   "accountPhoneNumbers": "Phone numbers",
   "accountPreferences": "Preferences",
   "accountSecurity": "Account security",
+  "accountDeleteAccount": "Delete account",
+  "accountDeleteAccountHint": "Permanently remove your account and data",
+  "accountDeleteAccountConfirmTitle": "Delete your account?",
+  "accountDeleteAccountConfirmMessage": "This will permanently delete your account and data. This action can't be undone.",
 
   "pageEditProfile": "Your Profile",
   "profileFirstName": "First name",

@@ -65,6 +65,16 @@ class S {
     return Intl.message('Retry', name: 'commonRetry', desc: '', args: []);
   }
 
+  /// `Delete`
+  String get commonDelete {
+    return Intl.message('Delete', name: 'commonDelete', desc: '', args: []);
+  }
+
+  /// `Cancel`
+  String get commonCancel {
+    return Intl.message('Cancel', name: 'commonCancel', desc: '', args: []);
+  }
+
   /// `Something went wrong. Please try again.`
   String get commonSomethingWentWrong {
     return Intl.message(
@@ -975,6 +985,46 @@ class S {
     return Intl.message(
       'Account security',
       name: 'accountSecurity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete account`
+  String get accountDeleteAccount {
+    return Intl.message(
+      'Delete account',
+      name: 'accountDeleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permanently remove your account and data`
+  String get accountDeleteAccountHint {
+    return Intl.message(
+      'Permanently remove your account and data',
+      name: 'accountDeleteAccountHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete your account?`
+  String get accountDeleteAccountConfirmTitle {
+    return Intl.message(
+      'Delete your account?',
+      name: 'accountDeleteAccountConfirmTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This will permanently delete your account and data. This action can't be undone.`
+  String get accountDeleteAccountConfirmMessage {
+    return Intl.message(
+      'This will permanently delete your account and data. This action can\'t be undone.',
+      name: 'accountDeleteAccountConfirmMessage',
       desc: '',
       args: [],
     );

@@ -49,6 +49,16 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "accountAddresses": MessageLookupByLibrary.simpleMessage("العناوين"),
     "accountContact": MessageLookupByLibrary.simpleMessage("معلومات التواصل"),
+    "accountDeleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
+    "accountDeleteAccountConfirmMessage": MessageLookupByLibrary.simpleMessage(
+      "سيتم حذف حسابك وبياناتك نهائياً. لا يمكن التراجع عن هذا الإجراء.",
+    ),
+    "accountDeleteAccountConfirmTitle": MessageLookupByLibrary.simpleMessage(
+      "هل تريد حذف حسابك؟",
+    ),
+    "accountDeleteAccountHint": MessageLookupByLibrary.simpleMessage(
+      "إزالة حسابك وبياناتك نهائياً",
+    ),
     "accountEditProfile": MessageLookupByLibrary.simpleMessage(
       "تعديل الملف الشخصي",
     ),
@@ -238,6 +248,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryLaptops": MessageLookupByLibrary.simpleMessage("لابتوب"),
     "categoryPhones": MessageLookupByLibrary.simpleMessage("هواتف"),
     "categorySports": MessageLookupByLibrary.simpleMessage("رياضة"),
+    "commonCancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+    "commonDelete": MessageLookupByLibrary.simpleMessage("حذف"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
     "commonSomethingWentWrong": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ ما. يرجى المحاولة مرة أخرى.",

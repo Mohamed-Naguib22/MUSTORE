@@ -110,6 +110,10 @@ class AppRouter {
         create: (_) => sl<ProfileCubit>()..fetchProfile(),
         child: child,
       ),
+      AppPage.account => BlocProvider(
+        create: (_) => sl<ProfileCubit>(),
+        child: child,
+      ),
       AppPage.addresses => MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => sl<AddressCubit>()..fetchAddresses()),

@@ -48,6 +48,18 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "accountAddresses": MessageLookupByLibrary.simpleMessage("Addresses"),
     "accountContact": MessageLookupByLibrary.simpleMessage("Contact"),
+    "accountDeleteAccount": MessageLookupByLibrary.simpleMessage(
+      "Delete account",
+    ),
+    "accountDeleteAccountConfirmMessage": MessageLookupByLibrary.simpleMessage(
+      "This will permanently delete your account and data. This action can\'t be undone.",
+    ),
+    "accountDeleteAccountConfirmTitle": MessageLookupByLibrary.simpleMessage(
+      "Delete your account?",
+    ),
+    "accountDeleteAccountHint": MessageLookupByLibrary.simpleMessage(
+      "Permanently remove your account and data",
+    ),
     "accountEditProfile": MessageLookupByLibrary.simpleMessage("Edit profile"),
     "accountPhoneNumbers": MessageLookupByLibrary.simpleMessage(
       "Phone numbers",
@@ -245,6 +257,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryLaptops": MessageLookupByLibrary.simpleMessage("Laptops"),
     "categoryPhones": MessageLookupByLibrary.simpleMessage("Phones"),
     "categorySports": MessageLookupByLibrary.simpleMessage("Sports"),
+    "commonCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "commonDelete": MessageLookupByLibrary.simpleMessage("Delete"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Retry"),
     "commonSomethingWentWrong": MessageLookupByLibrary.simpleMessage(
       "Something went wrong. Please try again.",

@@ -3,6 +3,8 @@
   "appTitle": "متجر",
 
   "commonRetry": "إعادة المحاولة",
+  "commonDelete": "حذف",
+  "commonCancel": "إلغاء",
   "commonSomethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
 
   "failureNetwork": "لا يوجد اتصال بالإنترنت",
@@ -121,6 +123,10 @@
   "accountPhoneNumbers": "أرقام الهاتف",
   "accountPreferences": "التفضيلات",
   "accountSecurity": "أمان الحساب",
+  "accountDeleteAccount": "حذف الحساب",
+  "accountDeleteAccountHint": "إزالة حسابك وبياناتك نهائياً",
+  "accountDeleteAccountConfirmTitle": "هل تريد حذف حسابك؟",
+  "accountDeleteAccountConfirmMessage": "سيتم حذف حسابك وبياناتك نهائياً. لا يمكن التراجع عن هذا الإجراء.",
 
   "profileFirstName": "الاسم الأول",
   "profileLastName": "اسم العائلة",
