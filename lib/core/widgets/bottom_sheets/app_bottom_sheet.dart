@@ -14,7 +14,7 @@ class AppBottomSheet extends StatelessWidget {
     this.showHandle = true,
     this.showCloseButton = false,
     this.scrollable = true,
-    this.maxHeightFactor = 0.9,
+    this.maxHeightFactor = Dimens.sheetMaxHeightFactor,
     this.padding = Dimens.screenH,
   });
 
@@ -46,7 +46,7 @@ class AppBottomSheet extends StatelessWidget {
         bool isDismissible = true,
         bool enableDrag = true,
         bool useRootNavigator = true,
-        double maxHeightFactor = 0.9,
+        double maxHeightFactor = Dimens.sheetMaxHeightFactor,
         EdgeInsetsGeometry padding = Dimens.screenH,
       }) {
     return showModalBottomSheet<T>(
@@ -116,7 +116,7 @@ class AppBottomSheet extends StatelessWidget {
                 if (showHandle)
                   Center(
                     child: Container(
-                      width: Dimens.xxxl - Dimens.sm,
+                      width: Dimens.handleWidth,
                       height: Dimens.xs,
                       margin: const EdgeInsetsDirectional.only(
                         top: Dimens.md,
@@ -177,7 +177,7 @@ class AppBottomSheet extends StatelessWidget {
                   ),
                   const Divider(),
                 ],
-                if (hasHeader) Dimens.gapMd,
+                hasHeader ? Dimens.gapMd : Dimens.gapLg,
                 Flexible(child: body),
                 if (footer != null) ...[
                   Dimens.gapMd,

@@ -49,6 +49,9 @@ abstract final class Dimens {
   static const double badge = 36;
   static const double iconBadge = 18;
 
+  static const double badgeXl = 56;
+  static const double iconBadgeXl = 28;
+
   static const double appBarHeight = 52;
 
   static const double illustration = 220;
@@ -57,6 +60,12 @@ abstract final class Dimens {
   static const double buttonHeightSm = 44;
 
   static const double fontSm = 13;
+  static const double fontLg = 18;
+
+  static const double lineHeightRelaxed = 1.5;
+
+  static const double handleWidth = 40;
+  static const double sheetMaxHeightFactor = 0.9;
 
   static const double listTileInset = lg + badge + md;
 

@@ -61,8 +61,8 @@ class AppConfirmationSheet extends StatelessWidget {
           child: AppIconBadge(
             icon: icon,
             isDestructive: isDestructive,
-            size: Dimens.xxxl + Dimens.sm,
-            iconSize: Dimens.iconMd + Dimens.xs,
+            size: Dimens.badgeXl,
+            iconSize: Dimens.iconBadgeXl,
             borderRadius: Dimens.borderLg,
           ),
         ),
@@ -71,7 +71,7 @@ class AppConfirmationSheet extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           style: theme.textTheme.titleLarge?.copyWith(
-            fontSize: 18,
+            fontSize: Dimens.fontLg,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -86,7 +86,7 @@ class AppConfirmationSheet extends StatelessWidget {
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: s.onSurfaceVariant,
-                height: 1.5,
+                height: Dimens.lineHeightRelaxed,
               ),
             ),
           ),
