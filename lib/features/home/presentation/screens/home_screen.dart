@@ -12,7 +12,7 @@ import 'package:mustore/features/catalog/domain/entities/category/category.dart'
 import 'package:mustore/features/catalog/presentation/controllers/category/category_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/category/category_state.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_cubit.dart';
-import 'package:mustore/features/catalog/presentation/controllers/product/product_state.dart';
+import 'package:mustore/features/catalog/presentation/controllers/product/product_section.dart';
 import 'package:mustore/features/catalog/presentation/widgets/category/category_list_widget.dart';
 import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 import 'package:mustore/features/home/presentation/widgets/banner_card_widget.dart';
@@ -35,6 +35,18 @@ class _HomeScreenState extends State<HomeScreen> {
   static const _pageSize = 10;
   static const _categoriesTake = 7;
 
+  static const _publicSections = [
+    ProductSection.bestSeller,
+    ProductSection.onSale,
+    ProductSection.recommended,
+    ProductSection.newArrivals,
+  ];
+
+  static const _personalSections = [
+    ProductSection.previouslyOrdered,
+    ProductSection.recentlyViewed,
+  ];
+
   late final ProductsCubit _productsCubit;
   late final CategoryCubit _categoryCubit;
 
@@ -50,11 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
     _categoryCubit = context.read<CategoryCubit>();
 
     _categoryCubit.fetchRootCategories(_categoriesTake);
-    _productsCubit
-      ..fetchBestSeller(pageSize: _pageSize)
-      ..fetchOnSale(pageSize: _pageSize)
-      ..fetchRecommended(pageSize: _pageSize)
-      ..fetchNewArrivals(pageSize: _pageSize);
+    for (final s in _publicSections) {
+      s.fetch(_productsCubit, pageSize: _pageSize);
+    }
   }
 
   @override
@@ -69,14 +79,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _refresh() => Future.wait([
     _categoryCubit.fetchRootCategories(_categoriesTake),
-    _productsCubit.fetchBestSeller(pageSize: _pageSize),
-    _productsCubit.fetchOnSale(pageSize: _pageSize),
-    _productsCubit.fetchRecommended(pageSize: _pageSize),
-    _productsCubit.fetchNewArrivals(pageSize: _pageSize),
-    if (_signedIn) ...[
-      _productsCubit.fetchPreviouslyOrdered(pageSize: _pageSize),
-      _productsCubit.fetchRecentlyViewed(pageSize: _pageSize),
-    ],
+    for (final s in [
+      ..._publicSections,
+      if (_signedIn) ..._personalSections,
+    ])
+      s.fetch(_productsCubit, pageSize: _pageSize),
   ]);
 
   Widget _categoriesSection(S l10n, CategoryState state) {
@@ -170,54 +177,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       cubit: _productsCubit,
                       pageSize: _pageSize,
                     ),
-                  BlocBuilder<ProductsCubit, ProductsState>(
-                    bloc: _productsCubit,
-                    buildWhen: (p, c) => p.bestSeller != c.bestSeller,
-                    builder: (context, state) => HomeSectionWidget(
-                      onSeeAll: () {},
-                      title: l10n.homeBestSellers,
-                      section: state.bestSeller,
-                      onRetry: () => _productsCubit.fetchBestSeller(
-                        pageSize: _pageSize,
-                      ),
+                  for (final s in _publicSections)
+                    HomeSectionWidget(
+                      cubit: _productsCubit,
+                      section: s,
+                      pageSize: _pageSize,
                     ),
-                  ),
-                  BlocBuilder<ProductsCubit, ProductsState>(
-                    bloc: _productsCubit,
-                    buildWhen: (p, c) => p.onSale != c.onSale,
-                    builder: (context, state) => HomeSectionWidget(
-                      onSeeAll: () {},
-                      title: l10n.homeOnSale,
-                      section: state.onSale,
-                      onRetry: () => _productsCubit.fetchOnSale(
-                        pageSize: _pageSize,
-                      ),
-                    ),
-                  ),
-                  BlocBuilder<ProductsCubit, ProductsState>(
-                    bloc: _productsCubit,
-                    buildWhen: (p, c) => p.recommended != c.recommended,
-                    builder: (context, state) => HomeSectionWidget(
-                      onSeeAll: () {},
-                      title: l10n.homeRecommended,
-                      section: state.recommended,
-                      onRetry: () => _productsCubit.fetchRecommended(
-                        pageSize: _pageSize,
-                      ),
-                    ),
-                  ),
-                  BlocBuilder<ProductsCubit, ProductsState>(
-                    bloc: _productsCubit,
-                    buildWhen: (p, c) => p.newArrivals != c.newArrivals,
-                    builder: (context, state) => HomeSectionWidget(
-                      onSeeAll: () {},
-                      title: l10n.homeNewArrivals,
-                      section: state.newArrivals,
-                      onRetry: () => _productsCubit.fetchNewArrivals(
-                        pageSize: _pageSize,
-                      ),
-                    ),
-                  ),
                   const SliverToBoxAdapter(
                     child: SizedBox(height: Dimens.xxl),
                   ),

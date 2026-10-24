@@ -123,6 +123,10 @@ class AppRouter {
         ],
         child: child,
       ),
+      AppPage.products => BlocProvider(
+        create: (_) => sl<ProductsCubit>(),
+        child: child,
+      ),
       AppPage.contacts => BlocProvider(
         create: (_) => sl<ContactCubit>()..fetchContacts(),
         child: child,

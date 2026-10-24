@@ -8,6 +8,7 @@ import 'package:mustore/features/auth/presentation/screens/reset_password_screen
 import 'package:mustore/features/auth/presentation/screens/sign_in_required_screen.dart';
 import 'package:mustore/features/auth/presentation/screens/verify_email_screen.dart';
 import 'package:mustore/features/catalog/presentation/screens/categories_screen.dart';
+import 'package:mustore/features/catalog/presentation/screens/product_list_screen.dart';
 import 'package:mustore/features/home/presentation/screens/home_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/account_screen.dart';
 import 'package:mustore/features/profile/presentation/screens/addresses_screen.dart';
@@ -38,6 +39,9 @@ enum AppPage {
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   signInRequired('/sign-in-required', AccessLevel.guestOnly, SignInRequiredScreen.new,
+      parent: home, fullScreen: true, appBar: AppBarMode.none),
+
+  products('/products/:section', AccessLevel.public, ProductListScreen.new,
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   home('/', AccessLevel.public, HomeScreen.new,
@@ -103,7 +107,7 @@ enum AppPage {
 
   String titleOf(S l10n) => switch (this) {
     splash || login || register || verifyEmail ||
-    forgetPassword || resetPassword || signInRequired => '',
+    forgetPassword || resetPassword || signInRequired || products => '',
     home => l10n.navHome,
     cart => l10n.navCart,
     categories => l10n.navCategories,
