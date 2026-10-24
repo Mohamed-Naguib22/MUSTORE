@@ -1,6 +1,7 @@
 import 'package:mustore/features/catalog/data/models/product/product_sale_model.dart';
 import 'package:mustore/features/catalog/domain/entities/product/product.dart';
 import 'package:mustore/features/catalog/domain/enums/currency.dart';
+import 'mock_images.dart';
 
 class ProductModel extends Product {
   const ProductModel({
@@ -16,20 +17,10 @@ class ProductModel extends Product {
     super.sale,
   });
 
-  static const _fallbackProductImages = [
-    'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600',
-    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600',
-    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600',
-    'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600',
-    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600',
-    'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600',
-    'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600',
-    'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600',
-  ];
-
   factory ProductModel.fromJson(Map<String, dynamic> json) {
+    final id = json['id'] as String;
     return ProductModel(
-      id: json['id'] as String,
+      id: id,
       name: json['name'] as String,
       description: json['description'] as String?,
       price: (json['price'] as num).toDouble(),
@@ -38,15 +29,10 @@ class ProductModel extends Product {
       isAddedToWishlist: json['isAddedToWishlist'] as bool,
       currency: CurrencyCode.fromJson(json['currency'] as String?),
       // imageUrl: json['imageUrl'] as String,
-      imageUrl: _fallbackProductImages[
-      (json['id'] as String).hashCode.abs() %
-          _fallbackProductImages.length
-      ],
+      imageUrl: MockImages.product(id),
       sale: json['sale'] == null
           ? null
-          : ProductSaleModel.fromJson(
-        json['sale'] as Map<String, dynamic>,
-      ),
+          : ProductSaleModel.fromJson(json['sale'] as Map<String, dynamic>),
     );
   }
 }
