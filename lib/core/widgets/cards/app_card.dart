@@ -64,9 +64,9 @@ class _AppCardState extends State<AppCard> {
         };
 
     final borderAlpha = switch (widget.variant) {
-      AppCardVariant.outlined => 0.8,
-      AppCardVariant.elevated => 0.55,
-      AppCardVariant.filled => 0.3,
+      AppCardVariant.outlined => 0.65,
+      AppCardVariant.elevated => 0.4,
+      AppCardVariant.filled => 0.2,
     };
 
     final border = widget.borderColor ?? s.outline.withValues(alpha: borderAlpha);

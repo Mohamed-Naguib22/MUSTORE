@@ -129,9 +129,6 @@ class ProductCardWidget extends StatelessWidget {
     final reviews = product.numberOfReviews.round();
 
     return AppCard(
-      variant: AppCardVariant.filled,
-      color: scheme.surface,
-      borderColor: AppColors.transparent,
       padding: EdgeInsets.zero,
       onTap: () {},
       child: Column(

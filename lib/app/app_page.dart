@@ -42,7 +42,7 @@ enum AppPage {
       parent: home, fullScreen: true, appBar: AppBarMode.none),
 
   products('/products/:section', AccessLevel.public, ProductListScreen.new,
-      parent: home, fullScreen: true),
+      parent: home,),
 
   home('/', AccessLevel.public, HomeScreen.new,
       icon: Icons.home_outlined,
