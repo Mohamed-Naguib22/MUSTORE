@@ -13,6 +13,7 @@ import 'package:mustore/features/auth/domain/enums/auth_status.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/category/category_cubit.dart';
 import 'package:mustore/features/catalog/presentation/controllers/product/product_cubit.dart';
+import 'package:mustore/features/catalog/presentation/controllers/product/product_section.dart';
 import 'package:mustore/features/home/presentation/controllers/home_cubit.dart';
 import 'package:mustore/features/profile/presentation/controllers/account/profile_cubit.dart';
 import 'package:mustore/features/profile/presentation/controllers/address/address_cubit.dart';
@@ -86,6 +87,12 @@ class AppRouter {
           child: AppPageScaffold(
             page: page,
             safeArea: page != AppPage.splash,
+            titleBuilder: page == AppPage.products
+                ? (l10n) =>
+            ProductSection.parse(state.pathParameters['section'])
+                ?.title(l10n) ??
+                ''
+                : null,
             child: _providers(page, state.extra),
           ),
           transitionsBuilder: (context, animation, secondary, child) =>

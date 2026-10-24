@@ -10,6 +10,7 @@ import 'package:mustore/features/catalog/presentation/widgets/product/product_im
 import 'package:mustore/generated/l10n.dart';
 
 const double kProductCardHeight = 270;
+const double kProductCardWidth = 170;
 
 class ProductCardWidget extends StatelessWidget {
   const ProductCardWidget({super.key, required this.product});
@@ -17,6 +18,7 @@ class ProductCardWidget extends StatelessWidget {
   final Product product;
 
   static const double _wishlistSize = Dimens.xxl;
+  static const double _chipAlpha = 0.92;
 
   static const EdgeInsetsDirectional _imagePadding =
   EdgeInsetsDirectional.all(Dimens.sm);
@@ -66,7 +68,7 @@ class ProductCardWidget extends StatelessWidget {
     width: _wishlistSize,
     height: _wishlistSize,
     decoration: BoxDecoration(
-      color: scheme.surface,
+      color: scheme.surface.withValues(alpha: _chipAlpha),
       shape: BoxShape.circle,
     ),
     child: Icon(
@@ -84,7 +86,7 @@ class ProductCardWidget extends StatelessWidget {
       Container(
         padding: _pillPadding,
         decoration: BoxDecoration(
-          color: scheme.surface,
+          color: scheme.surface.withValues(alpha: _chipAlpha),
           borderRadius: Dimens.borderPill,
         ),
         child: Row(
@@ -127,6 +129,9 @@ class ProductCardWidget extends StatelessWidget {
     final reviews = product.numberOfReviews.round();
 
     return AppCard(
+      variant: AppCardVariant.filled,
+      color: scheme.surface,
+      borderColor: AppColors.transparent,
       padding: EdgeInsets.zero,
       onTap: () {},
       child: Column(
@@ -198,36 +203,39 @@ class ProductCardWidget extends StatelessWidget {
                   ),
                 ),
                 Dimens.gapSm,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        _price(l10n, finalPrice),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: text.titleSmall?.copyWith(
-                          color: sale == null ? scheme.onSurface : scheme.error,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    if (sale != null) ...[
-                      Dimens.gapSm,
-                      Flexible(
-                        child: Text(
-                          _price(l10n, product.price),
+                SizedBox(
+                  width: double.infinity,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          _price(l10n, finalPrice),
                           maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: text.labelSmall?.copyWith(
-                            color: scheme.onSurfaceVariant,
-                            decoration: TextDecoration.lineThrough,
+                          style: text.titleSmall?.copyWith(
+                            color:
+                            sale == null ? scheme.onSurface : scheme.error,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                      ),
-                    ],
-                  ],
+                        if (sale != null) ...[
+                          Dimens.gapSm,
+                          Text(
+                            _price(l10n, product.price),
+                            maxLines: 1,
+                            style: text.labelSmall?.copyWith(
+                              color: scheme.onSurfaceVariant,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

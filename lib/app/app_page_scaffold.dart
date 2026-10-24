@@ -9,11 +9,13 @@ class AppPageScaffold extends StatelessWidget {
     required this.page,
     required this.child,
     this.safeArea = true,
+    this.titleBuilder,
   });
 
   final AppPage page;
   final Widget child;
   final bool safeArea;
+  final String Function(S l10n)? titleBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,12 @@ class AppPageScaffold extends StatelessWidget {
       );
     }
 
+    final l10n = S.of(context);
+
     return Scaffold(
-      appBar: CustomAppbarWidget(title: page.titleOf(S.of(context))),
+      appBar: CustomAppbarWidget(
+        title: titleBuilder?.call(l10n) ?? page.titleOf(l10n),
+      ),
       body: child,
     );
   }

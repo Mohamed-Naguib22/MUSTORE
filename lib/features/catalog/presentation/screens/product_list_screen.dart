@@ -60,34 +60,34 @@ class _ProductListScreenState extends State<ProductListScreen> {
     if (section == null) return const NotFoundScreen();
     final l10n = S.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(section.title(l10n))),
-      body: BlocBuilder<ProductsCubit, ProductsState>(
-        bloc: _cubit,
-        buildWhen: (p, c) => section.of(p) != section.of(c),
-        builder: (context, state) {
-          final s = section.of(state);
-          final items = s.data.items;
+    return  BlocBuilder<ProductsCubit, ProductsState>(
+      bloc: _cubit,
+      buildWhen: (p, c) => section.of(p) != section.of(c),
+      builder: (context, state) {
+        final s = section.of(state);
+        final items = s.data.items;
 
-          if (s.status == PaginationStatus.failure && items.isEmpty) {
-            return AppMessageWidget(
-              message: s.failure?.localizedMessage(context) ?? l10n.commonSomethingWentWrong,
-              actionLabel: l10n.commonRetry,
-              onAction: () => section.fetch(_cubit),
-            );
-          }
-
-          return RefreshIndicator(
-            onRefresh: () => section.fetch(_cubit),
-            child: ProductsGridWidget(
-              controller: _scroll,
-              products: items,
-              isLoading: s.status == PaginationStatus.loading && items.isEmpty,
-              loadingMore: s.status == PaginationStatus.loadingMore,
-            ),
+        if (s.status == PaginationStatus.failure && items.isEmpty) {
+          return AppMessageWidget(
+            message: s.failure?.localizedMessage(context) ?? l10n.commonSomethingWentWrong,
+            actionLabel: l10n.commonRetry,
+            onAction: () => section.fetch(_cubit),
           );
-        },
-      ),
+        }
+
+        final isLoading = s.status == PaginationStatus.initial ||
+            s.status == PaginationStatus.loading;
+
+        return RefreshIndicator(
+          onRefresh: () => section.fetch(_cubit),
+          child: ProductsGridWidget(
+            controller: _scroll,
+            products: items,
+            isLoading: isLoading,
+            loadingMore: s.status == PaginationStatus.loadingMore,
+          ),
+        );
+      },
     );
   }
 }
