@@ -27,6 +27,20 @@ class UserProfile extends Equatable {
 
   String get fullName => '$firstName $lastName';
 
+  UserProfile copyWith({
+    String? firstName,
+    String? lastName,
+    String? profilePictureUrl,
+    Gender? gender,
+  }) =>
+      UserProfile(
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        email: email,
+        gender: gender ?? this.gender,
+        profilePictureUrl: profilePictureUrl ?? this.profilePictureUrl,
+      );
+
   bool get isDefaultPicture =>
       profilePictureUrl.isEmpty ||
           profilePictureUrl.toLowerCase().contains(defaultPictureFileName.toLowerCase());

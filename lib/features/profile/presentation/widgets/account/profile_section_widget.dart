@@ -5,6 +5,7 @@ import 'package:mustore/app/app_page.dart';
 import 'package:mustore/features/auth/domain/entities/auth_session.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
+import 'package:mustore/features/profile/presentation/controllers/account/profile_cubit.dart';
 import 'package:mustore/features/profile/presentation/widgets/account/profile_card_widget.dart';
 import 'package:mustore/generated/l10n.dart';
 
@@ -18,7 +19,11 @@ class ProfileSectionWidget extends StatelessWidget {
       builder: (context, session) => ProfileCardWidget(
         session: session,
         editTooltip: S.of(context).accountEditProfile,
-        onEdit: () => context.pushNamed(AppPage.editProfile.name),
+        onEdit: () {
+          final cubit = context.read<ProfileCubit>();
+          if (cubit.state.profile == null) cubit.fetchProfile();
+          context.pushNamed(AppPage.editProfile.name, extra: cubit);
+        },
       ),
     );
   }

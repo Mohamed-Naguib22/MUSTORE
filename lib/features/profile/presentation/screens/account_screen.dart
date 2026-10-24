@@ -6,6 +6,8 @@ import 'package:mustore/core/utils/enums/request_status.dart';
 import 'package:mustore/core/widgets/feedback/app_toast.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_cubit.dart';
 import 'package:mustore/features/auth/presentation/controllers/auth_state.dart';
+import 'package:mustore/features/profile/presentation/controllers/account/profile_cubit.dart';
+import 'package:mustore/features/profile/presentation/controllers/account/profile_state.dart';
 import 'package:mustore/features/profile/presentation/widgets/account/contact_section_widget.dart';
 import 'package:mustore/features/profile/presentation/widgets/account/preferences_section_widget.dart';
 import 'package:mustore/features/profile/presentation/widgets/account/profile_section_widget.dart';
@@ -27,6 +29,17 @@ class AccountScreen extends StatelessWidget {
           listenWhen: (p, c) => c.failure != null && p.failure != c.failure,
           listener: (context, state) =>
               AppToast.error(context, state.failure!.localizedMessage(context)),
+        ),
+        BlocListener<ProfileCubit, ProfileState>(
+          listenWhen: (p, c) => c.profile != null && p.profile != c.profile,
+          listener: (context, state) {
+            final profile = state.profile!;
+            context.read<AuthCubit>().syncProfile(
+              firstName: profile.firstName,
+              lastName: profile.lastName,
+              profilePictureUrl: profile.profilePictureUrl,
+            );
+          },
         ),
         BlocListener<AuthCubit, AuthState>(
           listenWhen: (p, c) =>

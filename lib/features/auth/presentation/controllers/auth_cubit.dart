@@ -310,6 +310,26 @@ class AuthCubit extends Cubit<AuthState> with SafeEmitMixin<AuthState> {
     );
   }
 
+  Future<void> syncProfile({
+    required String firstName,
+    required String lastName,
+    String? profilePictureUrl,
+  }) async {
+    final current = state.session;
+    if (current == null) return;
+
+    final updated = current.copyWith(
+      firstName: firstName,
+      lastName: lastName,
+      profilePictureUrl: profilePictureUrl,
+    );
+
+    if (updated == current) return;
+
+    safeEmit(state.copyWith(session: updated));
+    await _sessions.save(updated);
+  }
+
   Future<void> _runUnit(
       AuthAction action,
       Future<Either<Failure, Unit>> Function() call,

@@ -7,6 +7,6 @@ abstract interface class AccountRepository {
   Future<Either<Failure, UserProfile>> getProfile();
   Future<Either<Failure, Unit>> updateProfile(UpdateProfileParams params);
   Future<Either<Failure, Unit>> deleteAccount();
-  Future<Either<Failure, Unit>> setProfilePicture(String filePath);
-  Future<Either<Failure, Unit>> deleteProfilePicture();
+  Future<Either<Failure, String>> setProfilePicture(String filePath);
+  Future<Either<Failure, String>> deleteProfilePicture();
 }

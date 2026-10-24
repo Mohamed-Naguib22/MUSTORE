@@ -37,16 +37,14 @@ class AccountRepositoryImpl with NetworkMixin implements AccountRepository {
       });
 
   @override
-  Future<Either<Failure, Unit>> setProfilePicture(String filePath) =>
-      onlineOnly<Unit>(() async {
-        await _remote.setProfilePicture(filePath);
-        return unit;
+  Future<Either<Failure, String>> setProfilePicture(String filePath) =>
+      onlineOnly<String>(() async {
+        return await _remote.setProfilePicture(filePath);
       });
 
   @override
-  Future<Either<Failure, Unit>> deleteProfilePicture() =>
-      onlineOnly<Unit>(() async {
-        await _remote.deleteProfilePicture();
-        return unit;
+  Future<Either<Failure, String>> deleteProfilePicture() =>
+      onlineOnly<String>(() async {
+        return await _remote.deleteProfilePicture();
       });
 }

@@ -29,21 +29,29 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
   }
 
   @override
-  Future<void> deleteAccount() =>
-      _apiClient.delete(path: AccountEndpoints.delete);
+  Future<void> deleteAccount() async =>
+      await _apiClient.delete(path: AccountEndpoints.delete);
 
   @override
-  Future<void> setProfilePicture(String filePath) async {
+  Future<String> setProfilePicture(String filePath) async {
     final file = await MultipartFile.fromFile(filePath);
 
-    await _apiClient.post(
+    final response = await _apiClient.post(
       path: AccountEndpoints.setPicture,
       data: {'profilePicture': file},
       multipart: true,
     );
+
+    return _extractPictureUrl(response.data);
   }
 
   @override
-  Future<void> deleteProfilePicture() =>
-      _apiClient.delete(path: AccountEndpoints.deletePicture);
+  Future<String> deleteProfilePicture() async {
+    final response = await _apiClient.delete(path: AccountEndpoints.deletePicture);
+
+    return _extractPictureUrl(response.data);
+  }
+
+  String _extractPictureUrl(dynamic data) =>
+      (data as Map<String, dynamic>)['profilePictureUrl'] as String? ?? '';
 }

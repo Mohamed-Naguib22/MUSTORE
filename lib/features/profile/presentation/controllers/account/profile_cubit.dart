@@ -31,14 +31,12 @@ class ProfileCubit extends Cubit<ProfileState>
   final SetProfilePictureUseCase _setProfilePicture;
   final DeleteProfilePictureUseCase _deleteProfilePicture;
 
-  Future<void> fetchProfile({bool silent = false}) async {
+  Future<void> fetchProfile() async {
     if (state.status.isLoading) return;
 
-    if (!silent) {
-      safeEmit(
-        state.copyWith(status: RequestStatus.loading, clearFailure: true),
-      );
-    }
+    safeEmit(
+      state.copyWith(status: RequestStatus.loading, clearFailure: true),
+    );
 
     final result = await _getProfile(const NoParams());
 
@@ -60,10 +58,7 @@ class ProfileCubit extends Cubit<ProfileState>
     if (state.updateStatus.isLoading) return;
 
     safeEmit(
-      state.copyWith(
-        updateStatus: RequestStatus.loading,
-        clearFailure: true,
-      ),
+      state.copyWith(updateStatus: RequestStatus.loading, clearFailure: true),
     );
 
     final result = await _updateProfile(params);
@@ -76,23 +71,21 @@ class ProfileCubit extends Cubit<ProfileState>
       ),
       onRight: (_) => state.copyWith(
         updateStatus: RequestStatus.success,
+        profile: state.profile?.copyWith(
+          firstName: params.firstName,
+          lastName: params.lastName,
+          gender: params.gender,
+        ),
         clearFailure: true,
       ),
     );
-
-    if (state.updateStatus == RequestStatus.success) {
-      await fetchProfile(silent: true);
-    }
   }
 
   Future<void> setProfilePicture(String filePath) async {
     if (state.pictureStatus.isLoading) return;
 
     safeEmit(
-      state.copyWith(
-        pictureStatus: RequestStatus.loading,
-        clearFailure: true,
-      ),
+      state.copyWith(pictureStatus: RequestStatus.loading, clearFailure: true),
     );
 
     final result = await _setProfilePicture(filePath);
@@ -103,26 +96,20 @@ class ProfileCubit extends Cubit<ProfileState>
         pictureStatus: RequestStatus.failure,
         failure: failure,
       ),
-      onRight: (_) => state.copyWith(
+      onRight: (url) => state.copyWith(
         pictureStatus: RequestStatus.success,
         pictureVersion: state.pictureVersion + 1,
+        profile: state.profile?.copyWith(profilePictureUrl: url),
         clearFailure: true,
       ),
     );
-
-    if (state.pictureStatus == RequestStatus.success) {
-      await fetchProfile(silent: true);
-    }
   }
 
   Future<void> deleteProfilePicture() async {
     if (state.pictureStatus.isLoading) return;
 
     safeEmit(
-      state.copyWith(
-        pictureStatus: RequestStatus.loading,
-        clearFailure: true,
-      ),
+      state.copyWith(pictureStatus: RequestStatus.loading, clearFailure: true),
     );
 
     final result = await _deleteProfilePicture(const NoParams());
@@ -133,16 +120,13 @@ class ProfileCubit extends Cubit<ProfileState>
         pictureStatus: RequestStatus.failure,
         failure: failure,
       ),
-      onRight: (_) => state.copyWith(
+      onRight: (url) => state.copyWith(
         pictureStatus: RequestStatus.success,
         pictureVersion: state.pictureVersion + 1,
+        profile: state.profile?.copyWith(profilePictureUrl: url),
         clearFailure: true,
       ),
     );
-
-    if (state.pictureStatus == RequestStatus.success) {
-      await fetchProfile(silent: true);
-    }
   }
 
   Future<void> deleteAccount() async {

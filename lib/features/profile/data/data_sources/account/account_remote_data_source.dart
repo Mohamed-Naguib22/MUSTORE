@@ -5,6 +5,6 @@ abstract interface class AccountRemoteDataSource {
   Future<UserProfileModel> getProfile();
   Future<void> updateProfile(UpdateProfileParams params);
   Future<void> deleteAccount();
-  Future<void> setProfilePicture(String filePath);
-  Future<void> deleteProfilePicture();
+  Future<String> setProfilePicture(String filePath);
+  Future<String> deleteProfilePicture();
 }

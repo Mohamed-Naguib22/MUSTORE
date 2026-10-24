@@ -15,6 +15,26 @@ class AuthSession extends Equatable {
   final String refreshToken;
   final DateTime refreshTokenExpirationDate;
 
+  AuthSession copyWith({
+    String? firstName,
+    String? lastName,
+    String? profilePictureUrl,
+  }) =>
+      AuthSession(
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        phoneNumber: phoneNumber,
+        email: email,
+        loginProvider: loginProvider,
+        profilePictureUrl: profilePictureUrl ?? this.profilePictureUrl,
+        isValidated: isValidated,
+        roles: roles,
+        accessToken: accessToken,
+        accessTokenExpirationDate: accessTokenExpirationDate,
+        refreshToken: refreshToken,
+        refreshTokenExpirationDate: refreshTokenExpirationDate,
+      );
+
   const AuthSession({
     required this.firstName,
     required this.lastName,

@@ -86,7 +86,7 @@ class AppRouter {
           child: AppPageScaffold(
             page: page,
             safeArea: page != AppPage.splash,
-            child: _providers(page),
+            child: _providers(page, state.extra),
           ),
           transitionsBuilder: (context, animation, secondary, child) =>
               _transition(page, context, animation, secondary, child),
@@ -94,7 +94,7 @@ class AppRouter {
         routes: routes,
       );
 
-  Widget _providers(AppPage page) {
+  Widget _providers(AppPage page, Object? extra) {
     final child = page.builder();
 
     return switch (page) {
@@ -106,7 +106,9 @@ class AppRouter {
         ],
         child: child,
       ),
-      AppPage.editProfile => BlocProvider(
+      AppPage.editProfile => extra is ProfileCubit
+          ? BlocProvider.value(value: extra, child: child)
+          : BlocProvider(
         create: (_) => sl<ProfileCubit>()..fetchProfile(),
         child: child,
       ),
