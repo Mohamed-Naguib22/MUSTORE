@@ -6,6 +6,7 @@ import 'package:mustore/app/di/core_module.dart';
 import 'package:mustore/app/di/home_module.dart';
 import 'package:mustore/app/di/lookup_module.dart';
 import 'package:mustore/app/di/profile_module.dart';
+import 'package:mustore/app/di/recommendation_module.dart';
 import 'package:mustore/app/di/settings_module.dart';
 
 final sl = GetIt.instance;
@@ -19,4 +20,5 @@ Future<void> configureDependencies() async {
   registerHomeModule(sl);
   registerProfileModule(sl);
   registerLookupModule(sl);
+  registerRecommendationModule(sl);
 }

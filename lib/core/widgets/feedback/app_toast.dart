@@ -6,8 +6,6 @@ import 'package:toastification/toastification.dart';
 abstract final class AppToast {
   static const Duration _defaultDuration = Duration(seconds: 4);
 
-  /// Darker amber for the warning icon on light surfaces. The brand warning
-  /// amber is only ~2:1 on white; this is ~5:1. Dark mode keeps the brand one.
   static const Color _warningOnLight = Color(0xFFB45309);
 
   static ToastificationItem success(
